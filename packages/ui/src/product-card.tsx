@@ -1,9 +1,19 @@
+"use client";
+
 import styled from "styled-components";
+import { StarIcon } from "@phosphor-icons/react/Star";
+import { UsdcSVG } from "../usdc";
 
 const CardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 3px;
+
+  @media only screen and (min-width: 992px) {
+    & {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
 `;
 
 const Card = styled.div`
@@ -49,6 +59,7 @@ const Image = styled.div`
     width: 100%;
     object-fit: cover;
     object-position: center;
+    filter: brightness(90%);
   }
 `;
 
@@ -57,7 +68,7 @@ const ContentBlur = styled.div`
   bottom: 0;
   height: 80px;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.4);
   filter: blur(30px);
 `;
 
@@ -75,12 +86,14 @@ const Name = styled.p`
   font-size: 13px;
   font-weight: var(--text-bold);
   text-shadow: var(--xl-shadow);
+  text-transform: capitalize;
 `;
 
 const Category = styled.p`
   font-size: 9px;
   color: #ece7e7;
   text-shadow: var(--xl-shadow);
+  text-transform: capitalize;
 `;
 
 const RateAndPriceWrapper = styled.div`
@@ -97,7 +110,7 @@ const Rating = styled.div`
   backdrop-filter: var(--glass-blur);
   font-size: 9px;
   border-radius: var(--lg-radius);
-  box-shadow: var(--xl-shadow);
+  box-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.2);
   color: #ffffff;
   font-weight: var(--text-bold);
   display: flex;
@@ -111,11 +124,15 @@ const Price = styled.div`
   padding: 2px 5px;
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
-  box-shadow: var(--xl-shadow);
-  font-size: 12px;
+  box-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.2);
+  font-size: 15px;
   font-weight: var(--text-bold);
   border-radius: var(--lg-radius);
   color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
 
   & span {
     font-size: 8px;
@@ -123,6 +140,7 @@ const Price = styled.div`
 `;
 
 interface DataType {
+  id?: string;
   brand: string;
   image_url: string;
   name: string;
@@ -131,6 +149,7 @@ interface DataType {
 }
 
 export function ProductCard({
+  id,
   brand,
   image_url,
   name,
@@ -139,7 +158,7 @@ export function ProductCard({
 }: DataType) {
   return (
     <CardWrapper>
-      <Card>
+      <Card key={id}>
         <Brand>
           <img src="../img/addidas-logo.png" alt={brand} />
         </Brand>
@@ -152,21 +171,13 @@ export function ProductCard({
           <Category>{category}</Category>
           <RateAndPriceWrapper>
             <Rating>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                height="10"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
+              <StarIcon size={10} weight="fill" />
               4.2
             </Rating>
-            <Price>{price}</Price>
+            <Price>
+              <UsdcSVG height="16px" />
+              {price}
+            </Price>
           </RateAndPriceWrapper>
         </ContentWrapper>
       </Card>
