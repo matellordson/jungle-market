@@ -122,20 +122,34 @@ const Price = styled.div`
   }
 `;
 
-export function ProductCard() {
+interface DataType {
+  brand: string;
+  image_url: string;
+  name: string;
+  category: string;
+  price: number;
+}
+
+export function ProductCard({
+  brand,
+  image_url,
+  name,
+  category,
+  price,
+}: DataType) {
   return (
     <CardWrapper>
       <Card>
         <Brand>
-          <img src="../img/addidas-logo.png" alt="seller picture" />
+          <img src="../img/addidas-logo.png" alt={brand} />
         </Brand>
         <Image>
-          <img src="../img/addidas.webp" alt=" image" />
+          <img src={image_url} alt={name} />
         </Image>
         <ContentBlur />
         <ContentWrapper>
-          <Name>Lorem ipsum, dolor sit amet consectetur adipisicing.</Name>
-          <Category>Women's Jacket</Category>
+          <Name>{name}</Name>
+          <Category>{category}</Category>
           <RateAndPriceWrapper>
             <Rating>
               <svg
@@ -152,7 +166,7 @@ export function ProductCard() {
               </svg>
               4.2
             </Rating>
-            <Price>500</Price>
+            <Price>{price}</Price>
           </RateAndPriceWrapper>
         </ContentWrapper>
       </Card>
