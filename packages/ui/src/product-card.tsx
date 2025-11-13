@@ -3,18 +3,7 @@
 import styled from "styled-components";
 import { StarIcon } from "@phosphor-icons/react/Star";
 import { UsdcSVG } from "../usdc";
-
-const CardWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3px;
-
-  @media only screen and (min-width: 992px) {
-    & {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-`;
+import Image from "next/image";
 
 const Card = styled.div`
   height: 300px;
@@ -23,7 +12,6 @@ const Card = styled.div`
   background-color: var(--bg-front);
   position: relative;
   overflow: hidden;
-  box-shadow: var(--sm-shadow);
   border: 1px solid var(--bg-border);
 `;
 
@@ -49,7 +37,7 @@ const Brand = styled.div`
   }
 `;
 
-const Image = styled.div`
+const Images = styled.div`
   height: 100%;
   width: 100%;
   background-color: var(--foreground);
@@ -59,17 +47,20 @@ const Image = styled.div`
     width: 100%;
     object-fit: cover;
     object-position: center;
-    filter: brightness(90%);
+
+    @media (prefers-color-scheme: dark) {
+      filter: brightness(90%);
+    }
   }
 `;
 
 const ContentBlur = styled.div`
   position: absolute;
   bottom: 0;
-  height: 80px;
+  height: 90px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  filter: blur(30px);
+  filter: blur(20px);
 `;
 
 const ContentWrapper = styled.div`
@@ -83,14 +74,14 @@ const ContentWrapper = styled.div`
 
 const Name = styled.p`
   color: #ffffff;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: var(--text-bold);
   text-shadow: var(--xl-shadow);
   text-transform: capitalize;
 `;
 
 const Category = styled.p`
-  font-size: 9px;
+  font-size: 12px;
   color: #ece7e7;
   text-shadow: var(--xl-shadow);
   text-transform: capitalize;
@@ -108,7 +99,7 @@ const Rating = styled.div`
   padding: 2px 5px;
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
-  font-size: 9px;
+  font-size: 15px;
   border-radius: var(--lg-radius);
   box-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.2);
   color: #ffffff;
@@ -125,7 +116,7 @@ const Price = styled.div`
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   box-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.2);
-  font-size: 15px;
+  font-size: 20px;
   font-weight: var(--text-bold);
   border-radius: var(--lg-radius);
   color: #ffffff;
@@ -133,10 +124,6 @@ const Price = styled.div`
   justify-content: center;
   align-items: center;
   gap: 3px;
-
-  & span {
-    font-size: 8px;
-  }
 `;
 
 interface DataType {
@@ -157,30 +144,33 @@ export function ProductCard({
   price,
 }: DataType) {
   return (
-    <CardWrapper>
-      <Card key={id}>
-        <Brand>
-          <img src="../img/addidas-logo.png" alt={brand} />
-        </Brand>
-        <Image>
-          <img src={image_url} alt={name} />
-        </Image>
-        <ContentBlur />
-        <ContentWrapper>
-          <Name>{name}</Name>
-          <Category>{category}</Category>
-          <RateAndPriceWrapper>
-            <Rating>
-              <StarIcon size={10} weight="fill" />
-              4.2
-            </Rating>
-            <Price>
-              <UsdcSVG height="16px" />
-              {price}
-            </Price>
-          </RateAndPriceWrapper>
-        </ContentWrapper>
-      </Card>
-    </CardWrapper>
+    <Card key={id}>
+      <Brand>
+        {/* <Image
+            src="../img/addidas-logo.png"
+            alt={brand}
+            width={400}
+            height={400}
+          /> */}
+      </Brand>
+      <Images>
+        <Image src={image_url} alt={name} width={400} height={400} />
+      </Images>
+      <ContentBlur />
+      <ContentWrapper>
+        <Name>{name}</Name>
+        <Category>{category}</Category>
+        <RateAndPriceWrapper>
+          <Rating>
+            <StarIcon size={15} weight="fill" />
+            4.2
+          </Rating>
+          <Price>
+            <UsdcSVG height="21px" />
+            {price}
+          </Price>
+        </RateAndPriceWrapper>
+      </ContentWrapper>
+    </Card>
   );
 }

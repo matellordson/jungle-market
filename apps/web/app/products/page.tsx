@@ -15,7 +15,16 @@ export default async function Products() {
   });
   const data: DataType[] = await res.json();
   return (
-    <div>
+    <div
+      style={{
+        display: "grid",
+        gap: "5px",
+        gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))",
+        maxWidth: "200rem",
+        margin: "auto",
+        padding: "5px",
+      }}
+    >
       {data.map((product) => (
         <ProductCard
           key={product.id}
