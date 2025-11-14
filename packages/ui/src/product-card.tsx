@@ -41,9 +41,9 @@ const SaveProduct = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-blur: blur(30px);
+  background-color: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-blur: var(--glass-blur);
   border: 1px solid var(--glass-border);
   opacity: 80%;
   color: var(--text-neutral);
@@ -57,9 +57,9 @@ const CartProduct = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  background-color: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
   opacity: 80%;
   color: var(--text-neutral);
@@ -80,9 +80,9 @@ const BottomContent = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  background-color: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
   border-radius: 5px;
   padding: 10px;
@@ -90,7 +90,7 @@ const BottomContent = styled.div`
 
 const Name = styled.p`
   font-size: 18px;
-  font-weight: bold;
+  font-weight: bolder;
   text-transform: capitalize;
 `;
 
@@ -131,7 +131,7 @@ const DetailBox = styled.div`
   text-align: center;
 
   & .title {
-    color: var(--text-light);
+    color: var(--text-neutral);
     font-size: 13px;
     font-weight: bold;
   }
@@ -144,6 +144,7 @@ const DetailBox = styled.div`
     justify-content: center;
     align-items: center;
     gap: 2px;
+    font-weight: bold;
   }
 `;
 
@@ -152,8 +153,8 @@ const Rating = styled.div`
 `;
 
 const Category = styled.div`
-  border-left: 1px solid #636262;
-  border-right: 1px solid #636262;
+  border-left: 1px solid var(--border-divide);
+  border-right: 1px solid var(--border-divide);
   padding: 0 20px;
 `;
 

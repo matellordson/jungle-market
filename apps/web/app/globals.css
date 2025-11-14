@@ -7,8 +7,8 @@
   --bg-highlight: #efefef;
   --bg-border: #dadada;
   --text-light: #a0a09e;
-  --text-neutral: #787876;
-  --text-dark: #1b1b19;
+  --text-neutral: hsl(212, 18%, 35%);
+  --text-dark: hsl(212, 56%, 16%);
   --text-icon: #939395;
   --text-blur: white;
   --text-thin: 400;
@@ -19,9 +19,10 @@
   --sm-radius: 10px;
   --lg-radius: 20px;
   --card-radius: 20px;
-  --glass-bg: rgba(0, 0, 0, 0.2);
-  --glass-blur: blur(10px);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-blur: blur(30px);
   --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+  --border-divide: #9c9d9d;
   --page-padding: 5px;
 }
 
@@ -40,8 +41,9 @@
     --sm-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.5);
     --lg-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.6);
     --xl-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.7);
-    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(0, 0, 0, 0.6);
     --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+    --border-divide: #636262;
   }
 }
 
