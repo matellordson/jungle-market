@@ -59,7 +59,7 @@ const ContentBlur = styled.div`
   bottom: 0;
   height: 90px;
   width: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   filter: blur(20px);
   -webkit-filter: blur(20px);
 `;
@@ -158,7 +158,7 @@ export function ProductCard({
       </Brand>
       <Images>
         <Suspense fallback={"hello"}>
-          <Image src={image_url} alt={name} fill />
+          <Image src={image_url} alt={name} width={400} height={300} />
         </Suspense>
       </Images>
       <ContentBlur />
