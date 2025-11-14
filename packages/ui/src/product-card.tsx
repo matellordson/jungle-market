@@ -42,12 +42,8 @@ const Images = styled.div`
   height: 100%;
   width: 100%;
   /* background-color: var(--foreground); */
-  background-color: red;
 
   & img {
-    object-fit: cover;
-    object-position: center;
-
     @media (prefers-color-scheme: dark) {
       filter: brightness(90%);
     }
@@ -158,7 +154,12 @@ export function ProductCard({
       </Brand>
       <Images>
         <Suspense fallback={"hello"}>
-          <Image src={image_url} alt={name} width={400} height={300} />
+          <Image
+            src={image_url}
+            alt={name}
+            fill
+            style={{ objectFit: "cover" }}
+          />
         </Suspense>
       </Images>
       <ContentBlur />
