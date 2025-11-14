@@ -13,7 +13,7 @@ export default async function Products() {
   const url =
     process.env.NODE_ENV === "production"
       ? process.env.NEXT_PUBLIC_API_URL!
-      : "http://localhost:3000";
+      : "http://localhost:8080";
   const res = await fetch(`${url}/products`, {
     cache: "no-cache",
   });

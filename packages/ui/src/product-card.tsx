@@ -59,8 +59,9 @@ const ContentBlur = styled.div`
   bottom: 0;
   height: 90px;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.4);
   filter: blur(20px);
+  -webkit-filter: blur(20px);
 `;
 
 const ContentWrapper = styled.div`
@@ -99,9 +100,10 @@ const Rating = styled.div`
   padding: 2px 5px;
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
   font-size: 15px;
   border-radius: var(--lg-radius);
-  box-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.2);
+  box-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.2);
   color: #ffffff;
   font-weight: var(--text-bold);
   display: flex;
@@ -115,7 +117,8 @@ const Price = styled.div`
   padding: 2px 5px;
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
-  box-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.2);
+  border: var(--glass-border);
+  box-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.2);
   font-size: 20px;
   font-weight: var(--text-bold);
   border-radius: var(--lg-radius);
@@ -155,7 +158,7 @@ export function ProductCard({
       </Brand>
       <Images>
         <Suspense fallback={"hello"}>
-          <Image src={image_url} alt={name} width={400} height={300} />
+          <Image src={image_url} alt={name} fill />
         </Suspense>
       </Images>
       <ContentBlur />
