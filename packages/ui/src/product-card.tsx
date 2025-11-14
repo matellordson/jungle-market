@@ -41,12 +41,10 @@ const Brand = styled.div`
 const Images = styled.div`
   height: 100%;
   width: 100%;
-  background-color: var(--foreground);
-  position: relative;
+  /* background-color: var(--foreground); */
+  background-color: red;
 
   & img {
-    height: 100%;
-    width: 100%;
     object-fit: cover;
     object-position: center;
 

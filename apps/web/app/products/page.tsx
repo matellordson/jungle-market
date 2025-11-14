@@ -10,7 +10,11 @@ interface DataType {
 }
 
 export default async function Products() {
-  const res = await fetch("http://localhost:8080/products", {
+  const url =
+    process.env.NODE_ENV === "production"
+      ? process.env.API_URL!
+      : "http://localhost:3000";
+  const res = await fetch(url, {
     cache: "no-cache",
   });
   const data: DataType[] = await res.json();
