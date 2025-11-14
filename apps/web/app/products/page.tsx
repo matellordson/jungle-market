@@ -12,7 +12,7 @@ interface DataType {
 export default async function Products() {
   const url =
     process.env.NODE_ENV === "production"
-      ? process.env.API_URL!
+      ? process.env.NEXT_PUBLIC_API_URL!
       : "http://localhost:3000";
   const res = await fetch(url, {
     cache: "no-cache",
