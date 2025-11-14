@@ -43,6 +43,7 @@ const SaveProduct = styled.button`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(30px);
+  -webkit-backdrop-blur: blur(30px);
   border: 1px solid var(--glass-border);
   opacity: 80%;
   cursor: pointer;
@@ -57,6 +58,7 @@ const CartProduct = styled.button`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border: 1px solid var(--glass-border);
   opacity: 80%;
   cursor: pointer;
@@ -78,6 +80,7 @@ const BottomContent = styled.div`
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border: 1px solid var(--glass-border);
   border-radius: 5px;
   padding: 10px;
@@ -215,7 +218,7 @@ export function ProductCard({
             </Price>
           </DetailBox>
 
-          <ProducerBox>
+          {/* <ProducerBox>
             <ProducerImage>
               <Image
                 src={brand_image_url!}
@@ -227,7 +230,7 @@ export function ProductCard({
             <ProducerName>
               by <span>{brand}</span>
             </ProducerName>
-          </ProducerBox>
+          </ProducerBox> */}
         </BottomContent>
       </BottomContentBox>
     </Card>
