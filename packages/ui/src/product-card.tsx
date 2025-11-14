@@ -46,6 +46,7 @@ const SaveProduct = styled.button`
   -webkit-backdrop-blur: blur(30px);
   border: 1px solid var(--glass-border);
   opacity: 80%;
+  color: var(--text-neutral);
   cursor: pointer;
 `;
 
@@ -61,6 +62,7 @@ const CartProduct = styled.button`
   -webkit-backdrop-filter: blur(30px);
   border: 1px solid var(--glass-border);
   opacity: 80%;
+  color: var(--text-neutral);
   cursor: pointer;
 `;
 
