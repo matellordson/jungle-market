@@ -72,7 +72,7 @@ const ContentWrapper = styled.div`
 const Name = styled.p`
   color: #ffffff;
   font-size: 17px;
-  font-weight: var(--text-bold);
+  font-weight: bold;
   text-shadow: var(--xl-shadow);
   text-transform: capitalize;
 `;

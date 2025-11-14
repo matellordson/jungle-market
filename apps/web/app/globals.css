@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
+
 :root {
   --bg-page: #f2f2f2;
   --bg-back: #e2e2e2;
@@ -47,7 +49,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-family: var(--font-geist-sans);
+  /* font-family: var(--font-geist-sans); */
+  font-family: "Comfortaa", sans-serif;
 }
 
 body {
