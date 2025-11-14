@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { StarIcon } from "@phosphor-icons/react/Star";
 import { UsdcSVG } from "../usdc";
 import Image from "next/image";
+import { Suspense } from "react";
 
 const Card = styled.div`
   height: 300px;
@@ -41,6 +42,7 @@ const Images = styled.div`
   height: 100%;
   width: 100%;
   background-color: var(--foreground);
+  position: relative;
 
   & img {
     height: 100%;
@@ -154,7 +156,9 @@ export function ProductCard({
           /> */}
       </Brand>
       <Images>
-        <Image src={image_url} alt={name} width={400} height={400} />
+        <Suspense fallback={"hello"}>
+          <Image src={image_url} alt={name} width={400} height={300} />
+        </Suspense>
       </Images>
       <ContentBlur />
       <ContentWrapper>
