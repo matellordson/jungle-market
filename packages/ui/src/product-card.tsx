@@ -96,6 +96,7 @@ const Rating = styled.div`
   padding: 2px 5px;
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: var(--glass-border);
   font-size: 15px;
   border-radius: var(--lg-radius);
@@ -113,6 +114,7 @@ const Price = styled.div`
   padding: 2px 5px;
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: var(--glass-border);
   box-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.2);
   font-size: 20px;
