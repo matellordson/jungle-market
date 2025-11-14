@@ -14,7 +14,7 @@ export default async function Products() {
     process.env.NODE_ENV === "production"
       ? process.env.NEXT_PUBLIC_API_URL!
       : "http://localhost:3000";
-  const res = await fetch(url, {
+  const res = await fetch(`${url}/products`, {
     cache: "no-cache",
   });
   const data: DataType[] = await res.json();
