@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { StarIcon } from "@phosphor-icons/react/Star";
 import { UsdcSVG } from "../usdc";
 import Image from "next/image";
-import { Suspense } from "react";
 
 const Card = styled.div`
   height: 300px;
@@ -17,8 +16,8 @@ const Card = styled.div`
 `;
 
 const Brand = styled.div`
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   border-radius: 100%;
   border: 3px solid var(--foreground);
   box-shadow: var(--sm-shadow);
@@ -30,8 +29,6 @@ const Brand = styled.div`
   right: 8px;
 
   & > img {
-    height: 20px;
-    width: 20px;
     border-radius: 100%;
     object-fit: cover;
     object-position: center;
@@ -39,11 +36,13 @@ const Brand = styled.div`
 `;
 
 const Images = styled.div`
-  height: 100%;
+  height: 300px;
   width: 100%;
   /* background-color: var(--foreground); */
 
   & img {
+    height: 300%;
+    width: 100%;
     @media (prefers-color-scheme: dark) {
       filter: brightness(90%);
     }
@@ -131,6 +130,7 @@ interface DataType {
   id?: string;
   brand: string;
   image_url: string;
+  brand_image_url: string;
   name: string;
   category: string;
   price: number;
@@ -140,30 +140,19 @@ export function ProductCard({
   id,
   brand,
   image_url,
+  brand_image_url,
   name,
   category,
   price,
 }: DataType) {
   return (
     <Card key={id}>
-      <Brand>
-        {/* <Image
-            src="../img/addidas-logo.png"
-            alt={brand}
-            width={400}
-            height={400}
-          /> */}
-      </Brand>
       <Images>
-        <Suspense fallback={"hello"}>
-          <Image
-            src={image_url}
-            alt={name}
-            fill
-            style={{ objectFit: "cover" }}
-          />
-        </Suspense>
+        <Image src={image_url} alt={name} fill style={{ objectFit: "cover" }} />
       </Images>
+      <Brand>
+        <Image src={brand_image_url} alt={brand} fill />
+      </Brand>
       <ContentBlur />
       <ContentWrapper>
         <Name>{name}</Name>

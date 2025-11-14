@@ -4,6 +4,7 @@ interface DataType {
   id: string;
   brand?: string;
   image_url?: string;
+  brand_image_url: string;
   name?: string;
   category?: string;
   price?: number;
@@ -34,6 +35,7 @@ export default async function Products() {
           key={product.id}
           brand={product.brand!}
           image_url={product.image_url!}
+          brand_image_url={product.brand_image_url}
           name={product.name!}
           category={product.category!}
           price={product.price!}
