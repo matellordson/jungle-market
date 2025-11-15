@@ -1,13 +1,13 @@
 import { ProductCard } from "@repo/ui/product-card";
 
 interface DataType {
-  id?: string;
-  brand?: string;
-  image_url?: string;
+  id: string;
+  brand: string;
+  image_url: string;
   brand_image_url: string;
-  name?: string;
-  category?: string;
-  price?: number;
+  name: string;
+  category: string;
+  price: number;
 }
 
 export default async function Products() {
@@ -24,7 +24,7 @@ export default async function Products() {
       style={{
         display: "grid",
         gap: "5px",
-        gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(min(200px, 100%), 1fr))",
         maxWidth: "200rem",
         margin: "auto",
         padding: "5px",

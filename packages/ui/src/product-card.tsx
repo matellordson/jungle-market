@@ -6,6 +6,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import { BookmarkSimpleIcon } from "@phosphor-icons/react/dist/icons/BookmarkSimple";
 import { ShoppingBagIcon } from "@phosphor-icons/react/dist/icons/ShoppingBag";
+import { DotsThreeIcon } from "@phosphor-icons/react/dist/icons/DotsThree";
 
 const Card = styled.div`
   height: 400px;
@@ -34,7 +35,7 @@ const TopContentBox = styled.div`
   gap: 5px;
 `;
 
-const SaveProduct = styled.button`
+const Dropdown = styled.button`
   height: 30px;
   width: 30px;
   border-radius: 100%;
@@ -44,22 +45,6 @@ const SaveProduct = styled.button`
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-blur: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  opacity: 80%;
-  color: var(--text-neutral);
-  cursor: pointer;
-`;
-
-const CartProduct = styled.button`
-  height: 30px;
-  width: 30px;
-  border-radius: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
   opacity: 80%;
   color: var(--text-neutral);
@@ -92,36 +77,6 @@ const Name = styled.p`
   font-size: 18px;
   font-weight: bolder;
   text-transform: capitalize;
-`;
-
-const ProducerBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`;
-
-const ProducerImage = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 25px;
-  width: 25px;
-  border-radius: 100%;
-  border: 1px solid var(--bg-border);
-
-  & img {
-    object-fit: cover;
-    border-radius: 100%;
-  }
-`;
-
-const ProducerName = styled.div`
-  font-size: 14px;
-  color: var(--text-neutral);
-
-  & span {
-    text-transform: capitalize;
-  }
 `;
 
 const DetailBox = styled.div`
@@ -164,19 +119,17 @@ const Price = styled.div`
 
 interface DataType {
   id?: string;
-  brand?: string;
-  image_url?: string;
-  brand_image_url?: string;
-  name?: string;
-  category?: string;
-  price?: number;
+  brand: string;
+  image_url: string;
+  brand_image_url: string;
+  name: string;
+  category: string;
+  price: number;
 }
 
 export function ProductCard({
   id,
-  brand,
   image_url,
-  brand_image_url,
   name,
   category,
   price,
@@ -188,12 +141,9 @@ export function ProductCard({
       </Product>
 
       <TopContentBox>
-        <SaveProduct>
-          <BookmarkSimpleIcon size={20} weight="bold" />
-        </SaveProduct>
-        <CartProduct>
-          <ShoppingBagIcon size={20} weight="bold" />
-        </CartProduct>
+        <Dropdown>
+          <DotsThreeIcon size={30} weight="bold" />
+        </Dropdown>
       </TopContentBox>
 
       <BottomContentBox>
@@ -220,20 +170,6 @@ export function ProductCard({
               </p>
             </Price>
           </DetailBox>
-
-          {/* <ProducerBox>
-            <ProducerImage>
-              <Image
-                src={brand_image_url!}
-                alt={brand!}
-                height={25}
-                width={25}
-              />
-            </ProducerImage>
-            <ProducerName>
-              by <span>{brand}</span>
-            </ProducerName>
-          </ProducerBox> */}
         </BottomContent>
       </BottomContentBox>
     </Card>
