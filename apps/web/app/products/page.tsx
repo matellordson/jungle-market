@@ -2,10 +2,9 @@ import { ProductCard } from "@repo/ui/product-card";
 
 interface DataType {
   id: string;
-  brand: string;
   image_url: string;
-  brand_image_url: string;
   name: string;
+  rating: number;
   category: string;
   price: number;
 }
@@ -33,10 +32,9 @@ export default async function Products() {
       {data.map((product) => (
         <ProductCard
           key={product.id}
-          brand={product.brand}
           image_url={product.image_url}
-          brand_image_url={product.brand_image_url}
           name={product.name}
+          rating={product.rating}
           category={product.category}
           price={product.price}
         />

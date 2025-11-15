@@ -119,10 +119,9 @@ const Price = styled.div`
 
 interface DataType {
   id?: string;
-  brand: string;
   image_url: string;
-  brand_image_url: string;
   name: string;
+  rating: number;
   category: string;
   price: number;
 }
@@ -131,6 +130,7 @@ export function ProductCard({
   id,
   image_url,
   name,
+  rating,
   category,
   price,
 }: DataType) {
@@ -155,7 +155,7 @@ export function ProductCard({
               <p className="title">Rating</p>
               <p className="value">
                 <StarIcon size={13} weight="fill" />
-                4.5
+                {rating}
               </p>
             </Rating>
             <Category>
