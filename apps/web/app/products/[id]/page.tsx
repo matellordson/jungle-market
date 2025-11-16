@@ -1,0 +1,17 @@
+export default async function ProductDetails({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const url =
+    process.env.NODE_ENV === "production"
+      ? process.env.NEXT_PUBLIC_API_URL!
+      : "http://localhost:8080";
+  const res = await fetch(`${url}/products/${id}`, {
+    cache: "no-cache",
+  });
+  const [data] = await res.json();
+
+  return <p>{data.name}</p>;
+}

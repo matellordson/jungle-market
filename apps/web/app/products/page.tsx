@@ -1,4 +1,5 @@
 import { ProductCard } from "@repo/ui/product-card";
+import Link from "next/link";
 
 interface DataType {
   id: string;
@@ -31,14 +32,15 @@ export default async function Products() {
       }}
     >
       {data.map((product) => (
-        <ProductCard
-          key={product.id}
-          image_url={product.image_url}
-          name={product.name}
-          rating={product.rating}
-          category={product.category}
-          price={product.price}
-        />
+        <Link href={`/products/${product.id}`} key={product.id}>
+          <ProductCard
+            image_url={product.image_url}
+            name={product.name}
+            rating={product.rating}
+            category={product.category}
+            price={product.price}
+          />
+        </Link>
       ))}
     </div>
   );
