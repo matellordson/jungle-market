@@ -1,7 +1,7 @@
 "use client";
 
 import { StarIcon } from "@phosphor-icons/react/Star";
-import { UsdcSVG } from "../usdc";
+import { UsdcSVG } from "../../usdc";
 import Image from "next/image";
 import styled from "styled-components";
 import { DotsThreeIcon } from "@phosphor-icons/react/dist/icons/DotsThree";

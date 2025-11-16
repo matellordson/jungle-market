@@ -1,4 +1,4 @@
-import { ProductCard } from "@repo/ui/product-card";
+import { ProductCard } from "@repo/ui/products/product-card";
 import Link from "next/link";
 
 interface DataType {
