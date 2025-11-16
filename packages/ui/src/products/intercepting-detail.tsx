@@ -9,6 +9,7 @@ const ModalBlur = styled.div`
   width: 100vw;
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
+  -var-backdrop-filter: var(--glass-blur);
   position: fixed;
   top: 0;
   left: 0;
@@ -19,8 +20,8 @@ const ModalBlur = styled.div`
 `;
 
 const ModalBox = styled.div`
-  height: 90vh;
-  width: 90vw;
+  height: 95vh;
+  width: 95vw;
   background-color: var(--bg-page);
   border-radius: var(--sm-radius);
   border: 1px solid var(--bg-border);
