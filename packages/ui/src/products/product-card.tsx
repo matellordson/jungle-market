@@ -48,6 +48,11 @@ const Dropdown = styled.button`
   opacity: 80%;
   color: var(--text-neutral);
   cursor: pointer;
+
+  &:hover {
+    transition: all 0.4s ease;
+    opacity: 80%;
+  }
 `;
 
 const BottomContentBox = styled.div`

@@ -20,11 +20,16 @@ const ModalBlur = styled.div`
 `;
 
 const ModalBox = styled.div`
-  height: 95vh;
-  width: 95vw;
+  height: 100vh;
+  width: 100vw;
   background-color: var(--bg-page);
   border-radius: var(--sm-radius);
   border: 1px solid var(--bg-border);
+
+  @media only screen and (min-width: 992px) {
+    height: 95vh;
+    width: 95vw;
+  }
 `;
 
 const ModalAction = styled.div`
