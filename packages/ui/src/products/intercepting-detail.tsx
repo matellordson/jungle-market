@@ -9,7 +9,7 @@ const ModalBlur = styled.div`
   width: 100vw;
   background-color: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
-  -var-backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   position: fixed;
   top: 0;
   left: 0;
