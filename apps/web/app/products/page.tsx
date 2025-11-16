@@ -32,15 +32,15 @@ export default async function Products() {
       }}
     >
       {data.map((product) => (
-        <Link href={`/products/${product.id}`} key={product.id}>
-          <ProductCard
-            image_url={product.image_url}
-            name={product.name}
-            rating={product.rating}
-            category={product.category}
-            price={product.price}
-          />
-        </Link>
+        <ProductCard
+          key={product.id}
+          id={product.id}
+          image_url={product.image_url}
+          name={product.name}
+          rating={product.rating}
+          category={product.category}
+          price={product.price}
+        />
       ))}
     </div>
   );

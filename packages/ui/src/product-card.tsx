@@ -5,6 +5,7 @@ import { UsdcSVG } from "../usdc";
 import Image from "next/image";
 import styled from "styled-components";
 import { DotsThreeIcon } from "@phosphor-icons/react/dist/icons/DotsThree";
+import Link from "next/link";
 
 const Card = styled.div`
   height: 400px;
@@ -116,7 +117,7 @@ const Price = styled.div`
 `;
 
 interface DataType {
-  id?: string;
+  id: string;
   image_url: string;
   name: string;
   rating: number;
@@ -134,9 +135,11 @@ export function ProductCard({
 }: DataType) {
   return (
     <Card key={id}>
-      <Product>
-        <Image src={image_url!} alt={name!} fill />
-      </Product>
+      <Link href={`/products/${id}`}>
+        <Product>
+          <Image src={image_url!} alt={name!} fill />
+        </Product>
+      </Link>
 
       <TopContentBox>
         <Dropdown>
