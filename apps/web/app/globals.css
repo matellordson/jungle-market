@@ -58,6 +58,8 @@ body {
 body {
   color: var(--text-dark);
   background: var(--background);
+  height: 100%;
+  width: 100%;
 }
 
 * {
@@ -81,9 +83,9 @@ a {
   }
 }
 
-@media only screen and (min-width: 992px) {
+/* @media only screen and (min-width: 992px) {
   body {
-    max-width: 1400px;
+    max-width: 2000px;
     margin: auto;
   }
-}
+} */

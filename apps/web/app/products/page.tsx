@@ -22,11 +22,12 @@ export default async function Products() {
     <div
       style={{
         display: "grid",
-        gap: "5px",
-        gridTemplateColumns: "repeat(auto-fit, minmax(min(200px, 100%), 1fr))",
-        maxWidth: "200rem",
-        margin: "auto",
-        padding: "5px",
+        gap: "1.5rem",
+        gridTemplateColumns: "repeat(auto-fit, minmax(18.75em, 1fr))",
+        width: "100%",
+        maxWidth: "1600px",
+        margin: "0 auto",
+        padding: "1.5rem 1rem",
       }}
     >
       {data.map((product) => (

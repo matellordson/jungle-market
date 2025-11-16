@@ -4,8 +4,6 @@ import { StarIcon } from "@phosphor-icons/react/Star";
 import { UsdcSVG } from "../usdc";
 import Image from "next/image";
 import styled from "styled-components";
-import { BookmarkSimpleIcon } from "@phosphor-icons/react/dist/icons/BookmarkSimple";
-import { ShoppingBagIcon } from "@phosphor-icons/react/dist/icons/ShoppingBag";
 import { DotsThreeIcon } from "@phosphor-icons/react/dist/icons/DotsThree";
 
 const Card = styled.div`
