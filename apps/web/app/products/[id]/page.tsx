@@ -1,9 +1,12 @@
+import { notFound } from "next/navigation";
+
 export default async function ProductDetails({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
   const url =
     process.env.NODE_ENV === "production"
       ? process.env.NEXT_PUBLIC_API_URL!
@@ -11,6 +14,11 @@ export default async function ProductDetails({
   const res = await fetch(`${url}/products/${id}`, {
     cache: "no-cache",
   });
+
+  if (!res.ok) {
+    notFound();
+  }
+
   const [data] = await res.json();
 
   return <p>{data.name}</p>;
