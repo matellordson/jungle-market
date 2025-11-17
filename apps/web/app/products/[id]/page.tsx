@@ -1,6 +1,7 @@
+import { ProductDetail } from "@repo/ui/products/product-detail";
 import { notFound } from "next/navigation";
 
-export default async function ProductDetails({
+export default async function ProductDetailsPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -21,5 +22,5 @@ export default async function ProductDetails({
 
   const [data] = await res.json();
 
-  return <p>{data.name}</p>;
+  return <ProductDetail name={data.name} />;
 }

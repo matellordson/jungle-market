@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
 
 :root {
-  --bg-page: #f2f2f2;
+  /* --bg-page: #f2f2f2; */
+  --bg-page: #ffffff;
   --bg-back: #e2e2e2;
   --bg-front: #fbfbfb;
   --bg-highlight: #efefef;
@@ -12,7 +13,7 @@
   --text-icon: #939395;
   --text-blur: white;
   --text-thin: 400;
-  --text-bold: 500;
+  --text-bold: bold;
   --sm-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.1);
   --lg-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.1);
   --xl-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.1);
@@ -23,7 +24,7 @@
   --glass-blur: blur(30px);
   --glass-border: 1px solid rgba(255, 255, 255, 0.3);
   --border-divide: #9c9d9d;
-  --page-padding: 5px;
+  --page-padding: 10px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -60,6 +61,7 @@ body {
   background: var(--background);
   height: 100%;
   width: 100%;
+  background-color: var(--bg-page);
 }
 
 * {
