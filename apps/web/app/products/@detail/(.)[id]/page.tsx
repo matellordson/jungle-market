@@ -1,4 +1,5 @@
 import InterceptingModal from "@repo/ui/products/intercepting-detail";
+import { ProductDetail } from "@repo/ui/products/product-detail";
 import { notFound } from "next/navigation";
 
 export default async function ProductDetails({
@@ -24,7 +25,12 @@ export default async function ProductDetails({
 
   return (
     <InterceptingModal>
-      <p>{data.name}</p>
+      <ProductDetail
+        name={data.name}
+        rating={data.rating}
+        category={data.category}
+        price={data.price}
+      />
     </InterceptingModal>
   );
 }
