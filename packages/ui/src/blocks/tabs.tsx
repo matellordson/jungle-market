@@ -54,7 +54,6 @@ const Tab = styled.div`
 
   & .active {
     background-color: var(--bg-front);
-    box-shadow: var(--sm-shadow);
     color: var(--text-dark);
   }
 `;

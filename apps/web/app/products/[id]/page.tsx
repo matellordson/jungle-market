@@ -22,5 +22,12 @@ export default async function ProductDetailsPage({
 
   const [data] = await res.json();
 
-  return <ProductDetail name={data.name} />;
+  return (
+    <ProductDetail
+      name={data.name}
+      rating={data.rating}
+      category={data.category}
+      price={data.price}
+    />
+  );
 }
