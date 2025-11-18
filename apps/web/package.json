@@ -12,10 +12,13 @@
   },
   "dependencies": {
     "@repo/ui": "*",
+    "@tanstack/react-query": "^5.90.10",
     "next": "^16.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "viem": "2.x",
+    "wagmi": "^2.19.4"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

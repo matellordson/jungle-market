@@ -21,7 +21,7 @@ const TabWrapper = styled.div`
 `;
 
 const Tab = styled.div`
-  height: 30px;
+  height: 35px;
   width: fit-content;
   margin: 0 auto;
   background-color: var(--bg-back);

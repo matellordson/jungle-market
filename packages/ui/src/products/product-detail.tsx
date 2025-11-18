@@ -152,16 +152,19 @@ const Info = styled.div`
 
 const Rating = styled.div`
   padding: 0 10px;
+  width: 100%;
 `;
 
 const Category = styled.div`
   border-left: 1px solid var(--border-divide);
   border-right: 1px solid var(--border-divide);
-  padding: 0 40px;
+  padding: 0 20px;
+  width: 100%;
 `;
 
 const Price = styled.div`
   padding: 0 10px;
+  width: 100%;
 `;
 
 const productTab = [
