@@ -1,6 +1,5 @@
 "use client";
 
-import { StarIcon } from "@phosphor-icons/react/Star";
 import { UsdcSVG } from "../../usdc";
 import Image from "next/image";
 import styled from "styled-components";
@@ -159,10 +158,7 @@ export function ProductCard({
           <DetailBox>
             <Rating>
               <p className="title">Rating</p>
-              <p className="value">
-                <StarIcon size={13} weight="fill" />
-                {rating}
-              </p>
+              <p className="value">{rating}</p>
             </Rating>
             <Category>
               <p className="title">Category</p>
