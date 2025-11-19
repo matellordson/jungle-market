@@ -37,7 +37,7 @@ const ImageBox = styled.div`
 `;
 
 const Gallery = styled.div`
-  height: 70%;
+  height: 80%; //could change for dynamism
   width: 100%;
   background-color: var(--bg-front);
   border-radius: var(--sm-radius);
@@ -53,10 +53,6 @@ const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
-
-  @media only screen and (min-width: 992px) {
-    height: 30%;
-  }
 `;
 
 const ProductName = styled.p`
@@ -95,95 +91,35 @@ const ProducerName = styled.p`
   font-size: 15px;
 `;
 
-const InfoTable = styled.div`
-  margin-top: 5px;
-  width: 100%;
-  border-radius: var(--sm-radius);
-  border: 1px solid var(--bg-border);
-  background-color: var(--bg-highlight);
-  padding: var(--page-padding);
-
-  @media only screen and (min-width: 992px) {
-    height: 100px;
-  }
-`;
-
-const Info = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  text-align: center;
-
-  & .title {
-    color: var(--text-neutral);
-    font-size: 13px;
-    font-weight: bold;
-  }
-
-  & .value {
-    text-transform: capitalize;
-    padding-top: 3px;
-    font-size: 13px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2px;
-    font-weight: bold;
-  }
-
-  @media only screen and (min-width: 992px) {
-    & .title {
-      font-size: 17px;
-    }
-
-    & .value {
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    & .value svg {
-      scale: 1.4;
-    }
-  }
-`;
-
-const Rating = styled.div`
-  padding: 0 10px;
-  width: 100%;
-`;
-
 const Category = styled.div`
-  border-left: 1px solid var(--border-divide);
-  border-right: 1px solid var(--border-divide);
-  padding: 0 20px;
-  width: 100%;
+  color: var(--text-light);
+  margin-bottom: 5px;
+  font-size: 14px;
 `;
 
 const Price = styled.div`
-  padding: 0 10px;
-  width: 100%;
+  font-weight: var(--text-bold);
+  margin-top: 15px;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 const productTab = [
   {
     key: "overview",
     name: "Overview",
-    icon: <ArticleNyTimesIcon size={15} />,
     content: <p>overview</p>,
   },
   {
     key: "details",
     name: "Details",
-    icon: <ListBulletsIcon size={15} />,
     content: <p>details</p>,
   },
   {
     key: "rating",
     name: "Rating",
-    icon: <StarIcon size={15} />,
     content: <p>rating</p>,
   },
 ];
@@ -202,32 +138,15 @@ export function ProductDetail({ name, rating, category, price }: DataType) {
         <Gallery></Gallery>
         <ProductInfo>
           <ProductName>{name}</ProductName>
+          <Category>{category}</Category>
           <ProducerBox>
             <ProducerImage></ProducerImage>
             <ProducerName>by Producer</ProducerName>
           </ProducerBox>
-          <InfoTable>
-            <Info>
-              <Rating>
-                <p className="title">Rating</p>
-                <p className="value">
-                  <StarIcon size={14} weight="fill" />
-                  {rating}
-                </p>
-              </Rating>
-              <Category>
-                <p className="title">Category</p>
-                <p className="value">{category}</p>
-              </Category>
-              <Price>
-                <p className="title">Price</p>
-                <p className="value">
-                  <UsdcSVG height="17px" />
-                  {price}
-                </p>
-              </Price>
-            </Info>
-          </InfoTable>
+          <Price>
+            <UsdcSVG height="35px" />
+            {price}
+          </Price>
         </ProductInfo>
       </ImageBox>
       <TabBox>

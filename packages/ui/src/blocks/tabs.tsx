@@ -4,7 +4,6 @@ import { styled } from "styled-components";
 interface TabItem {
   key: string;
   name: string;
-  icon: JSX.Element;
   content: JSX.Element;
 }
 
@@ -93,7 +92,6 @@ export default function Tabs({ tabsData }: TabsProps) {
             className={tab === tabItem.key ? "active" : ""}
             onClick={() => setTabState(tabItem.key)}
           >
-            {tabItem.icon}
             {tabItem.name}
           </div>
         ))}
