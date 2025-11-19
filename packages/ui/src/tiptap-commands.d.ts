@@ -1,23 +1,20 @@
+// src/types/tiptap-commands.d.ts (Example path)
+
 import "@tiptap/core";
 
-// Declare the module augmentation for the Tiptap core library
+// This augmentation must be done in the global scope for the module
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
-    /**
-     * Commands for the custom node background extension (or similar)
-     */
+    // Group the related commands under a logical key (e.g., 'nodeBackground')
     nodeBackground: {
       /**
-       * Toggles the background color for the current node.
+       * Toggles the background color for the current block node.
        */
       toggleNodeBackgroundColor: (color: string) => ReturnType;
       /**
-       * Removes the background color for the current node.
+       * Removes the background color from the current block node.
        */
       unsetNodeBackgroundColor: () => ReturnType;
     };
   }
-
-  // NOTE: If the extension is named differently, you might need to
-  // adjust the namespace or the command structure.
 }
