@@ -22,9 +22,7 @@ import SelectList, {
 } from "@repo/ui/components/select-list";
 import { PlugsConnected } from "@phosphor-icons/react/dist/icons/PlugsConnected";
 import { Plugs } from "@phosphor-icons/react/dist/icons/Plugs";
-import { WalletMetamask } from "@web3icons/react";
-import { WalletWalletConnect } from "@web3icons/react";
-import { WalletCoinbase } from "@web3icons/react";
+import { WalletIcon } from "@web3icons/react";
 import { useConnect, useConnectors, useAccount } from "wagmi";
 import { SuccessBadge } from "@repo/ui/components/badge";
 
@@ -84,11 +82,23 @@ export default function ConnectWallet() {
                     <SelectListDetails>
                       <SelectListImage>
                         {connector.name === "MetaMask" ? (
-                          <WalletMetamask variant="background" size={64} />
+                          <WalletIcon
+                            name="metamask"
+                            variant="background"
+                            size={64}
+                          />
                         ) : connector.name === "WalletConnect" ? (
-                          <WalletWalletConnect variant="background" size={64} />
+                          <WalletIcon
+                            name="wallet-connect"
+                            variant="background"
+                            size={64}
+                          />
                         ) : connector.name === "Coinbase Wallet" ? (
-                          <WalletCoinbase variant="background" size={64} />
+                          <WalletIcon
+                            name="coinbase wallet"
+                            variant="background"
+                            size={64}
+                          />
                         ) : (
                           ""
                         )}

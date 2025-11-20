@@ -35,7 +35,7 @@ export const Modal = styled.div`
 
   @media only screen and (min-width: 500px) {
     & {
-      width: 400px;
+      width: 500px;
       max-width: 500px;
     }
   }
