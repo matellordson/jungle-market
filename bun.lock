@@ -31,6 +31,7 @@
         "@radix-ui/react-popover": "^1.1.15",
         "@repo/ui": "*",
         "@tanstack/react-query": "^5.90.10",
+        "@web3icons/react": "^4.0.37",
         "next": "^16.0.1",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
@@ -683,6 +684,10 @@
     "@walletconnect/window-getters": ["@walletconnect/window-getters@1.0.1", "", { "dependencies": { "tslib": "1.14.1" } }, "sha512-vHp+HqzGxORPAN8gY03qnbTMnhqIwjeRJNOMOAzePRg4xVEEE2WvYsI9G2NMjOknA8hnuYbU3/hwLcKbjhc8+Q=="],
 
     "@walletconnect/window-metadata": ["@walletconnect/window-metadata@1.0.1", "", { "dependencies": { "@walletconnect/window-getters": "^1.0.1", "tslib": "1.14.1" } }, "sha512-9koTqyGrM2cqFRW517BPY/iEtUDx2r1+Pwwu5m7sJ7ka79wi3EyqhqcICk/yDmv6jAS1rjKgTKXlEhanYjijcA=="],
+
+    "@web3icons/common": ["@web3icons/common@0.11.28", "", { "peerDependencies": { "typescript": "^5.0.0" } }, "sha512-xUMDevMZH6gh6Bi0kpKXyTNqW8rL1Rdj1pqWTMVuGmbakMZU/bh9HhSF2xezRtqQULIE+9NS8ZiiionWq/RJug=="],
+
+    "@web3icons/react": ["@web3icons/react@4.0.37", "", { "dependencies": { "@web3icons/common": "0.11.28" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0" } }, "sha512-3otoDaDEYz2OdNYt9LtOo0PLPrwJYoc4mQ3NTsPws6Q+ZMAuO1ExBvLq8u2JMBYbJdRsk+WQ448u4takiD5/nA=="],
 
     "abitype": ["abitype@1.1.0", "", { "peerDependencies": { "typescript": ">=5.0.4", "zod": "^3.22.0 || ^4.0.0" }, "optionalPeers": ["typescript", "zod"] }, "sha512-6Vh4HcRxNMLA0puzPjM5GBgT4aAcFGKZzSgAXvuZ27shJP6NEpielTuqbBmZILR5/xd0PizkBGy5hReKz9jl5A=="],
 

@@ -16,6 +16,7 @@
     "@radix-ui/react-popover": "^1.1.15",
     "@repo/ui": "*",
     "@tanstack/react-query": "^5.90.10",
+    "@web3icons/react": "^4.0.37",
     "next": "^16.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
