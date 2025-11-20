@@ -16,7 +16,6 @@ export const SelectListItem = styled.div`
     background-color: var(--bg-highlight);
     padding: var(--padding);
     margin: 0 5px;
-    box-shadow: var(--sm-shadow);
 
     & .select-list-icon {
       transition: all 0.4s ease;
@@ -32,8 +31,8 @@ export const SelectListDetails = styled.div`
 `;
 
 export const SelectListImage = styled.div`
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -43,6 +42,7 @@ export const SelectListImage = styled.div`
 `;
 
 export const SelectListTitle = styled.p`
+  font-weight: var(--text-bold);
   display: flex;
   align-items: center;
   gap: 7px;

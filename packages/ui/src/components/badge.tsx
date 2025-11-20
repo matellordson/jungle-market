@@ -8,7 +8,7 @@ export const DefaultBadge = styled.div`
   border: 1px solid var(--bg-border);
   border-radius: var(--radius);
   text-align: center;
-  font-size: 9px;
+  font-size: 10px;
   color: var(--text-neutral);
 `;
 

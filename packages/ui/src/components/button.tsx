@@ -10,7 +10,6 @@ export const DefaultBtn = styled.button`
   cursor: pointer;
 
   &:hover {
-    transition: all 0.4s ease;
     opacity: 80%;
   }
 `;

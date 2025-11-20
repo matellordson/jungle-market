@@ -10,6 +10,7 @@ export const ModalWrapper = styled.div`
   position: absolute;
   background-color: var(--bg-glass);
   backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   position: absolute;
   top: 0;
   display: flex;

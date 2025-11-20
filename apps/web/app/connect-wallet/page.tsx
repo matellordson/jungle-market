@@ -21,7 +21,7 @@ import SelectList, {
   SelectListTitle,
 } from "@repo/ui/components/select-list";
 import { PlugsConnected } from "@phosphor-icons/react/dist/icons/PlugsConnected";
-import { Plugs } from "@phosphor-icons/react/dist/icons/Plugs";
+import { ArrowRight } from "@phosphor-icons/react/dist/icons/ArrowRight";
 import { WalletIcon } from "@web3icons/react";
 import { useConnect, useConnectors, useAccount } from "wagmi";
 import { SuccessBadge } from "@repo/ui/components/badge";
@@ -117,7 +117,7 @@ export default function ConnectWallet() {
                       {isWalletConnected ? (
                         <PlugsConnected size={20} weight="bold" />
                       ) : (
-                        <Plugs size={20} weight="bold" />
+                        <ArrowRight size={20} weight="bold" />
                       )}
                     </SelectListIcon>
                   </SelectListItem>
