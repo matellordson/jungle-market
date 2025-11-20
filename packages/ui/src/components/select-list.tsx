@@ -50,6 +50,7 @@ export const SelectListTitle = styled.p`
 
 export const SelectListIcon = styled.div`
   opacity: 0;
+  color: var(--text-icon);
 `;
 
 export default function SelectList() {

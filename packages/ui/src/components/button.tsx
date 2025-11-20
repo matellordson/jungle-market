@@ -8,6 +8,7 @@ export const DefaultBtn = styled.button`
   border: 1px solid var(--bg-border);
   border-radius: var(--radius);
   cursor: pointer;
+  font-size: 15px;
 
   &:hover {
     opacity: 80%;

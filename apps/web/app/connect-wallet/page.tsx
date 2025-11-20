@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { DefaultBtn, DestructiveGhostBtn } from "@repo/ui/components/button";
+import {
+  DefaultBtn,
+  DestructiveGhostBtn,
+  IconBtn,
+} from "@repo/ui/components/button";
 import {
   FooterButton,
   Modal,
@@ -22,14 +26,16 @@ import SelectList, {
 } from "@repo/ui/components/select-list";
 import { PlugsConnected } from "@phosphor-icons/react/dist/icons/PlugsConnected";
 import { ArrowRight } from "@phosphor-icons/react/dist/icons/ArrowRight";
+import { CaretCircleRight } from "@phosphor-icons/react/dist/icons/CaretCircleRight";
 import { WalletIcon } from "@web3icons/react";
 import { useConnect, useConnectors, useAccount } from "wagmi";
 import { SuccessBadge } from "@repo/ui/components/badge";
+import { XIcon } from "@phosphor-icons/react/dist/icons/X";
 
 export default function ConnectWallet() {
   const Stages = [
     {
-      title: "Choose wallet",
+      title: "Connect wallet",
       description: "Get started by connecting your preferred wallet.",
     },
     {
@@ -67,7 +73,19 @@ export default function ConnectWallet() {
       <ModalWrapper className={modalState ? "active" : ""}>
         <Modal>
           <ModalBody>
-            <ModalHeader>{currentStage?.title}</ModalHeader>
+            <ModalHeader>
+              {currentStage?.title}{" "}
+              <IconBtn
+                onClick={() => {
+                  setModalState(false);
+                }}
+                style={{
+                  backgroundColor: "var(--bg-highlight)",
+                }}
+              >
+                <XIcon weight="bold" />
+              </IconBtn>
+            </ModalHeader>
             <ModalDescription>{currentStage?.description}</ModalDescription>
             <ModalContent>
               {connectors.map((connector) => {
@@ -127,13 +145,6 @@ export default function ConnectWallet() {
           </ModalBody>
           <ModalFooter>
             <FooterButton>
-              <DestructiveGhostBtn
-                onClick={() => {
-                  setModalState(false);
-                }}
-              >
-                Cancel
-              </DestructiveGhostBtn>
               <DefaultBtn
                 onClick={() => {
                   // Fixed array index issue: Stages[+1] might be undefined or coercion dependent.

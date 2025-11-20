@@ -16,7 +16,6 @@ export const ModalWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.4s ease;
 
   &.active {
     visibility: visible;
@@ -47,7 +46,13 @@ export const ModalBody = styled.div`
   width: 100%;
 `;
 
-export const ModalHeader = styled.h3``;
+export const ModalHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: bolder;
+`;
 
 export const ModalDescription = styled.p`
   padding-top: 5px;

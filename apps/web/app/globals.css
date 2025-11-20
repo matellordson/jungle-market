@@ -1,11 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
 
 :root {
-  /* --bg-page: #f2f2f2; */
   --bg-page: #ffffff;
   --bg-back: #e2e2e2;
   --bg-front: #fbfbfb;
-  --bg-highlight: #f2f2f2;
+  --bg-highlight: #f3f4f6;
   --bg-border: #dadada;
   --text-light: #a0a09e;
   --text-neutral: hsl(212, 18%, 35%);
