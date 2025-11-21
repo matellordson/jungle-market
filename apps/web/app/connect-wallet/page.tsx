@@ -48,7 +48,7 @@ export const SelectListItem = styled.div`
 
   &:hover {
     background-color: var(--bg-highlight);
-    animation: ${popIn} 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: ${popIn} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 
     & .select-list-icon {
       opacity: 1;
@@ -168,6 +168,24 @@ const CheckmarkOverlay = styled.div`
   animation: ${popIn} 0.3s ease forwards;
 `;
 
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Loader = styled.div`
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: ${rotate} 1s linear infinite;
+`;
+
 export default function ConnectWallet() {
   const [modalState, setModalState] = useState(false);
   const { connect } = useConnect();
@@ -176,21 +194,49 @@ export default function ConnectWallet() {
 
   const [accountState, setAccountState] = useState<string>("");
   const [stepIndex, setStepIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const accountType = [{ name: "Buyer" }, { name: "Seller" }];
 
   const isBtnDisabled =
-    (stepIndex === 0 && !isConnected) || (stepIndex === 1 && !accountState);
+    (stepIndex === 0 && !isConnected) ||
+    (stepIndex === 1 && !accountState) ||
+    isLoading;
 
-  const handleCompletion = () => {
+  const handleCompletion = async () => {
+    setIsLoading(true);
+
     const finalData = {
-      connector: activeConnector?.name || "Unknown",
       wallet_address: address,
-      account_type: accountState,
+      connector: activeConnector?.name || "Unknown",
+      role: accountState,
     };
 
-    console.log("Registration Data Submitted:", finalData);
-    setModalState(false);
+    const url =
+      process.env.NODE_ENV === "production"
+        ? process.env.NEXT_PUBLIC_API_URL!
+        : "http://localhost:8080";
+
+    try {
+      const res = await fetch(`${url}/connect-wallet`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalData),
+      });
+
+      if (res.ok) {
+        setModalState(false);
+        setStepIndex(0);
+      } else {
+        console.error("API call failed:", res.status, res.statusText);
+      }
+    } catch (error) {
+      console.error("Error during API call:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const Stages = [
@@ -315,6 +361,7 @@ export default function ConnectWallet() {
                 onClick={() => {
                   setModalState(false);
                   setStepIndex(0);
+                  setIsLoading(false);
                 }}
                 style={{
                   backgroundColor: "var(--bg-highlight)",
@@ -334,6 +381,7 @@ export default function ConnectWallet() {
                     setStepIndex((prev) => prev - 1);
                   }}
                   style={{ opacity: 0.7 }}
+                  disabled={isLoading}
                 >
                   Previous
                 </DefaultBtn>
@@ -343,6 +391,10 @@ export default function ConnectWallet() {
                 style={{
                   opacity: isBtnDisabled ? 0.5 : 1,
                   cursor: isBtnDisabled ? "not-allowed" : "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
                 }}
                 onClick={() => {
                   if (isBtnDisabled) return;
@@ -356,7 +408,12 @@ export default function ConnectWallet() {
                   }
                 }}
               >
-                {stepIndex < Stages.length - 1 ? (
+                {isLoading ? (
+                  <>
+                    <Loader />
+                    {/* <span>Processing...</span> */}
+                  </>
+                ) : stepIndex < Stages.length - 1 ? (
                   <span>Continue</span>
                 ) : (
                   <span>Done</span>
