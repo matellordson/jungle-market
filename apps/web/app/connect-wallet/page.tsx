@@ -1,11 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  DefaultBtn,
-  DestructiveGhostBtn,
-  IconBtn,
-} from "@repo/ui/components/button";
+import { DefaultBtn, IconBtn } from "@repo/ui/components/button";
 import {
   FooterButton,
   Modal,
@@ -17,7 +13,7 @@ import {
   ModalTrigger,
   ModalWrapper,
 } from "@repo/ui/components/modal";
-import SelectList, {
+import {
   SelectListDetails,
   SelectListIcon,
   SelectListImage,
@@ -26,36 +22,148 @@ import SelectList, {
 } from "@repo/ui/components/select-list";
 import { PlugsConnected } from "@phosphor-icons/react/dist/icons/PlugsConnected";
 import { ArrowRight } from "@phosphor-icons/react/dist/icons/ArrowRight";
-import { CaretCircleRight } from "@phosphor-icons/react/dist/icons/CaretCircleRight";
+import { Storefront } from "@phosphor-icons/react/dist/icons/Storefront";
+import { ShoppingBag } from "@phosphor-icons/react/dist/icons/ShoppingBag";
 import { WalletIcon } from "@web3icons/react";
 import { useConnect, useConnectors, useAccount } from "wagmi";
 import { SuccessBadge } from "@repo/ui/components/badge";
 import { XIcon } from "@phosphor-icons/react/dist/icons/X";
 
 export default function ConnectWallet() {
+  const [modalState, setModalState] = useState(false);
+  const { connect } = useConnect();
+  const connectors = useConnectors();
+  const { connector: activeConnector, isConnected, address } = useAccount();
+  const [accountState, setAccountState] = useState<string>("");
+  const [stepIndex, setStepIndex] = useState(0);
+
+  const accountType = [{ name: "Buyer" }, { name: "Seller" }];
+
   const Stages = [
     {
       title: "Connect wallet",
       description: "Get started by connecting your preferred wallet.",
+      content: (
+        <>
+          {connectors.map((connector) => {
+            const isWalletConnected =
+              isConnected && activeConnector?.id === connector.id;
+
+            return (
+              <SelectListItem
+                key={connector.id}
+                onClick={() => {
+                  connect({ connector });
+                }}
+              >
+                <SelectListDetails>
+                  <SelectListImage>
+                    {connector.name === "MetaMask" ? (
+                      <WalletIcon
+                        name="metamask"
+                        variant="background"
+                        size={64}
+                      />
+                    ) : connector.name === "WalletConnect" ? (
+                      <WalletIcon
+                        name="wallet-connect"
+                        variant="background"
+                        size={64}
+                      />
+                    ) : connector.name === "Coinbase Wallet" ? (
+                      <WalletIcon
+                        name="coinbase wallet"
+                        variant="background"
+                        size={64}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </SelectListImage>
+                  <SelectListTitle>
+                    {connector.name}
+                    {isWalletConnected && (
+                      <span className="text-sm text-green-500 ml-2">
+                        <SuccessBadge>Active</SuccessBadge>
+                      </span>
+                    )}
+                  </SelectListTitle>
+                </SelectListDetails>
+
+                <SelectListIcon className="select-list-icon">
+                  {isWalletConnected ? (
+                    <PlugsConnected size={20} weight="bold" />
+                  ) : (
+                    <ArrowRight size={20} weight="bold" />
+                  )}
+                </SelectListIcon>
+              </SelectListItem>
+            );
+          })}
+        </>
+      ),
     },
     {
       title: "Account Type",
       description: "What option suit your visit intentions?.",
+      content: (
+        <>
+          {accountType.map((account) => (
+            <SelectListItem
+              key={account.name}
+              onClick={() => {
+                setAccountState(account.name);
+              }}
+            >
+              <SelectListDetails>
+                <SelectListImage>
+                  {account.name == "Buyer" ? (
+                    <ShoppingBag size={25} />
+                  ) : account.name == "Seller" ? (
+                    <Storefront size={25} />
+                  ) : (
+                    ""
+                  )}
+                </SelectListImage>
+                <SelectListTitle>
+                  {account.name}
+                  {accountState === account.name && (
+                    <span className="text-sm text-green-500 ml-2">
+                      <SuccessBadge>Active</SuccessBadge>
+                    </span>
+                  )}
+                </SelectListTitle>
+              </SelectListDetails>
+
+              <SelectListIcon className="select-list-icon"></SelectListIcon>
+            </SelectListItem>
+          ))}
+        </>
+      ),
     },
   ];
 
-  const [modalState, setModalState] = useState(false);
-  const [currentStage, setCurrentStage] = useState(Stages[0]);
+  const currentStage = Stages[stepIndex];
 
-  const { connect } = useConnect();
-  const connectors = useConnectors();
+  interface StageValueTypes {
+    connector: string | undefined;
+    wallet_address: string | undefined;
+    account_type: string;
+  }
 
-  const { connector: activeConnector, isConnected } = useAccount();
+  const StageValues: StageValueTypes = {
+    connector: "",
+    wallet_address: "",
+    account_type: "",
+  };
+
+  console.log(StageValues);
 
   useEffect(() => {
     if (isConnected && modalState) {
-      // Uncomment the line below if you want to auto-move to "Account Type"
-      // setCurrentStage(Stages[1]);
+      StageValues.connector = activeConnector?.name;
+      StageValues.wallet_address = address;
+      StageValues.account_type = accountState;
     }
   }, [isConnected, modalState]);
 
@@ -74,10 +182,11 @@ export default function ConnectWallet() {
         <Modal>
           <ModalBody>
             <ModalHeader>
-              {currentStage?.title}{" "}
+              {currentStage?.title}
               <IconBtn
                 onClick={() => {
                   setModalState(false);
+                  setStepIndex(0);
                 }}
                 style={{
                   backgroundColor: "var(--bg-highlight)",
@@ -87,73 +196,31 @@ export default function ConnectWallet() {
               </IconBtn>
             </ModalHeader>
             <ModalDescription>{currentStage?.description}</ModalDescription>
-            <ModalContent>
-              {connectors.map((connector) => {
-                const isWalletConnected =
-                  isConnected && activeConnector?.id === connector.id;
-
-                return (
-                  <SelectListItem
-                    key={connector.id}
-                    onClick={() => connect({ connector })}
-                  >
-                    <SelectListDetails>
-                      <SelectListImage>
-                        {connector.name === "MetaMask" ? (
-                          <WalletIcon
-                            name="metamask"
-                            variant="background"
-                            size={64}
-                          />
-                        ) : connector.name === "WalletConnect" ? (
-                          <WalletIcon
-                            name="wallet-connect"
-                            variant="background"
-                            size={64}
-                          />
-                        ) : connector.name === "Coinbase Wallet" ? (
-                          <WalletIcon
-                            name="coinbase wallet"
-                            variant="background"
-                            size={64}
-                          />
-                        ) : (
-                          ""
-                        )}
-                      </SelectListImage>
-                      <SelectListTitle>
-                        {connector.name}
-                        {isWalletConnected && (
-                          <span className="text-sm text-green-500 ml-2">
-                            <SuccessBadge>Active</SuccessBadge>
-                          </span>
-                        )}
-                      </SelectListTitle>
-                    </SelectListDetails>
-
-                    <SelectListIcon className="select-list-icon">
-                      {isWalletConnected ? (
-                        <PlugsConnected size={20} weight="bold" />
-                      ) : (
-                        <ArrowRight size={20} weight="bold" />
-                      )}
-                    </SelectListIcon>
-                  </SelectListItem>
-                );
-              })}
-            </ModalContent>
+            <ModalContent>{currentStage?.content}</ModalContent>
           </ModalBody>
           <ModalFooter>
             <FooterButton>
-              <DefaultBtn
-                onClick={() => {
-                  // Fixed array index issue: Stages[+1] might be undefined or coercion dependent.
-                  // Usually you want the next index.
-                  setCurrentStage(Stages[1]);
-                }}
-              >
-                Continue
-              </DefaultBtn>
+              <div className="flex items-center gap-4 w-full">
+                {stepIndex > 0 && (
+                  <DefaultBtn
+                    onClick={() => {
+                      setStepIndex((prev) => prev - 1);
+                    }}
+                    style={{ opacity: 0.7 }}
+                  >
+                    Previous
+                  </DefaultBtn>
+                )}
+                <DefaultBtn
+                  onClick={() => {
+                    if (stepIndex < Stages.length - 1) {
+                      setStepIndex((prev) => prev + 1);
+                    }
+                  }}
+                >
+                  Continue
+                </DefaultBtn>
+              </div>
             </FooterButton>
           </ModalFooter>
         </Modal>

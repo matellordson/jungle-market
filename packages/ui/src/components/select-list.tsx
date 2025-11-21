@@ -39,6 +39,10 @@ export const SelectListImage = styled.div`
   align-items: center;
   border: 1px solid var(--bg-border);
   overflow: hidden;
+
+  & svg {
+    color: var(--text-icon);
+  }
 `;
 
 export const SelectListTitle = styled.p`
