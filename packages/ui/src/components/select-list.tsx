@@ -85,7 +85,7 @@ export default function SelectList() {
           <SelectListImage></SelectListImage>
           <SelectListTitle>Coinbase</SelectListTitle>
         </SelectListDetails>
-        <SelectListIcon className="select-list-icon">
+        <SelectListIcon className="select-list-icon-hidden select-list-icon-visible">
           <ArrowRightIcon size={20} weight="bold" />
         </SelectListIcon>
       </SelectListItem>

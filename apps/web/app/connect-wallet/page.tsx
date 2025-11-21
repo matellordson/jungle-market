@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { DefaultBtn, IconBtn } from "@repo/ui/components/button";
 import {
   FooterButton,
@@ -33,11 +33,31 @@ export default function ConnectWallet() {
   const [modalState, setModalState] = useState(false);
   const { connect } = useConnect();
   const connectors = useConnectors();
+
   const { connector: activeConnector, isConnected, address } = useAccount();
+
   const [accountState, setAccountState] = useState<string>("");
   const [stepIndex, setStepIndex] = useState(0);
 
   const accountType = [{ name: "Buyer" }, { name: "Seller" }];
+
+  // Check if the button should be disabled based on current step
+  const isBtnDisabled =
+    (stepIndex === 0 && !isConnected) || (stepIndex === 1 && !accountState);
+
+  const handleCompletion = () => {
+    // Data aggregation
+    const finalData = {
+      connector: activeConnector?.name || "Unknown",
+      wallet_address: address,
+      account_type: accountState,
+    };
+
+    console.log("Registration Data Submitted:", finalData);
+
+    // Close modal
+    setModalState(false);
+  };
 
   const Stages = [
     {
@@ -145,28 +165,6 @@ export default function ConnectWallet() {
 
   const currentStage = Stages[stepIndex];
 
-  interface StageValueTypes {
-    connector: string | undefined;
-    wallet_address: string | undefined;
-    account_type: string;
-  }
-
-  const StageValues: StageValueTypes = {
-    connector: "",
-    wallet_address: "",
-    account_type: "",
-  };
-
-  console.log(StageValues);
-
-  useEffect(() => {
-    if (isConnected && modalState) {
-      StageValues.connector = activeConnector?.name;
-      StageValues.wallet_address = address;
-      StageValues.account_type = accountState;
-    }
-  }, [isConnected, modalState]);
-
   return (
     <div>
       <ModalTrigger
@@ -200,27 +198,40 @@ export default function ConnectWallet() {
           </ModalBody>
           <ModalFooter>
             <FooterButton>
-              <div className="flex items-center gap-4 w-full">
-                {stepIndex > 0 && (
-                  <DefaultBtn
-                    onClick={() => {
-                      setStepIndex((prev) => prev - 1);
-                    }}
-                    style={{ opacity: 0.7 }}
-                  >
-                    Previous
-                  </DefaultBtn>
-                )}
+              {stepIndex > 0 && (
                 <DefaultBtn
                   onClick={() => {
-                    if (stepIndex < Stages.length - 1) {
-                      setStepIndex((prev) => prev + 1);
-                    }
+                    setStepIndex((prev) => prev - 1);
                   }}
+                  style={{ opacity: 0.7 }}
                 >
-                  Continue
+                  Previous
                 </DefaultBtn>
-              </div>
+              )}
+              <DefaultBtn
+                disabled={isBtnDisabled}
+                style={{
+                  opacity: isBtnDisabled ? 0.5 : 1,
+                  cursor: isBtnDisabled ? "not-allowed" : "pointer",
+                }}
+                onClick={() => {
+                  if (isBtnDisabled) return;
+
+                  const isLastStep = stepIndex === Stages.length - 1;
+
+                  if (isLastStep) {
+                    handleCompletion();
+                  } else {
+                    setStepIndex((prev) => prev + 1);
+                  }
+                }}
+              >
+                {stepIndex < Stages.length - 1 ? (
+                  <span>Continue</span>
+                ) : (
+                  <span>Done</span>
+                )}
+              </DefaultBtn>
             </FooterButton>
           </ModalFooter>
         </Modal>
