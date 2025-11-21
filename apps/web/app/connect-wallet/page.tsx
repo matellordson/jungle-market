@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import styled, { css, keyframes } from "styled-components";
 import { DefaultBtn, IconBtn } from "@repo/ui/components/button";
 import {
   FooterButton,
@@ -13,27 +14,163 @@ import {
   ModalTrigger,
   ModalWrapper,
 } from "@repo/ui/components/modal";
-import {
-  SelectListDetails,
-  SelectListIcon,
-  SelectListImage,
-  SelectListItem,
-  SelectListTitle,
-} from "@repo/ui/components/select-list";
 import { PlugsConnected } from "@phosphor-icons/react/dist/icons/PlugsConnected";
 import { ArrowRight } from "@phosphor-icons/react/dist/icons/ArrowRight";
 import { Storefront } from "@phosphor-icons/react/dist/icons/Storefront";
 import { ShoppingBag } from "@phosphor-icons/react/dist/icons/ShoppingBag";
+import { CheckCircle } from "@phosphor-icons/react/dist/icons/CheckCircle";
 import { WalletIcon } from "@web3icons/react";
-import { useConnect, useConnectors, useAccount } from "wagmi";
 import { SuccessBadge } from "@repo/ui/components/badge";
 import { XIcon } from "@phosphor-icons/react/dist/icons/X";
+import { useConnect, useConnectors, useAccount } from "wagmi";
+
+const popIn = keyframes`
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+`;
+
+export const SelectListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const SelectListItem = styled.div`
+  padding: var(--padding);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: all 0.2s ease-in-out;
+  color: var(--text-dark);
+  border-bottom: none;
+
+  &:hover {
+    background-color: var(--bg-highlight);
+
+    & .select-list-icon {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+`;
+
+export const SelectListDetails = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const SelectListImage = styled.div`
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--bg-border);
+  overflow: hidden;
+  background: var(--bg-page);
+
+  & svg {
+    color: var(--text-dark);
+  }
+`;
+
+export const SelectListTitle = styled.div`
+  font-weight: var(--text-bold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dark);
+`;
+
+export const ActiveStatus = styled.span`
+  font-size: 0.85rem;
+  margin-left: 8px;
+  color: var(--success-text);
+`;
+
+export const SelectListIcon = styled.div`
+  opacity: 0;
+  color: var(--text-icon);
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+`;
+
+const SelectionGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 10px;
+`;
+
+const SelectionCard = styled.div<{ $isActive: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  position: relative;
+
+  background-color: var(--bg-page);
+  border: 1px solid var(--bg-border);
+  color: var(--text-neutral);
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  ${(props) =>
+    props.$isActive &&
+    css`
+      animation: ${popIn} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      border-color: var(--success-border);
+      background-color: var(--success-bg);
+      color: var(--success-text);
+      box-shadow: var(--sm-shadow);
+      opacity: 1;
+
+      &:hover {
+        opacity: 0.8;
+        background-color: var(--success-bg);
+        border-color: var(--success-border);
+      }
+    `}
+`;
+
+const CardIconWrapper = styled.div<{ $isActive: boolean }>`
+  font-size: 32px;
+  margin-bottom: 4px;
+  color: ${(props) =>
+    props.$isActive ? "var(--success-text)" : "var(--text-icon)"};
+`;
+
+const CardTitle = styled.div`
+  font-weight: var(--text-bold);
+  font-size: 1.1rem;
+`;
+
+const CheckmarkOverlay = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: var(--success-text);
+  animation: ${popIn} 0.3s ease forwards;
+`;
 
 export default function ConnectWallet() {
   const [modalState, setModalState] = useState(false);
   const { connect } = useConnect();
   const connectors = useConnectors();
-
   const { connector: activeConnector, isConnected, address } = useAccount();
 
   const [accountState, setAccountState] = useState<string>("");
@@ -41,12 +178,10 @@ export default function ConnectWallet() {
 
   const accountType = [{ name: "Buyer" }, { name: "Seller" }];
 
-  // Check if the button should be disabled based on current step
   const isBtnDisabled =
     (stepIndex === 0 && !isConnected) || (stepIndex === 1 && !accountState);
 
   const handleCompletion = () => {
-    // Data aggregation
     const finalData = {
       connector: activeConnector?.name || "Unknown",
       wallet_address: address,
@@ -54,8 +189,6 @@ export default function ConnectWallet() {
     };
 
     console.log("Registration Data Submitted:", finalData);
-
-    // Close modal
     setModalState(false);
   };
 
@@ -64,7 +197,7 @@ export default function ConnectWallet() {
       title: "Connect wallet",
       description: "Get started by connecting your preferred wallet.",
       content: (
-        <>
+        <SelectListWrapper>
           {connectors.map((connector) => {
             const isWalletConnected =
               isConnected && activeConnector?.id === connector.id;
@@ -103,9 +236,9 @@ export default function ConnectWallet() {
                   <SelectListTitle>
                     {connector.name}
                     {isWalletConnected && (
-                      <span className="text-sm text-green-500 ml-2">
+                      <ActiveStatus>
                         <SuccessBadge>Active</SuccessBadge>
-                      </span>
+                      </ActiveStatus>
                     )}
                   </SelectListTitle>
                 </SelectListDetails>
@@ -120,45 +253,41 @@ export default function ConnectWallet() {
               </SelectListItem>
             );
           })}
-        </>
+        </SelectListWrapper>
       ),
     },
     {
-      title: "Account Type",
-      description: "What option suit your visit intentions?.",
+      title: "Choose your role",
+      description: "Select the option that best describes your goals.",
       content: (
-        <>
-          {accountType.map((account) => (
-            <SelectListItem
-              key={account.name}
-              onClick={() => {
-                setAccountState(account.name);
-              }}
-            >
-              <SelectListDetails>
-                <SelectListImage>
-                  {account.name == "Buyer" ? (
-                    <ShoppingBag size={25} />
-                  ) : account.name == "Seller" ? (
-                    <Storefront size={25} />
-                  ) : (
-                    ""
-                  )}
-                </SelectListImage>
-                <SelectListTitle>
-                  {account.name}
-                  {accountState === account.name && (
-                    <span className="text-sm text-green-500 ml-2">
-                      <SuccessBadge>Active</SuccessBadge>
-                    </span>
-                  )}
-                </SelectListTitle>
-              </SelectListDetails>
+        <SelectionGrid>
+          {accountType.map((account) => {
+            const isActive = accountState === account.name;
+            return (
+              <SelectionCard
+                key={account.name}
+                $isActive={isActive}
+                onClick={() => setAccountState(account.name)}
+              >
+                {isActive && (
+                  <CheckmarkOverlay>
+                    <CheckCircle weight="fill" size={20} />
+                  </CheckmarkOverlay>
+                )}
 
-              <SelectListIcon className="select-list-icon"></SelectListIcon>
-            </SelectListItem>
-          ))}
-        </>
+                <CardIconWrapper $isActive={isActive}>
+                  {account.name === "Buyer" ? (
+                    <ShoppingBag weight={isActive ? "fill" : "regular"} />
+                  ) : (
+                    <Storefront weight={isActive ? "fill" : "regular"} />
+                  )}
+                </CardIconWrapper>
+
+                <CardTitle>{account.name}</CardTitle>
+              </SelectionCard>
+            );
+          })}
+        </SelectionGrid>
       ),
     },
   ];

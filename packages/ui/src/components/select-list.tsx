@@ -57,38 +57,38 @@ export const SelectListIcon = styled.div`
   color: var(--text-icon);
 `;
 
-export default function SelectList() {
-  return (
-    <SelectListWrapper>
-      <SelectListItem>
-        <SelectListDetails>
-          <SelectListImage></SelectListImage>
-          <SelectListTitle>Metamask</SelectListTitle>
-        </SelectListDetails>
-        <SelectListIcon className="select-list-icon">
-          <ArrowRightIcon size={20} weight="bold" />
-        </SelectListIcon>
-      </SelectListItem>
+// export default function SelectList() {
+//   return (
+//     <SelectListWrapper>
+//       <SelectListItem>
+//         <SelectListDetails>
+//           <SelectListImage></SelectListImage>
+//           <SelectListTitle>Metamask</SelectListTitle>
+//         </SelectListDetails>
+//         <SelectListIcon className="select-list-icon">
+//           <ArrowRightIcon size={20} weight="bold" />
+//         </SelectListIcon>
+//       </SelectListItem>
 
-      <SelectListItem>
-        <SelectListDetails>
-          <SelectListImage></SelectListImage>
-          <SelectListTitle>Wallet Connect</SelectListTitle>
-        </SelectListDetails>
-        <SelectListIcon className="select-list-icon">
-          <ArrowRightIcon size={20} weight="bold" />
-        </SelectListIcon>
-      </SelectListItem>
+//       <SelectListItem>
+//         <SelectListDetails>
+//           <SelectListImage></SelectListImage>
+//           <SelectListTitle>Wallet Connect</SelectListTitle>
+//         </SelectListDetails>
+//         <SelectListIcon className="select-list-icon">
+//           <ArrowRightIcon size={20} weight="bold" />
+//         </SelectListIcon>
+//       </SelectListItem>
 
-      <SelectListItem>
-        <SelectListDetails>
-          <SelectListImage></SelectListImage>
-          <SelectListTitle>Coinbase</SelectListTitle>
-        </SelectListDetails>
-        <SelectListIcon className="select-list-icon-hidden select-list-icon-visible">
-          <ArrowRightIcon size={20} weight="bold" />
-        </SelectListIcon>
-      </SelectListItem>
-    </SelectListWrapper>
-  );
-}
+//       <SelectListItem>
+//         <SelectListDetails>
+//           <SelectListImage></SelectListImage>
+//           <SelectListTitle>Coinbase</SelectListTitle>
+//         </SelectListDetails>
+//         <SelectListIcon className="select-list-icon-hidden select-list-icon-visible">
+//           <ArrowRightIcon size={20} weight="bold" />
+//         </SelectListIcon>
+//       </SelectListItem>
+//     </SelectListWrapper>
+//   );
+// }

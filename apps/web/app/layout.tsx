@@ -19,10 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <WagmiProvider>
-      <html lang="en">
-        <body className={`${geistSans.variable}`}>{children}</body>
-      </html>
-    </WagmiProvider>
+    <html lang="en">
+      <body className={`${geistSans.variable}`}>
+        <WagmiProvider>{children} </WagmiProvider>
+      </body>
+    </html>
   );
 }
