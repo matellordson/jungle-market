@@ -24,7 +24,7 @@ export const ModalWrapper = styled.div`
 
 export const Modal = styled.div`
   width: 90vw;
-  background-color: var(--bg-front);
+  background-color: var(--bg-foreground);
   border-radius: var(--radius);
   border: 1px solid var(--bg-border);
   padding: var(--padding);

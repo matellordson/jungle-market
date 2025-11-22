@@ -1,16 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
 
 :root {
-  --bg-page: #ffffff;
-  --bg-back: #e2e2e2;
-  --bg-front: #fbfbfb;
-  --bg-highlight: #f4f6f5;
-  --bg-border: #dadada;
-  --text-light: #a0a09e;
-  --text-neutral: hsl(212, 18%, 35%);
-  --text-dark: hsl(212, 56%, 16%);
-  --text-icon: #939395;
+  /* LIGHT MODE  */
+  --bg-background: #f9f9f9;
+  --bg-foreground: #ffffff;
+  --bg-highlight: #efefef;
+  --bg-border: #e0e0e0;
+
+  /* TEXT */
+  --text-light: #6c6c6c;
+  --text-neutral: #333333;
+  --text-dark: #1a1a1a;
+  --text-icon: #4d4d4d;
   --text-blur: white;
+
+  /* UTILITY */
   --text-thin: 400;
   --text-bold: bold;
   --sm-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.1);
@@ -21,7 +25,7 @@
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-blur: blur(30px);
   --glass-border: 1px solid rgba(255, 255, 255, 0.3);
-  --border-divide: #9c9d9d;
+  --border-divide: #b0b0b0;
   --padding: 10px;
   --destructive-bg: #fef2f2;
   --destructive-border: #fecaca;
@@ -36,22 +40,26 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-page: #121212;
-    --bg-back: #323131;
-    --bg-front: #1f1f1f;
-    --bg-highlight: #2a2a2a;
-    --bg-border: #2e2e2e;
-    --text-light: #b8b8b8;
-    --text-neutral: #cccccc;
-    --text-dark: #f5f5f5;
-    --text-icon: #a3a3a3;
+    /* DARK MODE  */
+    --bg-background: #0d0d0d;
+    --bg-foreground: #1a1a1a;
+    --bg-highlight: #262626;
+    --bg-border: #333333;
+
+    /* TEXT */
+    --text-light: #a3a3a3;
+    --text-neutral: #c4c4c4;
+    --text-dark: #f2f2f2;
+    --text-icon: #b8b8b8;
     --text-blur: rgba(255, 255, 255, 0.8);
+
+    /* UTILITY */
     --sm-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.5);
     --lg-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.6);
     --xl-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.7);
     --glass-bg: rgba(0, 0, 0, 0.6);
     --glass-border: 1px solid rgba(255, 255, 255, 0.15);
-    --border-divide: #636262;
+    --border-divide: #4d4d4d;
     --destructive-bg: #450a0a;
     --destructive-border: #7f1d1d;
     --destructive-text: #fecaca;
@@ -76,7 +84,7 @@ body {
   background: var(--background);
   height: 100%;
   width: 100%;
-  background-color: var(--bg-page);
+  background-color: var(--bg-background);
 }
 
 * {
@@ -103,10 +111,3 @@ button {
     color-scheme: dark;
   }
 }
-
-/* @media only screen and (min-width: 992px) {
-  body {
-    max-width: 2000px;
-    margin: auto;
-  }
-} */

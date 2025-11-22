@@ -4,39 +4,23 @@ import styled from "styled-components";
 
 export const DefaultBtn = styled.button`
   padding: 8px 15px;
-  background-color: var(--bg-front);
+  background-color: var(--bg-foreground);
   border: 1px solid var(--bg-border);
   border-radius: var(--radius);
   cursor: pointer;
   font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     opacity: 80%;
   }
-`;
 
-export const GhostBtn = styled(DefaultBtn)`
-  background-color: transparent;
-  border: none;
-
-  &:hover {
-    background-color: var(--bg-front);
-    opacity: 100%;
-  }
-`;
-
-export const OutlineBtn = styled(DefaultBtn)`
-  background-color: transparent;
-`;
-
-export const DestructiveGhostBtn = styled(DefaultBtn)`
-  background-color: transparent;
-  border: none;
-
-  &:hover {
-    background-color: var(--destructive-bg);
-    color: var(--destructive-text);
-    opacity: 100%;
+  & svg {
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
   }
 `;
 

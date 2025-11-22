@@ -15,8 +15,14 @@ import {
   ModalWrapper,
 } from "@repo/ui/components/modal";
 import { PlugsConnected } from "@phosphor-icons/react/dist/icons/PlugsConnected";
-import { ArrowRight } from "@phosphor-icons/react/dist/icons/ArrowRight";
+import {
+  ArrowRight,
+  ArrowRightIcon,
+} from "@phosphor-icons/react/dist/icons/ArrowRight";
+import { ArrowLeft } from "@phosphor-icons/react/dist/icons/ArrowLeft";
+import { Check } from "@phosphor-icons/react/dist/icons/Check";
 import { Storefront } from "@phosphor-icons/react/dist/icons/Storefront";
+import { SpinnerIcon } from "@phosphor-icons/react/dist/icons/Spinner";
 import { ShoppingBag } from "@phosphor-icons/react/dist/icons/ShoppingBag";
 import { CheckCircle } from "@phosphor-icons/react/dist/icons/CheckCircle";
 import { WalletIcon } from "@web3icons/react";
@@ -178,15 +184,12 @@ const rotate = keyframes`
 `;
 
 const Loader = styled.div`
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top: 3px solid #fff;
-  border-radius: 50%;
-  width: 16px;
-  height: 16px;
-  animation: ${rotate} 1s linear infinite;
+  & .loader {
+    animation: ${rotate} 1s linear infinite;
+  }
 `;
 
-export default function ConnectWallet() {
+export function ConnectWallet() {
   const [modalState, setModalState] = useState(false);
   const { connect } = useConnect();
   const connectors = useConnectors();
@@ -383,7 +386,7 @@ export default function ConnectWallet() {
                   style={{ opacity: 0.7 }}
                   disabled={isLoading}
                 >
-                  Previous
+                  <ArrowLeft weight="bold" />
                 </DefaultBtn>
               )}
               <DefaultBtn
@@ -409,14 +412,15 @@ export default function ConnectWallet() {
                 }}
               >
                 {isLoading ? (
-                  <>
-                    <Loader />
-                    {/* <span>Processing...</span> */}
-                  </>
+                  <Loader>
+                    <SpinnerIcon weight="bold" className="loader" />
+                  </Loader>
                 ) : stepIndex < Stages.length - 1 ? (
-                  <span>Continue</span>
+                  <span>
+                    <ArrowRightIcon weight="bold" />
+                  </span>
                 ) : (
-                  <span>Done</span>
+                  <Check weight="bold" />
                 )}
               </DefaultBtn>
             </FooterButton>
