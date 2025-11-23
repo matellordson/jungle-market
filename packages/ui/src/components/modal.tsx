@@ -85,4 +85,5 @@ export const FooterButton = styled.div`
   display: flex;
   justify-content: end;
   gap: 3px;
+  align-items: center;
 `;

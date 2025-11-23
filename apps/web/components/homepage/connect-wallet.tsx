@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { DefaultBtn, IconBtn } from "@repo/ui/components/button";
 import {
@@ -19,8 +19,8 @@ import {
   ArrowRight,
   ArrowRightIcon,
 } from "@phosphor-icons/react/dist/icons/ArrowRight";
-import { ArrowLeft } from "@phosphor-icons/react/dist/icons/ArrowLeft";
-import { Check } from "@phosphor-icons/react/dist/icons/Check";
+import { ArrowLeftIcon } from "@phosphor-icons/react/dist/icons/ArrowLeft";
+import { CheckIcon } from "@phosphor-icons/react/dist/icons/Check";
 import { Storefront } from "@phosphor-icons/react/dist/icons/Storefront";
 import { SpinnerIcon } from "@phosphor-icons/react/dist/icons/Spinner";
 import { ShoppingBag } from "@phosphor-icons/react/dist/icons/ShoppingBag";
@@ -29,11 +29,13 @@ import { WalletIcon } from "@web3icons/react";
 import { SuccessBadge } from "@repo/ui/components/badge";
 import { XIcon } from "@phosphor-icons/react/dist/icons/X";
 import { useConnect, useConnectors, useAccount } from "wagmi";
+import { url } from "../../utils/url";
+import { redirect } from "next/navigation";
 
 const popIn = keyframes`
-  0% { transform: scale(0.95); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
+ 0% { transform: scale(0.95); }
+ 50% { transform: scale(1.02); }
+ 100% { transform: scale(1); }
 `;
 
 export const SelectListWrapper = styled.div`
@@ -175,12 +177,12 @@ const CheckmarkOverlay = styled.div`
 `;
 
 const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+ from {
+  transform: rotate(0deg);
+ }
+ to {
+  transform: rotate(360deg);
+ }
 `;
 
 const Loader = styled.div`
@@ -191,13 +193,16 @@ const Loader = styled.div`
 
 export function ConnectWallet() {
   const [modalState, setModalState] = useState(false);
-  const { connect } = useConnect();
+  const { connect: originalConnect } = useConnect();
   const connectors = useConnectors();
   const { connector: activeConnector, isConnected, address } = useAccount();
 
   const [accountState, setAccountState] = useState<string>("");
   const [stepIndex, setStepIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [connectingConnectorId, setConnectingConnectorId] = useState<
+    string | null
+  >(null);
 
   const accountType = [{ name: "Buyer" }, { name: "Seller" }];
 
@@ -215,30 +220,30 @@ export function ConnectWallet() {
       role: accountState,
     };
 
-    const url =
-      process.env.NODE_ENV === "production"
-        ? process.env.NEXT_PUBLIC_API_URL!
-        : "http://localhost:8080";
+    const res = await fetch(`${url}/connect-wallet`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalData),
+    });
+
+    redirect(`${address}`);
+  };
+
+  const connect = async ({
+    connector,
+  }: {
+    connector: (typeof connectors)[number];
+  }) => {
+    setConnectingConnectorId(connector.id);
 
     try {
-      const res = await fetch(`${url}/connect-wallet`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(finalData),
-      });
-
-      if (res.ok) {
-        setModalState(false);
-        setStepIndex(0);
-      } else {
-        console.error("API call failed:", res.status, res.statusText);
-      }
+      await originalConnect({ connector });
     } catch (error) {
-      console.error("Error during API call:", error);
+      console.error("Connection failed:", error);
     } finally {
-      setIsLoading(false);
+      setConnectingConnectorId(null);
     }
   };
 
@@ -251,12 +256,15 @@ export function ConnectWallet() {
           {connectors.map((connector) => {
             const isWalletConnected =
               isConnected && activeConnector?.id === connector.id;
+            const isConnecting = connectingConnectorId === connector.id;
 
             return (
               <SelectListItem
                 key={connector.id}
                 onClick={() => {
-                  connect({ connector });
+                  if (!isWalletConnected && !isConnecting) {
+                    connect({ connector });
+                  }
                 }}
               >
                 <SelectListDetails>
@@ -294,7 +302,11 @@ export function ConnectWallet() {
                 </SelectListDetails>
 
                 <SelectListIcon className="select-list-icon">
-                  {isWalletConnected ? (
+                  {isConnecting ? (
+                    <Loader>
+                      <SpinnerIcon weight="bold" className="loader" size={20} />
+                    </Loader>
+                  ) : isWalletConnected ? (
                     <PlugsConnected size={20} weight="bold" />
                   ) : (
                     <ArrowRight size={20} weight="bold" />
@@ -317,7 +329,15 @@ export function ConnectWallet() {
               <SelectionCard
                 key={account.name}
                 $isActive={isActive}
-                onClick={() => setAccountState(account.name)}
+                onClick={() => {
+                  if (!isLoading) {
+                    setAccountState(account.name);
+                  }
+                }}
+                style={{
+                  cursor: isLoading ? "not-allowed" : "pointer",
+                  opacity: isLoading ? 0.7 : 1,
+                }}
               >
                 {isActive && (
                   <CheckmarkOverlay>
@@ -365,6 +385,7 @@ export function ConnectWallet() {
                   setModalState(false);
                   setStepIndex(0);
                   setIsLoading(false);
+                  setConnectingConnectorId(null);
                 }}
                 style={{
                   backgroundColor: "var(--bg-highlight)",
@@ -386,7 +407,7 @@ export function ConnectWallet() {
                   style={{ opacity: 0.7 }}
                   disabled={isLoading}
                 >
-                  <ArrowLeft weight="bold" />
+                  <ArrowLeftIcon weight="bold" />
                 </DefaultBtn>
               )}
               <DefaultBtn
@@ -394,20 +415,24 @@ export function ConnectWallet() {
                 style={{
                   opacity: isBtnDisabled ? 0.5 : 1,
                   cursor: isBtnDisabled ? "not-allowed" : "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "8px",
                 }}
-                onClick={() => {
-                  if (isBtnDisabled) return;
-
-                  const isLastStep = stepIndex === Stages.length - 1;
-
-                  if (isLastStep) {
-                    handleCompletion();
+                onClick={async () => {
+                  const res = await fetch(
+                    `${url}/accounts/wallet_address/${address}`
+                  );
+                  const data = await res.json();
+                  if (data === address) {
+                    redirect(`${data}`);
                   } else {
-                    setStepIndex((prev) => prev + 1);
+                    if (isBtnDisabled) return;
+
+                    const isLastStep = stepIndex === Stages.length - 1;
+
+                    if (isLastStep) {
+                      handleCompletion();
+                    } else {
+                      setStepIndex((prev) => prev + 1);
+                    }
                   }
                 }}
               >
@@ -420,7 +445,7 @@ export function ConnectWallet() {
                     <ArrowRightIcon weight="bold" />
                   </span>
                 ) : (
-                  <Check weight="bold" />
+                  <CheckIcon weight="bold" />
                 )}
               </DefaultBtn>
             </FooterButton>
