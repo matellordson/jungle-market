@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { DefaultBtn, IconBtn } from "@repo/ui/components/button";
 import {
@@ -31,11 +30,12 @@ import { XIcon } from "@phosphor-icons/react/dist/icons/X";
 import { useConnect, useConnectors, useAccount } from "wagmi";
 import { url } from "../../utils/url";
 import { redirect } from "next/navigation";
+import { useState } from "react";
 
 const popIn = keyframes`
- 0% { transform: scale(0.95); }
- 50% { transform: scale(1.02); }
- 100% { transform: scale(1); }
+0% { transform: scale(0.95); }
+50% { transform: scale(1.02); }
+100% { transform: scale(1); }
 `;
 
 export const SelectListWrapper = styled.div`
@@ -177,12 +177,12 @@ const CheckmarkOverlay = styled.div`
 `;
 
 const rotate = keyframes`
- from {
-  transform: rotate(0deg);
- }
- to {
-  transform: rotate(360deg);
- }
+from {
+ transform: rotate(0deg);
+}
+to {
+ transform: rotate(360deg);
+}
 `;
 
 const Loader = styled.div`
@@ -228,7 +228,7 @@ export function ConnectWallet() {
       body: JSON.stringify(finalData),
     });
 
-    redirect(`${address}`);
+    throw redirect(`${address}`);
   };
 
   const connect = async ({
@@ -362,7 +362,10 @@ export function ConnectWallet() {
     },
   ];
 
+  // FIX: currentStage must be declared after Stages
   const currentStage = Stages[stepIndex];
+
+  const isGlobalLoading = connectingConnectorId !== null;
 
   return (
     <div>
@@ -371,8 +374,16 @@ export function ConnectWallet() {
           setModalState(true);
         }}
       >
-        <DefaultBtn>
-          {isConnected ? "Wallet Connected" : "Connect Wallet"}
+        <DefaultBtn disabled={isGlobalLoading}>
+          {isGlobalLoading ? (
+            <Loader>
+              <SpinnerIcon weight="bold" className="loader" />
+            </Loader>
+          ) : isConnected ? (
+            "Wallet Connected"
+          ) : (
+            "Connect Wallet"
+          )}
         </DefaultBtn>
       </ModalTrigger>
       <ModalWrapper className={modalState ? "active" : ""}>
@@ -422,7 +433,8 @@ export function ConnectWallet() {
                   );
                   const data = await res.json();
                   if (data === address) {
-                    redirect(`${data}`);
+                    // FIX: Must throw redirect in client components
+                    throw redirect(`${data}`);
                   } else {
                     if (isBtnDisabled) return;
 
