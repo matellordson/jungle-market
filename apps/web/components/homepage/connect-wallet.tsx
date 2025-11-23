@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { DefaultBtn, IconBtn } from "@repo/ui/components/button";
 import {
@@ -30,7 +31,6 @@ import { XIcon } from "@phosphor-icons/react/dist/icons/X";
 import { useConnect, useConnectors, useAccount } from "wagmi";
 import { url } from "../../utils/url";
 import { redirect } from "next/navigation";
-import { useState } from "react";
 
 const popIn = keyframes`
 0% { transform: scale(0.95); }
@@ -178,10 +178,10 @@ const CheckmarkOverlay = styled.div`
 
 const rotate = keyframes`
 from {
- transform: rotate(0deg);
+transform: rotate(0deg);
 }
 to {
- transform: rotate(360deg);
+transform: rotate(360deg);
 }
 `;
 
@@ -200,6 +200,8 @@ export function ConnectWallet() {
   const [accountState, setAccountState] = useState<string>("");
   const [stepIndex, setStepIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  // NEW STATE: Tracks a brief loading for the stage transition (Step 0 to 1)
+  const [isStageTransitioning, setIsStageTransitioning] = useState(false);
   const [connectingConnectorId, setConnectingConnectorId] = useState<
     string | null
   >(null);
@@ -209,7 +211,8 @@ export function ConnectWallet() {
   const isBtnDisabled =
     (stepIndex === 0 && !isConnected) ||
     (stepIndex === 1 && !accountState) ||
-    isLoading;
+    isLoading ||
+    isStageTransitioning; // Include the new state here
 
   const handleCompletion = async () => {
     setIsLoading(true);
@@ -362,7 +365,6 @@ export function ConnectWallet() {
     },
   ];
 
-  // FIX: currentStage must be declared after Stages
   const currentStage = Stages[stepIndex];
 
   const isGlobalLoading = connectingConnectorId !== null;
@@ -433,7 +435,6 @@ export function ConnectWallet() {
                   );
                   const data = await res.json();
                   if (data === address) {
-                    // FIX: Must throw redirect in client components
                     throw redirect(`${data}`);
                   } else {
                     if (isBtnDisabled) return;
@@ -443,12 +444,22 @@ export function ConnectWallet() {
                     if (isLastStep) {
                       handleCompletion();
                     } else {
-                      setStepIndex((prev) => prev + 1);
+                      // NEW LOGIC: Add a short delay and transition loader for Step 0 -> 1
+                      if (stepIndex === 0) {
+                        setIsStageTransitioning(true);
+                        setTimeout(() => {
+                          setStepIndex((prev) => prev + 1);
+                          setIsStageTransitioning(false);
+                        }, 500); // 500ms delay for visual feedback
+                      } else {
+                        setStepIndex((prev) => prev + 1);
+                      }
                     }
                   }
                 }}
               >
-                {isLoading ? (
+                {/* CHECK: Now checks for both API loading (isLoading) and Stage Transition loading */}
+                {isLoading || isStageTransitioning ? (
                   <Loader>
                     <SpinnerIcon weight="bold" className="loader" />
                   </Loader>
