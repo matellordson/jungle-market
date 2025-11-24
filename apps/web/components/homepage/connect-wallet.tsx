@@ -22,7 +22,7 @@ import {
 import { ArrowLeftIcon } from "@phosphor-icons/react/dist/icons/ArrowLeft";
 import { CheckIcon } from "@phosphor-icons/react/dist/icons/Check";
 import { Storefront } from "@phosphor-icons/react/dist/icons/Storefront";
-import { SpinnerIcon } from "@phosphor-icons/react/dist/icons/Spinner";
+import { CircleNotchIcon } from "@phosphor-icons/react/dist/icons/CircleNotch";
 import { ShoppingBag } from "@phosphor-icons/react/dist/icons/ShoppingBag";
 import { CheckCircle } from "@phosphor-icons/react/dist/icons/CheckCircle";
 import { WalletIcon } from "@web3icons/react";
@@ -200,7 +200,6 @@ export function ConnectWallet() {
   const [accountState, setAccountState] = useState<string>("");
   const [stepIndex, setStepIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  // NEW STATE: Tracks a brief loading for the stage transition (Step 0 to 1)
   const [isStageTransitioning, setIsStageTransitioning] = useState(false);
   const [connectingConnectorId, setConnectingConnectorId] = useState<
     string | null
@@ -212,7 +211,7 @@ export function ConnectWallet() {
     (stepIndex === 0 && !isConnected) ||
     (stepIndex === 1 && !accountState) ||
     isLoading ||
-    isStageTransitioning; // Include the new state here
+    isStageTransitioning;
 
   const handleCompletion = async () => {
     setIsLoading(true);
@@ -231,7 +230,7 @@ export function ConnectWallet() {
       body: JSON.stringify(finalData),
     });
 
-    throw redirect(`${address}`);
+    redirect(`${address}`);
   };
 
   const connect = async ({
@@ -307,7 +306,11 @@ export function ConnectWallet() {
                 <SelectListIcon className="select-list-icon">
                   {isConnecting ? (
                     <Loader>
-                      <SpinnerIcon weight="bold" className="loader" size={20} />
+                      <CircleNotchIcon
+                        weight="bold"
+                        className="loader"
+                        size={20}
+                      />
                     </Loader>
                   ) : isWalletConnected ? (
                     <PlugsConnected size={20} weight="bold" />
@@ -379,7 +382,7 @@ export function ConnectWallet() {
         <DefaultBtn disabled={isGlobalLoading}>
           {isGlobalLoading ? (
             <Loader>
-              <SpinnerIcon weight="bold" className="loader" />
+              <CircleNotchIcon weight="bold" className="loader" />
             </Loader>
           ) : isConnected ? (
             "Wallet Connected"
@@ -435,7 +438,7 @@ export function ConnectWallet() {
                   );
                   const data = await res.json();
                   if (data === address) {
-                    throw redirect(`${data}`);
+                    redirect(`${data}`);
                   } else {
                     if (isBtnDisabled) return;
 
@@ -444,13 +447,15 @@ export function ConnectWallet() {
                     if (isLastStep) {
                       handleCompletion();
                     } else {
-                      // NEW LOGIC: Add a short delay and transition loader for Step 0 -> 1
                       if (stepIndex === 0) {
                         setIsStageTransitioning(true);
-                        setTimeout(() => {
-                          setStepIndex((prev) => prev + 1);
-                          setIsStageTransitioning(false);
-                        }, 500); // 500ms delay for visual feedback
+
+                        await new Promise((resolve) =>
+                          setTimeout(resolve, 200)
+                        );
+
+                        setStepIndex((prev) => prev + 1);
+                        setIsStageTransitioning(false);
                       } else {
                         setStepIndex((prev) => prev + 1);
                       }
@@ -458,10 +463,9 @@ export function ConnectWallet() {
                   }
                 }}
               >
-                {/* CHECK: Now checks for both API loading (isLoading) and Stage Transition loading */}
                 {isLoading || isStageTransitioning ? (
                   <Loader>
-                    <SpinnerIcon weight="bold" className="loader" />
+                    <CircleNotchIcon weight="bold" className="loader" />
                   </Loader>
                 ) : stepIndex < Stages.length - 1 ? (
                   <span>

@@ -28,4 +28,20 @@ export const accountRoute = {
       });
     }
   },
+  // getting role only
+  "/accounts/role/:id": async (req: Request) => {
+    const [data] =
+      await sql`SELECT (role) FROM accounts WHERE wallet_address = ${req.params.id}`;
+    if (data?.role) {
+      return Response.json(data?.role, {
+        status: 200,
+        headers: corsHeaders,
+      });
+    } else {
+      return Response.json(null, {
+        status: 200,
+        headers: corsHeaders,
+      });
+    }
+  },
 };
