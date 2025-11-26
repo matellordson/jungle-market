@@ -51,7 +51,6 @@ export const SelectListItem = styled.div`
   justify-content: space-between;
   cursor: pointer;
   border-radius: var(--radius);
-  transition: all 0.2s ease-in-out;
   color: var(--text-dark);
   border-bottom: none;
 
@@ -106,7 +105,6 @@ export const SelectListIcon = styled.div`
   opacity: 0;
   color: var(--text-icon);
   transform: translateX(-10px);
-  transition: all 0.3s ease;
 `;
 
 const SelectionGrid = styled.div`

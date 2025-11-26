@@ -16,9 +16,6 @@ export const Input = styled.input`
   &:focus {
     background-color: var(--bg-highlight);
     outline: none;
-    border: none;
-    transition: all 0.4s ease;
-    box-shadow: 0 0 0 1px var(--bg-accent);
   }
 `;
 
@@ -33,6 +30,7 @@ export const TextArea = styled.textarea`
   max-height: 100px;
   font-family: inherit;
   line-height: 1.6;
+  min-height: 100px;
 
   &::placeholder {
     color: var(--text-mute);
@@ -41,8 +39,5 @@ export const TextArea = styled.textarea`
   &:focus {
     background-color: var(--bg-highlight);
     outline: none;
-    border: none;
-    transition: all 0.4s ease;
-    box-shadow: 0 0 0 1px var(--bg-accent);
   }
 `;
