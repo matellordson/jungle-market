@@ -23,9 +23,7 @@ export default function AuthenticatedPage({
       const res = await fetch(`${url}/accounts/role/${address}`);
       const data = await res.json();
       setRoleData(data);
-      setTimeout(() => {
-        setRoleLoading(false);
-      }, 3000);
+      setRoleLoading(false);
     }
     GetRole();
   }, [address, setRoleData]);

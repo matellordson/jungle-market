@@ -31,6 +31,7 @@ import { XIcon } from "@phosphor-icons/react/dist/icons/X";
 import { useConnect, useConnectors, useAccount } from "wagmi";
 import { url } from "../../utils/url";
 import { redirect } from "next/navigation";
+import { Button } from "../reusable/button";
 
 const popIn = keyframes`
 0% { transform: scale(0.95); }
@@ -379,7 +380,7 @@ export function ConnectWallet() {
           setModalState(true);
         }}
       >
-        <DefaultBtn disabled={isGlobalLoading}>
+        <Button disabled={isGlobalLoading}>
           {isGlobalLoading ? (
             <Loader>
               <CircleNotchIcon weight="bold" className="loader" />
@@ -389,7 +390,7 @@ export function ConnectWallet() {
           ) : (
             "Connect Wallet"
           )}
-        </DefaultBtn>
+        </Button>
       </ModalTrigger>
       <ModalWrapper className={modalState ? "active" : ""}>
         <Modal>
@@ -416,17 +417,17 @@ export function ConnectWallet() {
           <ModalFooter>
             <FooterButton>
               {stepIndex > 0 && (
-                <DefaultBtn
+                <Button
                   onClick={() => {
                     setStepIndex((prev) => prev - 1);
                   }}
                   style={{ opacity: 0.7 }}
                   disabled={isLoading}
                 >
-                  <ArrowLeftIcon weight="bold" />
-                </DefaultBtn>
+                  Previous
+                </Button>
               )}
-              <DefaultBtn
+              <Button
                 disabled={isBtnDisabled}
                 style={{
                   opacity: isBtnDisabled ? 0.5 : 1,
@@ -451,7 +452,7 @@ export function ConnectWallet() {
                         setIsStageTransitioning(true);
 
                         await new Promise((resolve) =>
-                          setTimeout(resolve, 200)
+                          setTimeout(resolve, 1000)
                         );
 
                         setStepIndex((prev) => prev + 1);
@@ -468,13 +469,11 @@ export function ConnectWallet() {
                     <CircleNotchIcon weight="bold" className="loader" />
                   </Loader>
                 ) : stepIndex < Stages.length - 1 ? (
-                  <span>
-                    <ArrowRightIcon weight="bold" />
-                  </span>
+                  <span>Continue</span>
                 ) : (
                   <CheckIcon weight="bold" />
                 )}
-              </DefaultBtn>
+              </Button>
             </FooterButton>
           </ModalFooter>
         </Modal>

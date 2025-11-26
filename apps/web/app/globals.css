@@ -4,8 +4,9 @@
   /* LIGHT MODE  */
   --bg-background: #f9f9f9;
   --bg-foreground: #ffffff;
-  --bg-highlight: #efefef;
+  --bg-highlight: #f8f8f8;
   --bg-border: #e0e0e0;
+  --bg-accent: #072b2f;
 
   /* TEXT */
   --text-light: #6c6c6c;
@@ -13,6 +14,9 @@
   --text-dark: #1a1a1a;
   --text-icon: #4d4d4d;
   --text-blur: white;
+  --text-mute: #999999;
+  --text-button: #f3eddf;
+  --text-mute: #757575;
 
   /* UTILITY */
   --text-thin: 400;
@@ -45,6 +49,7 @@
     --bg-foreground: #1a1a1a;
     --bg-highlight: #262626;
     --bg-border: #333333;
+    --bg-accent: #f3eddf;
 
     /* TEXT */
     --text-light: #a3a3a3;
@@ -52,6 +57,8 @@
     --text-dark: #f2f2f2;
     --text-icon: #b8b8b8;
     --text-blur: rgba(255, 255, 255, 0.8);
+    --text-mute: #888888;
+    --text-button: #072b2f;
 
     /* UTILITY */
     --sm-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.5);
@@ -96,14 +103,6 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-button {
-  color: var(--text-neutral);
-}
-
-.imgDark {
-  display: none;
 }
 
 @media (prefers-color-scheme: dark) {

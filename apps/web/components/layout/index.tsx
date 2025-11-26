@@ -1,6 +1,7 @@
 "use client";
 
 import styled from "styled-components";
+import SidebarLayout from "./sidebar";
 
 const LayoutWrapper = styled.div`
   height: 100vh;
@@ -9,16 +10,25 @@ const LayoutWrapper = styled.div`
 `;
 
 const SideBar = styled.div`
+  display: none;
   height: 100%;
   width: 20%;
   background-color: var(--bg-foreground);
   border-right: 1px solid var(--bg-border);
   padding: var(--padding);
+
+  @media only screen and (min-width: 992px) {
+    display: block;
+  }
 `;
 
 const PageWrapper = styled.div`
   height: 100%;
-  width: 80%;
+  width: 100%;
+
+  @media only screen and (min-width: 992px) {
+    width: 80%;
+  }
 `;
 
 const Tab = styled.div`
@@ -37,7 +47,9 @@ const Page = styled.div`
 export function Layout({ page }: { page: React.ReactNode }) {
   return (
     <LayoutWrapper>
-      <SideBar></SideBar>
+      <SideBar>
+        <SidebarLayout />
+      </SideBar>
       <PageWrapper>
         <Tab></Tab>
         <Page>{page}</Page>
