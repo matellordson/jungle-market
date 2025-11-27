@@ -3,11 +3,12 @@ import styled from "styled-components";
 export const Input = styled.input`
   background-color: inherit;
   border: 1px solid var(--bg-border);
-  padding: 10px;
+  padding: 13px 10px;
   border-radius: var(--radius);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-neutral);
   font-family: inherit;
+  width: 100%;
 
   &::placeholder {
     color: var(--text-mute);

@@ -13,7 +13,7 @@ import {
   ModalHeader,
   ModalTrigger,
   ModalWrapper,
-} from "@repo/ui/components/modal";
+} from "../reusable/modal";
 import { PlugsConnected } from "@phosphor-icons/react/dist/icons/PlugsConnected";
 import {
   ArrowRight,

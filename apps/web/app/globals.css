@@ -17,6 +17,7 @@
   --text-mute: #999999;
   --text-button: #f3eddf;
   --text-mute: #757575;
+  --text-accent: #072b2f;
 
   /* UTILITY */
   --text-thin: 400;
@@ -26,7 +27,7 @@
   --xl-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.1);
   --radius: 10px;
   --card-radius: 20px;
-  --glass-bg: rgba(255, 255, 255, 0.7);
+  --bg-glass: rgba(255, 255, 255, 0.7);
   --glass-blur: blur(30px);
   --glass-border: 1px solid rgba(255, 255, 255, 0.3);
   --border-divide: #b0b0b0;
@@ -59,12 +60,13 @@
     --text-blur: rgba(255, 255, 255, 0.8);
     --text-mute: #888888;
     --text-button: #072b2f;
+    --text-accent: #f3eddf;
 
     /* UTILITY */
     --sm-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.5);
     --lg-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.6);
     --xl-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.7);
-    --glass-bg: rgba(0, 0, 0, 0.6);
+    --bg-glass: rgba(0, 0, 0, 0.6);
     --glass-border: 1px solid rgba(255, 255, 255, 0.15);
     --border-divide: #4d4d4d;
     --destructive-bg: #450a0a;

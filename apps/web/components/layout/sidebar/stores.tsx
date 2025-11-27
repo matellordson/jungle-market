@@ -3,8 +3,8 @@
 import styled from "styled-components";
 import { CaretDownIcon } from "@phosphor-icons/react/dist/icons/CaretDown";
 import { CaretUpIcon } from "@phosphor-icons/react/dist/icons/CaretUp";
-import { PlusIcon } from "@phosphor-icons/react/dist/icons/Plus";
 import { useState } from "react";
+import { CreateStore } from "../../seller/create-store";
 
 const StoreWrapper = styled.div`
   padding: var(--padding);
@@ -71,8 +71,9 @@ const OtherStores = styled.div`
 const OtherStoresProfile = styled(Profile)`
   cursor: pointer;
   transition: all 0.4s ease;
-  padding: 5px;
+  padding: 10px;
   border-radius: 7px;
+
   &:hover {
     background-color: var(--bg-foreground);
   }
@@ -83,12 +84,15 @@ const OtherStoreName = styled(Name)`
 `;
 
 const NewStore = styled(OtherStoresProfile)`
-  margin-top: 5px;
-  padding: 7px;
   font-size: 11px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  padding: 5px;
+
+  &:hover {
+    background-color: transparent;
+    opacity: 80%;
+  }
 `;
 
 export default function Stores() {
@@ -128,8 +132,7 @@ export default function Stores() {
           </OtherStoresProfile>
         </OtherStores>
         <NewStore>
-          <PlusIcon weight="bold" />
-          New store
+          <CreateStore />
         </NewStore>
       </DropdownWrapper>
     </>

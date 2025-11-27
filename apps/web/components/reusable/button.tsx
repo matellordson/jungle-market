@@ -1,17 +1,50 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
-  background-color: var(--bg-accent);
-  border: none;
+export const Button = styled.button<{
+  $default?: boolean;
+  $outline?: boolean;
+  $ghost?: boolean;
+}>`
+  background-color: ${(props) =>
+    props.$default
+      ? "var(--bg-accent)"
+      : props.$outline
+        ? "inherit"
+        : props.$ghost
+          ? "inherit"
+          : ""};
+  border: ${(props) =>
+    props.$default
+      ? "none"
+      : props.$outline
+        ? "1px solid var(--bg-border)"
+        : props.$ghost
+          ? "none"
+          : ""};
   padding: 8px 10px;
   width: fit-content;
   font-size: 12px;
   border-radius: 7px;
-  color: var(--text-button);
+  color: ${(props) =>
+    props.$default
+      ? "var(--text-button)"
+      : props.$outline
+        ? "var(--text-accent)"
+        : ""};
   cursor: pointer;
   font-weight: var(--text-bold);
   font-family: inherit;
-  box-shadow: var(--xl-shadow);
+  box-shadow: ${(props) => (props.$default ? "var(--xl-shadow)" : "none")};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  svg {
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+  }
 
   &:hover {
     transition: all 0.4s ease;
