@@ -11,7 +11,7 @@ export const Button = styled.button`
   cursor: pointer;
   font-weight: var(--text-bold);
   font-family: inherit;
-  box-shadow: var(--sm-shadow);
+  box-shadow: var(--xl-shadow);
 
   &:hover {
     transition: all 0.4s ease;
