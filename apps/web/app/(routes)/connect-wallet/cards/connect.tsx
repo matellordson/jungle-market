@@ -1,48 +1,127 @@
 "use client";
-import styled from "styled-components";
 
-const Background = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 480px;
-  opacity: 0.6;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-`;
+import styled, { keyframes } from "styled-components";
+import { PlugsIcon } from "@phosphor-icons/react/Plugs";
+import { PlugsConnectedIcon } from "@phosphor-icons/react/PlugsConnected";
+import { CircleNotchIcon } from "@phosphor-icons/react/CircleNotch";
+import { WalletWalletConnect } from "@web3icons/react";
+import { useAccount, useConnect, useConnectors, useDisconnect } from "wagmi";
 
-const CardWrapper = styled.div`
-  position: absolute;
-  height: 300px;
-  width: 340px;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-  background-color: var(--foreground);
+const bounce = keyframes`
+0% {
+    transform: scale(1);
+} 50% {
+    transform: scale(0.95);
+
+} 100% {
+    transform: scale(1);
+}`;
+
+const Content = styled.button`
+  width: 100%;
+  background-color: var(--background);
+  border-radius: 20px;
   border: var(--border);
-  border-radius: 40px;
-  padding: 5px;
-  box-shadow: var(--shadow-bottom), var(--shadow-top);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-family: inherit;
 
-  @media only screen and (min-width: 992px) {
-    width: 400px;
+  &:focus {
+    animation: 0.25s forwards ease ${bounce};
   }
 `;
 
-const Content = styled.div`
-  height: 80%;
-  width: 100%;
-  background-color: var(--background);
-  border-radius: 35px;
-  box-shadow: var(--shadow-bottom), var(--shadow-top);
+const Info = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+`;
+
+const WalletConnectBox = styled.div`
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  border-radius: 10px;
+`;
+
+const ContentText = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+`;
+
+const ConnectorName = styled.p`
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-dark);
+`;
+
+const PrivacyMessage = styled.p`
+  font-size: 12px;
+  color: var(--text-light);
+`;
+
+const Icon = styled.div`
+  svg {
+    color: var(--icon);
+  }
 `;
 
 export function Connect() {
+  const connectors = useConnectors();
+  const { connect } = useConnect();
+  const { isConnected, isConnecting } = useAccount();
+  const { disconnect } = useDisconnect();
+
   return (
-    <div>
-      <Background />
-      <CardWrapper>
-        <Content></Content>
-      </CardWrapper>
-    </div>
+    <>
+      {connectors
+        .filter((c) => c.id === "walletConnect")
+        .map((connector) => (
+          <Content
+            key={connector.uid}
+            onClick={() => {
+              if (isConnected) {
+                disconnect();
+              } else {
+                connect({ connector });
+              }
+            }}
+          >
+            <Info>
+              <WalletConnectBox>
+                <WalletWalletConnect variant="background" size={40} />
+              </WalletConnectBox>
+              <ContentText>
+                <ConnectorName>{connector.name}</ConnectorName>
+                <PrivacyMessage>
+                  By connecting you agree to our policies.
+                </PrivacyMessage>
+              </ContentText>
+            </Info>
+            <Icon>
+              {isConnecting ? (
+                <CircleNotchIcon size={20} weight="duotone" />
+              ) : (
+                <>
+                  {isConnected ? (
+                    <PlugsConnectedIcon
+                      size={20}
+                      weight="duotone"
+                      color="var(--success-text)"
+                    />
+                  ) : (
+                    <PlugsIcon size={20} weight="duotone" />
+                  )}
+                </>
+              )}
+            </Icon>
+          </Content>
+        ))}
+    </>
   );
 }

@@ -1,9 +1,9 @@
-import { Connect } from "./cards/connect";
+import { ConnectWallet } from ".";
 
 export default function ConnectWalletPage() {
   return (
     <div>
-      <Connect />
+      <ConnectWallet />
     </div>
   );
 }

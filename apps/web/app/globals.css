@@ -4,14 +4,18 @@
   --background: oklch(98.5% 0 0);
   --foreground: oklch(97% 0 0);
   --border: 1px solid oklch(92.2% 0 0);
-  --text-dark: oklch(20.5% 0 0);
-  --text-light: oklch(43.9% 0 0);
-  --text-mute: oklch(70.5% 0.015 286.067);
-  --accent: oklch(69.6% 0.17 162.48);
-  ---accent-text: oklch(32.559% 0.06998 162.118);
-  --links: oklch(51.354% 0.11961 158.268);
-  --shadow-bottom: 0px 4px 6px oklch(0% 0 0 / 0.08);
-  --shadow-top: 0px 0px 3px oklch(0% 0 0 / 0.08);
+  --text-dark: oklch(21% 0.006 285.885);
+  --text-light: oklch(27.4% 0.006 286.033);
+  --icon: oklch(55.2% 0.016 285.938);
+  --success-bg: oklch(85% 0.13 145);
+  --success-text: oklch(30% 0.13 145);
+  --success-border: 1px solid oklch(75% 0.13 145);
+  --warning-bg: oklch(88% 0.12 85);
+  --warning-text: oklch(30% 0.12 85);
+  --warning-border: 1px solid oklch(78% 0.12 85);
+  --destructive-bg: oklch(87% 0.13 30);
+  --destructive-text: oklch(30% 0.13 30);
+  --destructive-border: 1px solid oklch(77% 0.13 30);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,12 +25,15 @@
     --border: 1px solid oklch(26.9% 0 0);
     --text-dark: oklch(97% 0 0);
     --text-light: oklch(70.8% 0 0);
-    --text-mute: oklch(37% 0.013 285.805);
-    --accent: oklch(37.8% 0.077 168.94);
-    --accent-text: oklch(90.33% 0.09499 169.662);
-    --links: oklch(77.988% 0.11482 169.273);
-    --shadow-bottom: 0px 4px 6px oklch(10% 0.01 168.94 / 0.3);
-    --shadow-top: 0px 0px 3px oklch(10% 0.01 168.94 / 0.3);
+    --success-bg: oklch(35% 0.13 145);
+    --success-text: oklch(85% 0.13 145);
+    --success-border: 1px solid oklch(45% 0.13 145);
+    --warning-bg: oklch(38% 0.12 85);
+    --warning-text: oklch(88% 0.12 85);
+    --warning-border: 1px solid oklch(48% 0.12 85);
+    --destructive-bg: oklch(37% 0.13 30);
+    --destructive-text: oklch(87% 0.13 30);
+    --destructive-border: 1px solid oklch(47% 0.13 30);
   }
 }
 
