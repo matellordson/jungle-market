@@ -17,10 +17,10 @@ export const ModalWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: auto;
 
   &.active {
     visibility: visible;
+    pointer-events: auto;
   }
 `;
 

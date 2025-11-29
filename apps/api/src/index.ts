@@ -1,6 +1,7 @@
 import { sql } from "../client/neon";
 import { accountRoute } from "./accounts";
 import { connectWalletRoute } from "./connect-wallet";
+import { storeRoutes } from "./stores";
 
 export const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -22,5 +23,6 @@ const server = Bun.serve({
     },
     ...connectWalletRoute,
     ...accountRoute,
+    ...storeRoutes,
   },
 });

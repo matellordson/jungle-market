@@ -107,6 +107,10 @@ a {
   text-decoration: none;
 }
 
+svg {
+  color: var(--text-icon);
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

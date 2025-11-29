@@ -65,13 +65,12 @@ const DropdownWrapper = styled.div`
 const OtherStores = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
 `;
 
 const OtherStoresProfile = styled(Profile)`
   cursor: pointer;
   transition: all 0.4s ease;
-  padding: 10px;
+  padding: 7px 10px;
   border-radius: 7px;
 
   &:hover {
@@ -87,11 +86,10 @@ const NewStore = styled(OtherStoresProfile)`
   font-size: 11px;
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 0 5px;
 
   &:hover {
     background-color: transparent;
-    opacity: 80%;
   }
 `;
 

@@ -30,11 +30,13 @@ export const Button = styled.button<{
       ? "var(--text-button)"
       : props.$outline
         ? "var(--text-accent)"
-        : ""};
+        : props.$ghost
+          ? "var(--text-accent)"
+          : ""};
   cursor: pointer;
   font-weight: var(--text-bold);
   font-family: inherit;
-  box-shadow: ${(props) => (props.$default ? "var(--xl-shadow)" : "none")};
+  box-shadow: ${(props) => (props.$default ? "var(--sm-shadow)" : "none")};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,10 +46,42 @@ export const Button = styled.button<{
     margin: 0;
     padding: 0;
     vertical-align: middle;
+    scale: 1.2;
+    stroke-width: 10px;
+    color: ${(props) =>
+      props.$default
+        ? "var(--text-button)"
+        : props.$outline
+          ? "var(--text-accent)"
+          : props.$ghost
+            ? "var(--text-accent)"
+            : ""};
   }
 
   &:hover {
-    transition: all 0.4s ease;
+    opacity: 90%;
+  }
+
+  &:disabled {
+    opacity: 50%;
+    cursor: not-allowed;
+  }
+`;
+
+export const IconBtn = styled.button`
+  height: 25px;
+  width: 25px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-icon);
+  padding: 0;
+  size: 30px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
     opacity: 90%;
   }
 `;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
-import { DefaultBtn, IconBtn } from "@repo/ui/components/button";
+import { IconBtn } from "../reusable/button";
 import {
   FooterButton,
   Modal,
@@ -378,7 +378,7 @@ export function ConnectWallet() {
           setModalState(true);
         }}
       >
-        <Button disabled={isGlobalLoading}>
+        <Button $default disabled={isGlobalLoading}>
           {isGlobalLoading ? (
             <Loader>
               <CircleNotchIcon weight="bold" className="loader" />
@@ -416,16 +416,18 @@ export function ConnectWallet() {
             <FooterButton>
               {stepIndex > 0 && (
                 <Button
+                  $outline
                   onClick={() => {
                     setStepIndex((prev) => prev - 1);
                   }}
                   style={{ opacity: 0.7 }}
                   disabled={isLoading}
                 >
-                  Previous
+                  <ArrowLeftIcon weight="bold" />
                 </Button>
               )}
               <Button
+                $default
                 disabled={isBtnDisabled}
                 style={{
                   opacity: isBtnDisabled ? 0.5 : 1,
@@ -467,7 +469,9 @@ export function ConnectWallet() {
                     <CircleNotchIcon weight="bold" className="loader" />
                   </Loader>
                 ) : stepIndex < Stages.length - 1 ? (
-                  <span>Continue</span>
+                  <span>
+                    <ArrowRightIcon weight="bold" />
+                  </span>
                 ) : (
                   <CheckIcon weight="bold" />
                 )}
