@@ -25,8 +25,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+<<<<<<< HEAD
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
+=======
+<<<<<<< HEAD
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        {children}
+=======
+      <body className={`${geistSans.variable}`}>
+        <WagmiProvider>{children} </WagmiProvider>
+>>>>>>> 38e672f66aeb9f9cff54258830ad7d5cb8058f8b
+>>>>>>> b7d43f0e09131914f16a66d9936907dbf1e27814
       </body>
     </html>
   );

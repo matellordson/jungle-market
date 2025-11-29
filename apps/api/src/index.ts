@@ -19,8 +19,12 @@ const server = Bun.serve({
       const data = await sql`SELECT * FROM products`;
       return Response.json(data);
     },
+<<<<<<< HEAD
     "/products/:id": async (req) => {1
       T 
+=======
+    "/products/:id": async (req) => {
+>>>>>>> b7d43f0e09131914f16a66d9936907dbf1e27814
       const data =
         await sql`SELECT * FROM products WHERE id = ${req.params.id}`;
       return Response.json(data);
