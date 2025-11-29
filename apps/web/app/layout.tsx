@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { WagmiProvider } from "./wagmi-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,8 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+<<<<<<< HEAD
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
+=======
+      <body className={`${geistSans.variable}`}>
+        <WagmiProvider>{children} </WagmiProvider>
+>>>>>>> 38e672f66aeb9f9cff54258830ad7d5cb8058f8b
       </body>
     </html>
   );
