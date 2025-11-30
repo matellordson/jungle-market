@@ -14,6 +14,9 @@ const CardWrapper = styled.div`
   border: var(--border);
   border-radius: 25px;
   padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 
   @media only screen and (min-width: 992px) {
     width: 400px;

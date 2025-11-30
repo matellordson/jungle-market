@@ -21,10 +21,11 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: oklch(14.5% 0 0);
-    --foreground: oklch(20.5% 0 0);
+    --foreground: oklch(21% 0.006 285.885);
     --border: 1px solid oklch(26.9% 0 0);
     --text-dark: oklch(97% 0 0);
     --text-light: oklch(70.8% 0 0);
+    --icon: oklch(55.2% 0.016 285.938);
     --success-bg: oklch(35% 0.13 145);
     --success-text: oklch(85% 0.13 145);
     --success-border: 1px solid oklch(45% 0.13 145);

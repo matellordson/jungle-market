@@ -17,6 +17,15 @@ const bounce = keyframes`
     transform: scale(1);
 }`;
 
+const spin = keyframes`
+0% {
+  transform: rotate(0deg);
+}
+ 100% {
+    transform: rotate(360deg) ;
+  }
+`;
+
 const Content = styled.button`
   width: 100%;
   background-color: var(--background);
@@ -71,6 +80,13 @@ const Icon = styled.div`
   }
 `;
 
+const Loader = styled.div`
+  svg {
+    transform-origin: center;
+    animation: ${spin} 1s linear infinite;
+  }
+`;
+
 export function Connect() {
   const connectors = useConnectors();
   const { connect } = useConnect();
@@ -105,7 +121,9 @@ export function Connect() {
             </Info>
             <Icon>
               {isConnecting ? (
-                <CircleNotchIcon size={20} weight="duotone" />
+                <Loader>
+                  <CircleNotchIcon size={20} weight="duotone" />
+                </Loader>
               ) : (
                 <>
                   {isConnected ? (
