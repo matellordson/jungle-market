@@ -6,6 +6,12 @@ interface StoreInterface {
   owner: string;
 }
 
+type BunRequest = {
+  params: {
+    id: string;
+  };
+};
+
 export const storeRoutes = {
   "/stores/create": {
     POST: async (req: Request) => {
@@ -17,5 +23,10 @@ export const storeRoutes = {
     OPTIONS: () => {
       return Response.json(null, { status: 204, headers: corsHeaders });
     },
+  },
+  "/stores/:id": async (req: BunRequest) => {
+    const body =
+      await sql`SELECT (id, name) FROM stores WHERE name = ${req.params.id}`;
+    return Response.json(body, { status: 200, headers: corsHeaders });
   },
 };
