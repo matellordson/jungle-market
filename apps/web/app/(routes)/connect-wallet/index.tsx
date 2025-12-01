@@ -242,6 +242,7 @@ const Button = styled.button`
   background-color: var(--success-bg);
   color: var(--success-text);
   font-family: inherit;
+  font-size: 15px;
   border-radius: 20px;
   border: none;
   font-weight: 500;
@@ -320,6 +321,7 @@ const Input = styled.input`
   padding: 0px 10px;
   border: var(--border);
   font-family: inherit;
+  font-size: 14px;
   border-radius: 15px;
   color: var(--text-dark);
   background-color: var(--foreground);
