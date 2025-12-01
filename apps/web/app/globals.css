@@ -5,7 +5,8 @@
   --foreground: oklch(97% 0 0);
   --border: 1px solid oklch(92.2% 0 0);
   --text-dark: oklch(21% 0.006 285.885);
-  --text-light: oklch(27.4% 0.006 286.033);
+  --text-light: oklch(44.2% 0.017 285.786);
+  --text-mute: oklch(70.5% 0.015 286.067);
   --icon: oklch(55.2% 0.016 285.938);
   --success-bg: oklch(85% 0.13 145);
   --success-text: oklch(30% 0.13 145);
@@ -25,6 +26,7 @@
     --border: 1px solid oklch(26.9% 0 0);
     --text-dark: oklch(97% 0 0);
     --text-light: oklch(70.8% 0 0);
+    --text-mute: oklch(70.5% 0.015 286.067);
     --icon: oklch(55.2% 0.016 285.938);
     --success-bg: oklch(35% 0.13 145);
     --success-text: oklch(85% 0.13 145);

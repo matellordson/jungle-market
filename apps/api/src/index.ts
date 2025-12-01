@@ -11,5 +11,9 @@ export const corsHeaders = {
 
 const server = Bun.serve({
   port: 8080,
-  routes: {},
+  routes: {
+    ...accountRoute,
+    ...connectWalletRoute,
+    ...storeRoutes,
+  },
 });
