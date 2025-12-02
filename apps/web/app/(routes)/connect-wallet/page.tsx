@@ -324,7 +324,7 @@ const Input = styled.input`
   padding: 0px 10px;
   border: var(--border);
   font-family: inherit;
-  font-size: 14px !important;
+  font-size: 14px;
   border-radius: 15px;
   color: var(--text-dark);
   background-color: var(--foreground);
@@ -424,9 +424,8 @@ export default function ConnectWalletPage() {
     setSecondStageLoading(false);
 
     // Get id from created store to redirect to the store page
-    const res = await fetch(`${url}/stores/${storeName}`);
+    const res = await fetch(`${url}/stores/name/${storeName}`);
     const data = await res.json();
-    console.log(data.id);
     redirect(`/${data.id}`);
   };
 

@@ -4,5 +4,5 @@ export default async function StorePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  return <p>Store {id}</p>;
+  return <p>Store: </p>;
 }

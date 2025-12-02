@@ -24,9 +24,16 @@ export const storeRoutes = {
       return Response.json(null, { status: 204, headers: corsHeaders });
     },
   },
+  // Store name is used as filter
+  "/stores/name/:id": async (req: BunRequest) => {
+    const [body] =
+      await sql`SELECT id, name, owner FROM stores WHERE name = ${req.params.id}`;
+    return Response.json(body, { status: 200, headers: corsHeaders });
+  },
+  // Store id is used as filter
   "/stores/:id": async (req: BunRequest) => {
-    const body =
-      await sql`SELECT (id, name) FROM stores WHERE name = ${req.params.id}`;
+    const [body] =
+      await sql`SELECT id, name, owner FROM stores WHERE id = ${req.params.id}`;
     return Response.json(body, { status: 200, headers: corsHeaders });
   },
 };
