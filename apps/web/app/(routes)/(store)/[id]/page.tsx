@@ -1,8 +1,3 @@
-export default async function StorePage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  return <p>Store: </p>;
+export default function HomePage() {
+  return <div>Home Page</div>;
 }

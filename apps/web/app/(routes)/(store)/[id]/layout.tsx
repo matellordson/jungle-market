@@ -1,20 +1,49 @@
-import OwnerCheck from "./owner-check";
+"use client";
 
-export default async function StoreLayout({
-  params,
+import { use, useEffect, useState } from "react";
+import { useAccount } from "wagmi";
+import { url } from "../../../../utils/url";
+import { notFound, redirect } from "next/navigation";
+
+export default function StoreLayout({
   children,
+  params,
 }: {
-  params: Promise<{ id: string }>;
   children: React.ReactNode;
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
+  const { id } = use(params);
+  const { address } = useAccount();
+  const [storeData, setStoreData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (address) {
+      const getStoreId = async () => {
+        const storeId = await fetch(`${url}/stores/${id}`);
+        const storeData = await storeId.json();
+        if (!storeData || address !== storeData.owner) {
+          redirect("/not-found");
+        } else {
+          setStoreData(storeData);
+          setIsLoading(false);
+        }
+      };
+      getStoreId();
+    } else {
+      redirect("/not-found");
+    }
+  });
   return (
     <div>
-      <OwnerCheck id={id}>
-        <>
-          {children} {id}
-        </>
-      </OwnerCheck>
+      {!isLoading ? (
+        <div>
+          <pre>{JSON.stringify(storeData, null, 2)}</pre>
+          {children}
+        </div>
+      ) : (
+        "Loading..."
+      )}
     </div>
   );
 }

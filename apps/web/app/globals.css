@@ -3,12 +3,13 @@
 :root {
   --background: oklch(98.5% 0 0);
   --foreground: oklch(97% 0 0);
-  --accent: #e98644;
+  --accent-bg: #e98644;
   --border: 1px solid oklch(92.2% 0 0);
   --text-dark: oklch(21% 0.006 285.885);
   --text-light: oklch(44.2% 0.017 285.786);
   --text-mute: oklch(70.5% 0.015 286.067);
   --text-accent: #e98644;
+  --accent-foreground: oklch(98.7% 0.022 95.277);
   --icon: oklch(55.2% 0.016 285.938);
   --success-bg: oklch(85% 0.13 145);
   --success-text: oklch(30% 0.13 145);
@@ -36,6 +37,7 @@
     --text-light: oklch(70.8% 0 0);
     --text-mute: oklch(70.5% 0.015 286.067);
     --text-accent: oklch(83.7% 0.128 66.29);
+    --accent-foreground: oklch(95.4% 0.038 75.164);
     --icon: oklch(55.2% 0.016 285.938);
     --success-bg: oklch(35% 0.13 145);
     --success-text: oklch(85% 0.13 145);

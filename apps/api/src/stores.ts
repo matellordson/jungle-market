@@ -32,8 +32,22 @@ export const storeRoutes = {
   },
   // Store id is used as filter
   "/stores/:id": async (req: BunRequest) => {
-    const [body] =
-      await sql`SELECT id, name, owner FROM stores WHERE id = ${req.params.id}`;
-    return Response.json(body, { status: 200, headers: corsHeaders });
+    try {
+      const [body] =
+        await sql`SELECT * FROM stores WHERE id = ${req.params.id}`;
+      return Response.json(body, { status: 200, headers: corsHeaders });
+    } catch {
+      return Response.json(null, { status: 200, headers: corsHeaders });
+    }
+  },
+  // This route will get the store id by using the owner as a reference
+  "/stores/owner/:id": async (req: BunRequest) => {
+    try {
+      const [body] =
+        await sql`SELECT * FROM stores WHERE owner = ${req.params.id}`;
+      return Response.json(body, { status: 200, headers: corsHeaders });
+    } catch {
+      return Response.json(null, { status: 200, headers: corsHeaders });
+    }
   },
 };
