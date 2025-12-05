@@ -4,6 +4,7 @@ import { use, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { url } from "../../../../utils/url";
 import { notFound, redirect } from "next/navigation";
+import Navigation from "../navigation";
 
 export default function StoreLayout({
   children,
@@ -37,10 +38,12 @@ export default function StoreLayout({
   return (
     <div>
       {!isLoading ? (
-        <div>
-          <pre>{JSON.stringify(storeData, null, 2)}</pre>
-          {children}
-        </div>
+        <Navigation>
+          <div>
+            <pre>{JSON.stringify(storeData, null, 2)}</pre>
+            {children}
+          </div>
+        </Navigation>
       ) : (
         "Loading..."
       )}
