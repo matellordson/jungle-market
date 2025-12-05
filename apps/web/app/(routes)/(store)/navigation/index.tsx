@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { SidebarSimpleIcon } from "@phosphor-icons/react/SidebarSimple";
 
@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
+  position: fixed;
 `;
 
 const NavItemsWrapper = styled.div`
@@ -35,7 +36,6 @@ const DragHandler = styled.div`
 const TabWrapper = styled.div`
   height: 40px;
   width: 100%;
-  background-color: blue;
   background-color: var(--foreground);
   border-bottom: var(--border);
   display: flex;
@@ -51,6 +51,13 @@ const SidebarToggle = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+
+  & > button {
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+    border: none;
+  }
 
   &:hover {
     background-color: var(--highlight);
@@ -77,6 +84,9 @@ const PageContent = styled.div`
   }
 `;
 
+const isDesktop = () =>
+  typeof window !== "undefined" && window.innerWidth >= 992;
+
 export default function Navigation({
   children,
 }: {
@@ -85,7 +95,21 @@ export default function Navigation({
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [isResizing, setIsResizing] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(300);
-  const [sideBarOpen, setSideBarOPen] = useState(true);
+
+  const [sideBarOpen, setSideBarOPen] = useState(() => {
+    return isDesktop();
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 992) {
+        setSideBarOPen(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const onMouseDown = () => {
     setIsResizing(true);
@@ -113,36 +137,30 @@ export default function Navigation({
     [isResizing]
   );
 
+  const toggleSidebar = () => {
+    setSideBarOPen((prev) => !prev);
+  };
+
   return (
     <Wrapper onMouseMove={onMouseMove} onMouseUp={onMouseUp}>
-      {sideBarOpen ? (
+      {sideBarOpen && (
         <NavItemsWrapper
           ref={sidebarRef}
           style={{ width: `${sidebarWidth}px` }}
         ></NavItemsWrapper>
-      ) : (
-        ""
       )}
 
-      <DragHandler onMouseDown={onMouseDown} />
+      {sideBarOpen && <DragHandler onMouseDown={onMouseDown} />}
 
       <PageWrapper>
         <TabWrapper>
           <SidebarToggle>
-            <SidebarSimpleIcon
-              size={25}
-              weight="duotone"
-              onClick={() => {
-                if (sideBarOpen) {
-                  setSideBarOPen(false);
-                } else {
-                  setSideBarOPen(true);
-                }
-              }}
-            />
+            <button onClick={toggleSidebar}>
+              <SidebarSimpleIcon size={25} weight="duotone" />
+            </button>
           </SidebarToggle>
         </TabWrapper>
-        {/* PageContent will dim in mobile view if sidebar is open */}
+
         <PageContent className={sideBarOpen ? "dim" : ""}>
           {children}
         </PageContent>
