@@ -51,7 +51,7 @@ const SidebarToggle = styled.div`
   align-items: center;
   border-radius: 5px;
   cursor: pointer;
-  color: var(--icon);
+  color: var(--text-light);
 
   &:hover {
     background-color: var(--highlight);
