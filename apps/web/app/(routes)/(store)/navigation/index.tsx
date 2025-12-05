@@ -2,7 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { SidebarSimpleIcon } from "@phosphor-icons/react/SidebarSimple";
+import { SidebarIcon } from "@phosphor-icons/react/Sidebar";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -41,7 +41,6 @@ const TabWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 0 10px;
-  cursor: pointer;
 `;
 
 const SidebarToggle = styled.div`
@@ -51,13 +50,7 @@ const SidebarToggle = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-
-  & > button {
-    background-color: transparent;
-    color: inherit;
-    cursor: pointer;
-    border: none;
-  }
+  cursor: pointer;
 
   &:hover {
     background-color: var(--highlight);
@@ -155,9 +148,7 @@ export default function Navigation({
       <PageWrapper>
         <TabWrapper>
           <SidebarToggle>
-            <button onClick={toggleSidebar}>
-              <SidebarSimpleIcon size={25} weight="duotone" />
-            </button>
+            <SidebarIcon onClick={toggleSidebar} size={25} weight="duotone" />
           </SidebarToggle>
         </TabWrapper>
 
