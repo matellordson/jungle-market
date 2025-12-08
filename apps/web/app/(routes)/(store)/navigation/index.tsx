@@ -2,7 +2,8 @@
 
 import { useRef, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { SidebarIcon } from "@phosphor-icons/react/Sidebar";
+import { SidebarSimpleIcon } from "@phosphor-icons/react/SidebarSimple";
+import NavHead from "./head";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -16,6 +17,7 @@ const NavItemsWrapper = styled.div`
   background-color: var(--foreground);
   flex-shrink: 0;
   border-right: var(--border);
+  padding: 10px;
 
   @media only screen and (min-width: 992px) {
     width: 0;
@@ -27,6 +29,10 @@ const DragHandler = styled.div`
   height: 100vh;
   width: 3px;
   cursor: ew-resize;
+
+  &:hover {
+    background-color: var(--highlight);
+  }
 
   @media only screen and (min-width: 992px) {
     display: block;
@@ -51,10 +57,8 @@ const SidebarToggle = styled.div`
   align-items: center;
   border-radius: 5px;
   cursor: pointer;
-  color: var(--text-light);
 
-  &:hover {
-    background-color: var(--highlight);
+  & svg:hover {
     color: var(--text-dark);
   }
 `;
@@ -142,7 +146,9 @@ export default function Navigation({
         <NavItemsWrapper
           ref={sidebarRef}
           style={{ width: `${sidebarWidth}px` }}
-        ></NavItemsWrapper>
+        >
+          <NavHead storeName={"Dolce & Gabanna"} />
+        </NavItemsWrapper>
       )}
 
       {sideBarOpen && <DragHandler onMouseDown={onMouseDown} />}
@@ -150,7 +156,11 @@ export default function Navigation({
       <PageWrapper>
         <TabWrapper>
           <SidebarToggle>
-            <SidebarIcon onClick={toggleSidebar} size={25} weight="duotone" />
+            <SidebarSimpleIcon
+              onClick={toggleSidebar}
+              size={25}
+              weight="duotone"
+            />
           </SidebarToggle>
         </TabWrapper>
 

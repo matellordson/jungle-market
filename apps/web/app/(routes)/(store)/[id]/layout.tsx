@@ -36,17 +36,6 @@ export default function StoreLayout({
     }
   });
   return (
-    <div>
-      {!isLoading ? (
-        <Navigation>
-          <div>
-            <pre>{JSON.stringify(storeData, null, 2)}</pre>
-            {children}
-          </div>
-        </Navigation>
-      ) : (
-        "Loading..."
-      )}
-    </div>
+    <div>{!isLoading ? <Navigation>{children}</Navigation> : "Loading..."}</div>
   );
 }
