@@ -33,6 +33,6 @@ export default function ConnectWalletLayout({
     } else {
       setIsLoading(false);
     }
-  });
+  }, [address]);
   return <div>{!isLoading ? <div>{children}</div> : "Loading..."}</div>;
 }

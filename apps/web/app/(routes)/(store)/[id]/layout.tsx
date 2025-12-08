@@ -31,10 +31,11 @@ export default function StoreLayout({
         }
       };
       getStoreId();
-    } else {
-      redirect("/not-found");
     }
-  });
+    // else {
+    //   redirect("/not-found");
+    // }
+  }, [address]);
   return (
     <div>{!isLoading ? <Navigation>{children}</Navigation> : "Loading..."}</div>
   );
