@@ -30,7 +30,7 @@
   :root {
     --background: oklch(14.5% 0 0);
     --foreground: oklch(21% 0.006 285.885);
-    --highlight: oklch(44.2% 0.017 285.786);
+    --highlight: oklch(26.9% 0 0);
     --border: 1px solid oklch(26.9% 0 0);
     --text-dark: oklch(97% 0 0);
     --text-light: oklch(70.8% 0 0);

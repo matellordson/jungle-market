@@ -37,6 +37,12 @@ export default function StoreLayout({
     // }
   }, [address]);
   return (
-    <div>{!isLoading ? <Navigation>{children}</Navigation> : "Loading..."}</div>
+    <div>
+      {!isLoading ? (
+        <Navigation storeId={id}>{children}</Navigation>
+      ) : (
+        "Loading..."
+      )}
+    </div>
   );
 }

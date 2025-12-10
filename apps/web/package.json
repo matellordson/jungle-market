@@ -16,27 +16,27 @@
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-popover": "^1.1.15",
     "@repo/ui": "*",
-    "@tanstack/react-query": "^5.90.10",
-    "@web3icons/react": "^4.0.37",
-    "next": "^16.0.1",
+    "@tanstack/react-query": "^5.90.12",
+    "@web3icons/react": "^4.1.4",
+    "next": "^16.0.8",
     "radix-ui": "^1.4.3",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
     "react-hotkeys-hook": "^5.2.1",
     "react-select": "^5.10.2",
     "react-tabulator": "^0.21.0",
     "styled-components": "^6.1.19",
-    "viem": "2.x",
-    "wagmi": "^2.19.4"
+    "viem": "^2.41.2",
+    "wagmi": "^2.19.5"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.19.2",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "eslint": "^9.39.1",
-    "sass": "^1.94.1",
+    "sass": "^1.95.0",
     "typescript": "5.9.2"
   }
 }
