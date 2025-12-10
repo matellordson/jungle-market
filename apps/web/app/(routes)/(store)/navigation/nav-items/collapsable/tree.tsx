@@ -2,25 +2,51 @@
 
 import { JSX, useState } from "react";
 import styled from "styled-components";
+import { CaretRightIcon } from "@phosphor-icons/react/CaretRight";
+import { CaretDownIcon } from "@phosphor-icons/react/CaretDown";
 
 const Wrapper = styled.div``;
 
-const Base = styled.div`
+const Base = styled.div<{ $active: boolean }>`
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 5px;
   padding: 5px;
   border-radius: 10px;
   cursor: pointer;
   font-size: 15px;
   color: var(--text-light);
+  background-color: ${(props) =>
+    props.$active ? "var(--highlight)" : "transparent"};
 
   &:hover {
     background-color: var(--highlight);
   }
 
   & svg {
-    color: var(--text-light);
+    color: ${(props) => (props.$active ? "var(--accent)" : "")};
+    vertical-align: middle;
+  }
+
+  & p {
+    color: ${(props) => (props.$active ? "var(--text-dark)" : "")};
+    font-weight: 500;
+  }
+
+  & span {
+    display: block;
+  }
+
+  &:hover span {
+    display: none;
+  }
+
+  & .toggle {
+    display: none;
+  }
+
+  &:hover .toggle {
+    display: block;
   }
 `;
 
@@ -49,10 +75,23 @@ const SubordinateItems = styled.div`
   }
 `;
 
+const CollapseToggle = styled.div`
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+
+  & svg {
+    padding: 3px;
+  }
+`;
+
 export default function NavTree({
   icon,
   name,
   subordinate,
+  active,
 }: {
   icon: JSX.Element;
   name: string;
@@ -60,20 +99,31 @@ export default function NavTree({
     icon: JSX.Element;
     name: string;
   }[];
+  active: boolean;
 }) {
   const [open, setIsOpen] = useState(false);
   return (
     <Wrapper>
-      <Base
-        onClick={() => {
-          if (!open) {
-            setIsOpen(true);
-          } else {
-            setIsOpen(false);
-          }
-        }}
-      >
+      <Base $active={active}>
+        <CollapseToggle
+          className="toggle"
+          onClick={() => {
+            if (!open) {
+              setIsOpen(true);
+            } else {
+              setIsOpen(false);
+            }
+          }}
+        >
+          {open ? (
+            <CaretDownIcon size={21} weight="bold" />
+          ) : (
+            <CaretRightIcon size={21} weight="bold" />
+          )}
+        </CollapseToggle>
+
         <span>{icon}</span>
+
         <p>{name}</p>
       </Base>
       {open ? (

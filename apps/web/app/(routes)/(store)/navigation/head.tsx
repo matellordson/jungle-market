@@ -34,8 +34,10 @@ const StoreImage = styled.div`
 `;
 
 const StoreName = styled.p`
-  font-size: 17px;
+  font-size: 16px;
   padding-left: 7px;
+  font-weight: 500;
+  color: var(--text-light);
 `;
 
 const SearchInput = styled.input`

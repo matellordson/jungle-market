@@ -8,6 +8,7 @@ import NavHead from "./head";
 import Essentials from "./nav-items/collapsable/essentials";
 import { url } from "../../../../utils/url";
 import SingleNavItem from "./nav-items/single";
+import { usePathname } from "next/navigation";
 
 const MOBILE_BREAKPOINT = 992;
 const MIN_DESKTOP_WIDTH = 250;
@@ -135,8 +136,8 @@ export default function Navigation({
   const [sidebarWidth, setSidebarWidth] = useState(INITIAL_DESKTOP_WIDTH);
   const [sideBarOpen, setSideBarOpen] = useState(() => isDesktop());
   const isResizingRef = useRef(false);
-
   const [storeName, setStoreName] = useState();
+  const pathName = usePathname();
 
   useEffect(() => {
     if (storeId) {
@@ -229,6 +230,10 @@ export default function Navigation({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [sideBarOpen]);
 
+  // routes for Nav Tree
+  const essentialsHref = `/${storeId}/essentials`;
+  const isEssentialsActive = pathName.startsWith(essentialsHref);
+
   return (
     <Wrapper>
       {sideBarOpen && (
@@ -245,8 +250,13 @@ export default function Navigation({
           <SingleNavItem
             name="Home"
             icon={<HouseIcon size={21} weight="duotone" />}
+            active={`/${storeId}` === `${pathName}`}
+            href={`/${storeId}/`}
           />
-          <Essentials />
+          <Essentials
+            active={isEssentialsActive}
+            href={`/${storeId}/essentials`}
+          />
           {isDesktop() && <DragHandler onMouseDown={onMouseDown} />}
         </NavItemsWrapper>
       )}

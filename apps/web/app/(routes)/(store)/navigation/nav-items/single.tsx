@@ -1,36 +1,51 @@
+import Link from "next/link";
 import { JSX } from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $active: boolean }>`
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 5px;
   padding: 5px;
   border-radius: 10px;
   cursor: pointer;
   font-size: 15px;
   color: var(--text-light);
+  background-color: ${(props) =>
+    props.$active ? "var(--highlight)" : "transparent"};
 
   &:hover {
     background-color: var(--highlight);
   }
 
   & svg {
-    color: var(--text-light);
+    color: ${(props) => (props.$active ? "var(--accent)" : "")};
+    vertical-align: middle;
+  }
+
+  & p {
+    color: ${(props) => (props.$active ? "var(--text-dark)" : "")};
+    font-weight: 500;
   }
 `;
 
 export default function SingleNavItem({
   icon,
   name,
+  active,
+  href,
 }: {
   icon: JSX.Element;
   name: string;
+  active: boolean;
+  href: string;
 }) {
   return (
-    <Wrapper>
-      <span>{icon}</span>
-      <p>{name}</p>
-    </Wrapper>
+    <Link href={href}>
+      <Wrapper $active={active}>
+        <span>{icon}</span>
+        <p>{name}</p>
+      </Wrapper>
+    </Link>
   );
 }
