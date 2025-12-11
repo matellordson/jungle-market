@@ -2,13 +2,19 @@
 
 import "tabulator-tables/dist/css/tabulator.min.css";
 import { ReactTabulator } from "react-tabulator";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  padding: 5px;
+  border-radius: 10px;
+`;
 
 export function DocsTable() {
   const columns = [
-    { title: "Name", field: "name" },
-    { title: "Age", field: "age" },
-    { title: "Favourite Color", field: "col" },
-    { title: "Date Of Birth", field: "dob" },
+    { title: "Name", field: "name", headerSort: false },
+    { title: "Age", field: "age", headerSort: false },
+    { title: "Favourite Color", field: "col", headerSort: false },
+    { title: "Date Of Birth", field: "dob", headerSort: false },
   ];
 
   const data = [
@@ -33,5 +39,9 @@ export function DocsTable() {
       dob: "31/01/1999",
     },
   ];
-  return <ReactTabulator data={data} columns={columns} />;
+  return (
+    <Wrapper>
+      <ReactTabulator data={data} columns={columns} />
+    </Wrapper>
+  );
 }

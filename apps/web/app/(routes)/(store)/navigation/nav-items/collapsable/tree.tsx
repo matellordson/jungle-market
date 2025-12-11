@@ -4,6 +4,7 @@ import { JSX, useState } from "react";
 import styled from "styled-components";
 import { CaretRightIcon } from "@phosphor-icons/react/CaretRight";
 import { CaretDownIcon } from "@phosphor-icons/react/CaretDown";
+import Link from "next/link";
 
 const Wrapper = styled.div``;
 
@@ -51,6 +52,7 @@ const Base = styled.div<{ $active: boolean }>`
 `;
 
 const SubordinateWrapper = styled.div`
+  margin-top: 5px;
   margin-left: 30px;
   display: flex;
   flex-direction: column;
@@ -92,6 +94,7 @@ export default function NavTree({
   name,
   subordinate,
   active,
+  href,
 }: {
   icon: JSX.Element;
   name: string;
@@ -100,6 +103,7 @@ export default function NavTree({
     name: string;
   }[];
   active: boolean;
+  href: string;
 }) {
   const [open, setIsOpen] = useState(false);
   return (
@@ -124,7 +128,9 @@ export default function NavTree({
 
         <span>{icon}</span>
 
-        <p>{name}</p>
+        <Link href={href}>
+          <p>{name}</p>
+        </Link>
       </Base>
       {open ? (
         <SubordinateWrapper>

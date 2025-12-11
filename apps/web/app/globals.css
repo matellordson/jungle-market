@@ -6,6 +6,7 @@
   --highlight: oklch(92% 0.004 286.32);
   --accent: #28d060;
   --border: 1px solid oklch(92.2% 0 0);
+  --bg-border: oklch(92.2% 0 0);
   --text-dark: oklch(21% 0.006 285.885);
   --text-light: oklch(44.2% 0.017 285.786);
   --text-mute: oklch(70.5% 0.015 286.067);
@@ -32,6 +33,7 @@
     --foreground: oklch(21% 0.006 285.885);
     --highlight: oklch(26.9% 0 0);
     --border: 1px solid oklch(26.9% 0 0);
+    --bg-border: oklch(26.9% 0 0);
     --text-dark: oklch(97% 0 0);
     --text-light: oklch(70.8% 0 0);
     --text-mute: oklch(70.5% 0.015 286.067);
@@ -75,4 +77,111 @@ a {
 
 svg {
   color: var(--icon);
+}
+
+/* Tabulator Custom Styles */
+
+.tabulator {
+  background-color: var(--background) !important;
+  border: var(--border) solid !important;
+  font-family: inherit;
+  height: fit-content !important;
+  border-radius: 5px !important;
+
+  /* Prevent Tabulator from drawing its own inner borders */
+  box-shadow: none !important;
+}
+
+.tabulator-table {
+  background-color: var(--background) !important;
+}
+
+/* ROWS */
+.tabulator-row {
+  background-color: var(--background) !important;
+  color: var(--text-light);
+
+  /* Remove default row bottom border */
+  border-bottom: none !important;
+}
+
+/* CELLS */
+.tabulator-cell {
+  font-weight: normal;
+  font-size: 15px;
+  padding: 10px !important;
+
+  /* Only apply BORDER-BOTTOM & RIGHT for a clean grid */
+  border-right: var(--border) solid !important;
+  border-bottom: var(--border) solid !important;
+}
+
+/* First row: add top border */
+.tabulator-row:first-child {
+  border-top: var(--border) !important;
+  border-bottom: var(
+    --border
+  ) !important; /* optional, if you want same as middle rows */
+}
+
+/* Middle rows: keep bottom border */
+.tabulator-row:not(:first-child):not(:last-child) {
+  border-bottom: var(--border) !important;
+}
+
+/* Last row: remove bottom border */
+.tabulator-row:last-child {
+  border-bottom: none !important;
+}
+
+/* Optional: transition for hover effects */
+.tabulator-row .tabulator-cell {
+  transition:
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.tabulator-row:hover {
+  background-color: var(--foreground) !important;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+}
+
+/* HEADER */
+.tabulator-header {
+  background-color: var(--background) !important;
+  border-bottom: var(--border) solid !important;
+  height: 30px;
+}
+
+/* HEADER COLUMNS */
+.tabulator-col {
+  background-color: var(--background) !important;
+  color: var(--text-light);
+  padding: 0px 10px !important;
+
+  /* Ensure clean borders in header */
+  border-right: var(--border) solid !important;
+}
+
+/* Remove last header column right border */
+.tabulator-col:last-child {
+  border-right: none !important;
+}
+
+/* TITLES */
+.tabulator-col-title {
+  font-weight: normal;
+  font-size: 15px;
+}
+
+/* RESIZE GUIDE (drag line) */
+.tabulator-col-resize-guide {
+  background-color: #ff4d4d !important;
+  width: 2px !important;
+}
+
+/* FIX: remove the thin border BEFORE the resize handle */
+.tabulator-col-resize-handle {
+  border-right: none !important;
 }

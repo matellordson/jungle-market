@@ -111,7 +111,7 @@ const PageWrapper = styled.div`
 `;
 
 const PageContent = styled.div<{ $sidebarOpen: boolean }>`
-  padding: 20px;
+  padding: 10px;
   flex-grow: 1;
   overflow-y: auto;
 
