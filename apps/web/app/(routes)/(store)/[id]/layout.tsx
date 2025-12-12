@@ -31,10 +31,9 @@ export default function StoreLayout({
         }
       };
       getStoreId();
+    } else {
+      redirect("/connect-wallet");
     }
-    // else {
-    //   redirect("/not-found");
-    // }
   }, [address]);
   return (
     <div>

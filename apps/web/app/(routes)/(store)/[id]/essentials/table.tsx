@@ -5,7 +5,6 @@ import { ReactTabulator } from "react-tabulator";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  padding: 5px;
   border-radius: 10px;
 `;
 
@@ -41,7 +40,7 @@ export function DocsTable() {
   ];
   return (
     <Wrapper>
-      <ReactTabulator data={data} columns={columns} />
+      <ReactTabulator data={data} columns={columns} layout={"fitColumns"} />
     </Wrapper>
   );
 }

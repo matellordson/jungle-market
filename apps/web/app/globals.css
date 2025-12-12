@@ -25,7 +25,6 @@
   --button-shadow:
     inset 0px 3px 5px oklch(44.2% 0.017 285.786),
     inset 0px -3px 6px oklch(14.1% 0.005 285.823);
-  --row-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -88,6 +87,7 @@ svg {
   font-family: inherit;
   height: fit-content !important;
   border-radius: 5px !important;
+  /* max-width: 1300px; */
 
   /* Prevent Tabulator from drawing its own inner borders */
   box-shadow: none !important;
@@ -142,11 +142,9 @@ svg {
     background-color 0.15s ease;
 }
 
-.tabulator-row:hover {
+/* .tabulator-row:hover {
   background-color: var(--foreground) !important;
-  border-radius: 5px;
-  box-shadow: var(--row-shadow);
-}
+} */
 
 /* HEADER */
 .tabulator-header {
@@ -184,5 +182,9 @@ svg {
 
 /* FIX: remove the thin border BEFORE the resize handle */
 .tabulator-col-resize-handle {
+  border-right: var(--border) !important;
+}
+
+.tabulator-col-resize-handle:last-child {
   border-right: none !important;
 }

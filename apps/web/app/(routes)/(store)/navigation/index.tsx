@@ -114,6 +114,8 @@ const PageContent = styled.div<{ $sidebarOpen: boolean }>`
   padding: 10px;
   flex-grow: 1;
   overflow-y: auto;
+  /* margin: auto; */
+  /* max-width: 1000px; */
 
   ${(props) =>
     props.$sidebarOpen &&

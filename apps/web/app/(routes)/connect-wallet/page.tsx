@@ -467,7 +467,7 @@ export default function ConnectWalletPage() {
                     <CircleNotchIcon
                       size={20}
                       weight="duotone"
-                      color="var(--text-accent)"
+                      color="var(--accent)"
                     />
                   </Loader>
                 ) : (
@@ -476,13 +476,13 @@ export default function ConnectWalletPage() {
                       <PlugsConnectedIcon
                         size={20}
                         weight="duotone"
-                        color="var(--text-accent)"
+                        color="var(--accent)"
                       />
                     ) : (
                       <PlugsIcon
                         size={20}
                         weight="duotone"
-                        color="var(--text-accent)"
+                        color="var(--accent)"
                       />
                     )}
                   </>
@@ -515,7 +515,7 @@ export default function ConnectWalletPage() {
                   <RadioButtonIcon
                     size={20}
                     weight="duotone"
-                    color="var(--text-accent)"
+                    color="var(--accent)"
                   />
                 </RoleIcon>
               </RoleContent>
