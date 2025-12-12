@@ -25,6 +25,7 @@
   --button-shadow:
     inset 0px 3px 5px oklch(44.2% 0.017 285.786),
     inset 0px -3px 6px oklch(14.1% 0.005 285.823);
+  --row-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -144,7 +145,7 @@ svg {
 .tabulator-row:hover {
   background-color: var(--foreground) !important;
   border-radius: 5px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--row-shadow);
 }
 
 /* HEADER */
