@@ -2,7 +2,7 @@
 
 import "tabulator-tables/dist/css/tabulator.min.css";
 import { ReactTabulator } from "react-tabulator";
-import type { ColumnDefinition } from "tabulator-tables";
+import type { ColumnDefinition } from "react-tabulator";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { url } from "../../../../../utils/url";
@@ -61,7 +61,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       sorter: "string",
       width: 200,
       headerSort: false,
-      editor: "list",
+      editor: "list" as unknown as ColumnDefinition["editor"],
       editorParams: {
         values: ["High", "Medium", "Low"],
       },
@@ -103,7 +103,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       field: "created_at",
       sorter: "date",
       width: 200,
-      editor: "date",
+      editor: "date" as unknown as ColumnDefinition["editor"],
       headerSort: false,
     },
   ];
