@@ -1,9 +1,14 @@
-import { DocsTable } from "./table";
+import { EssentialTable } from "./table";
 
-export default function DocsPage() {
+export default async function DocsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   return (
     <div>
-      <DocsTable />
+      <EssentialTable storeId={id} />
     </div>
   );
 }

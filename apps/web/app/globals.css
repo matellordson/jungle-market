@@ -93,6 +93,11 @@ svg {
   box-shadow: none !important;
 }
 
+.tabulator * {
+  color: var(--text-light) !important;
+  font-size: inherit;
+}
+
 .tabulator-table {
   background-color: var(--background) !important;
 }

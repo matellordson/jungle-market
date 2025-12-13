@@ -1,6 +1,6 @@
-import { sql } from "../client/neon";
 import { accountRoute } from "./accounts";
 import { connectWalletRoute } from "./connect-wallet";
+import { essentialRoute } from "./essentials";
 import { storeRoutes } from "./stores";
 
 export const corsHeaders = {
@@ -15,5 +15,6 @@ const server = Bun.serve({
     ...accountRoute,
     ...connectWalletRoute,
     ...storeRoutes,
+    ...essentialRoute,
   },
 });
