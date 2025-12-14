@@ -5,6 +5,7 @@
   --foreground: oklch(97% 0 0);
   --highlight: oklch(92% 0.004 286.32);
   --accent: #28d060;
+  --accent-foreground: #ffffff;
   --border: 1px solid oklch(92.2% 0 0);
   --bg-border: oklch(92.2% 0 0);
   --text-dark: oklch(21% 0.006 285.885);
@@ -32,6 +33,7 @@
     --background: oklch(14.5% 0 0);
     --foreground: oklch(21% 0.006 285.885);
     --highlight: oklch(26.9% 0 0);
+    --accent-foreground: #1c1c1e;
     --border: 1px solid oklch(26.9% 0 0);
     --bg-border: oklch(26.9% 0 0);
     --text-dark: oklch(97% 0 0);
@@ -147,10 +149,6 @@ svg {
     background-color 0.15s ease;
 }
 
-/* .tabulator-row:hover {
-  background-color: var(--foreground) !important;
-} */
-
 /* HEADER */
 .tabulator-header {
   background-color: var(--background) !important;
@@ -192,4 +190,58 @@ svg {
 
 .tabulator-col-resize-handle:last-child {
   border-right: none !important;
+}
+
+.tabulator-cell.tabulator-editing {
+  outline: none !important;
+  border: 2px solid var(--accent) !important;
+  border-radius: 6px;
+  background-color: var(--background);
+  padding: 0 5px !important;
+}
+
+.tabulator-row:has(.tabulator-editing) {
+  background-color: var(--foreground) !important;
+}
+
+/* Keep resize handle visible after editor blur */
+.tabulator .tabulator-col-resize-handle {
+  width: 6px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Prevent focus/blur from hiding it */
+.tabulator:not(:focus-within) .tabulator-col-resize-handle {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Container of the list editor */
+.tabulator-edit-list {
+  background-color: var(--foreground) !important;
+  padding: 5px;
+  border: var(--border) !important;
+  border-radius: 5px;
+  box-shadow: none !important;
+  font-size: 15px !important;
+  display: flex !important;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Each option */
+.tabulator-edit-list-item {
+  font-family: inherit;
+  padding: 5px 10px !important;
+  border-radius: 7px;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+/* Hover effect */
+.tabulator-edit-list-item:hover {
+  background-color: var(--highlight) !important;
+  color: var(--text-light) !important;
 }

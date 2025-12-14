@@ -6,6 +6,18 @@ import type { ColumnDefinition } from "react-tabulator";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { url } from "../../../../../utils/url";
+import { TextAaIcon } from "@phosphor-icons/react/TextAa";
+import { CirclesThreeIcon } from "@phosphor-icons/react/CirclesThree";
+import { ChartPieIcon } from "@phosphor-icons/react/ChartPie";
+import { TextAlignLeftIcon } from "@phosphor-icons/react/TextAlignLeft";
+import { UserIcon } from "@phosphor-icons/react/User";
+import { GitDiffIcon } from "@phosphor-icons/react/GitDiff";
+import { TagIcon } from "@phosphor-icons/react/Tag";
+import { CalendarBlankIcon } from "@phosphor-icons/react/CalendarBlank";
+import { renderToStaticMarkup } from "react-dom/server";
+import { DateTime } from "luxon";
+
+(window as any).luxon = { DateTime };
 
 const Wrapper = styled.div`
   border-radius: 10px;
@@ -46,6 +58,20 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       width: 300,
       editor: true,
       headerSort: false,
+      headerHozAlign: "left",
+      titleFormatter: () => {
+        const el = document.createElement("div");
+        el.style.display = "flex";
+        el.style.alignItems = "center";
+        el.style.gap = "6px";
+
+        el.innerHTML = `
+    ${renderToStaticMarkup(<TextAaIcon size={18} weight="duotone" />)}
+    <span>Name</span>
+  `;
+
+        return el;
+      },
     },
     {
       title: "Category",
@@ -54,6 +80,19 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       width: 200,
       editor: true,
       headerSort: false,
+      titleFormatter: () => {
+        const el = document.createElement("div");
+        el.style.display = "flex";
+        el.style.alignItems = "center";
+        el.style.gap = "6px";
+
+        el.innerHTML = `
+    ${renderToStaticMarkup(<CirclesThreeIcon size={18} weight="duotone" />)}
+    <span>Category</span>
+  `;
+
+        return el;
+      },
     },
     {
       title: "Priority",
@@ -65,6 +104,19 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       editorParams: {
         values: ["High", "Medium", "Low"],
       },
+      titleFormatter: () => {
+        const el = document.createElement("div");
+        el.style.display = "flex";
+        el.style.alignItems = "center";
+        el.style.gap = "6px";
+
+        el.innerHTML = `
+    ${renderToStaticMarkup(<ChartPieIcon size={18} weight="duotone" />)}
+    <span>Priority</span>
+  `;
+
+        return el;
+      },
     },
     {
       title: "Summary",
@@ -73,6 +125,19 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       width: 200,
       editor: true,
       headerSort: false,
+      titleFormatter: () => {
+        const el = document.createElement("div");
+        el.style.display = "flex";
+        el.style.alignItems = "center";
+        el.style.gap = "6px";
+
+        el.innerHTML = `
+    ${renderToStaticMarkup(<TextAlignLeftIcon size={18} weight="duotone" />)}
+    <span>Summary</span>
+  `;
+
+        return el;
+      },
     },
     {
       title: "Owner",
@@ -81,6 +146,19 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       width: 200,
       editor: true,
       headerSort: false,
+      titleFormatter: () => {
+        const el = document.createElement("div");
+        el.style.display = "flex";
+        el.style.alignItems = "center";
+        el.style.gap = "6px";
+
+        el.innerHTML = `
+    ${renderToStaticMarkup(<UserIcon size={18} weight="duotone" />)}
+    <span>Owner</span>
+  `;
+
+        return el;
+      },
     },
     {
       title: "Version",
@@ -89,6 +167,19 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       width: 200,
       editor: true,
       headerSort: false,
+      titleFormatter: () => {
+        const el = document.createElement("div");
+        el.style.display = "flex";
+        el.style.alignItems = "center";
+        el.style.gap = "6px";
+
+        el.innerHTML = `
+    ${renderToStaticMarkup(<GitDiffIcon size={18} weight="duotone" />)}
+    <span>Version</span>
+  `;
+
+        return el;
+      },
     },
     {
       title: "Tags",
@@ -97,14 +188,46 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       width: 200,
       editor: true,
       headerSort: false,
+      titleFormatter: () => {
+        const el = document.createElement("div");
+        el.style.display = "flex";
+        el.style.alignItems = "center";
+        el.style.gap = "6px";
+
+        el.innerHTML = `
+    ${renderToStaticMarkup(<TagIcon size={18} weight="duotone" />)}
+    <span>Tags</span>
+  `;
+
+        return el;
+      },
     },
     {
       title: "Created At",
       field: "created_at",
       sorter: "date",
       width: 200,
+      formatter: "datetime",
+      formatterParams: {
+        inputFormat: "iso",
+        outputFormat: "yyyy-MM-dd",
+      },
       editor: "date" as unknown as ColumnDefinition["editor"],
+      editorParams: { format: "yyyy-MM-dd" } as any,
       headerSort: false,
+      titleFormatter: () => {
+        const el = document.createElement("div");
+        el.style.display = "flex";
+        el.style.alignItems = "center";
+        el.style.gap = "6px";
+
+        el.innerHTML = `
+    ${renderToStaticMarkup(<CalendarBlankIcon size={18} weight="duotone" />)}
+    <span>Created</span>
+  `;
+
+        return el;
+      },
     },
   ];
 
@@ -113,7 +236,8 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       <ReactTabulator
         columns={tableColumns}
         data={essentialData}
-        layout={"fitColumns"}
+        layout={"fitDataStretch"}
+        autoResize={false}
       />
     </Wrapper>
   );
