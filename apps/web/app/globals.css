@@ -5,7 +5,7 @@
   --foreground: oklch(97% 0 0);
   --highlight: oklch(92% 0.004 286.32);
   --accent: #28d060;
-  --accent-foreground: #ffffff;
+  --accent-foreground: oklch(26.6% 0.065 152.934);
   --border: 1px solid oklch(92.2% 0 0);
   --bg-border: oklch(92.2% 0 0);
   --text-dark: oklch(21% 0.006 285.885);
@@ -26,6 +26,38 @@
   --button-shadow:
     inset 0px 3px 5px oklch(44.2% 0.017 285.786),
     inset 0px -3px 6px oklch(14.1% 0.005 285.823);
+  --scrollbar-size: 6px;
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: var(--bg-border);
+  --scrollbar-thumb-hover: rgba(100, 116, 139, 0.9);
+  --shadow: 0px 1px 3px hsla(0, 0%, 0%, 0.2);
+
+  --badge-gray-bg: #e4e4e0;
+  --badge-gray-text: #585854;
+
+  --badge-brown-bg: #e1d8cb;
+  --badge-brown-text: #5f4b2f;
+
+  --badge-orange-bg: #e6d6c7;
+  --badge-orange-text: #683e1e;
+
+  --badge-yellow-bg: #e7ddbf;
+  --badge-yellow-text: #5f511a;
+
+  --badge-green-bg: #d8e4dc;
+  --badge-green-text: #2f5642;
+
+  --badge-blue-bg: #d8e1ea;
+  --badge-blue-text: #2f4f6a;
+
+  --badge-purple-bg: #ded6e6;
+  --badge-purple-text: #4f3e63;
+
+  --badge-pink-bg: #e3d5dd;
+  --badge-pink-text: #673b51;
+
+  --badge-red-bg: #e6d6d6;
+  --badge-red-text: #663030;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -33,12 +65,12 @@
     --background: oklch(14.5% 0 0);
     --foreground: oklch(21% 0.006 285.885);
     --highlight: oklch(26.9% 0 0);
-    --accent-foreground: #1c1c1e;
+
     --border: 1px solid oklch(26.9% 0 0);
     --bg-border: oklch(26.9% 0 0);
     --text-dark: oklch(97% 0 0);
     --text-light: oklch(70.8% 0 0);
-    --text-mute: oklch(70.5% 0.015 286.067);
+    --text-mute: oklch(55.2% 0.016 285.938);
     --icon: oklch(55.2% 0.016 285.938);
     --success-bg: oklch(35% 0.13 145);
     --success-text: oklch(85% 0.13 145);
@@ -54,6 +86,35 @@
     --button-shadow:
       inset 0px 3px 5px oklch(87.1% 0.006 286.286),
       inset 0px -3px 6px oklch(70.5% 0.015 286.067);
+    --scrollbar-thumb: var(--bg-border);
+    --scrollbar-thumb-hover: #6b7280;
+
+    --badge-gray-bg: #2f2f2c;
+    --badge-gray-text: #cfcfcb;
+
+    --badge-brown-bg: #3a3228;
+    --badge-brown-text: #d4b996;
+
+    --badge-orange-bg: #4a2f1c;
+    --badge-orange-text: #f0b37e;
+
+    --badge-yellow-bg: #4a3f1c;
+    --badge-yellow-text: #ead27a;
+
+    --badge-green-bg: #253c2e;
+    --badge-green-text: #9fd6b3;
+
+    --badge-blue-bg: #243447;
+    --badge-blue-text: #a7c4e8;
+
+    --badge-purple-bg: #33293f;
+    --badge-purple-text: #c7b4e6;
+
+    --badge-pink-bg: #3f2732;
+    --badge-pink-text: #e6afc6;
+
+    --badge-red-bg: #4a2424;
+    --badge-red-text: #f1a3a3;
   }
 }
 
@@ -61,6 +122,8 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 html,
@@ -81,13 +144,33 @@ svg {
   color: var(--icon);
 }
 
+::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
 /* Tabulator Custom Styles */
 
 .tabulator {
   background-color: var(--background) !important;
   border: var(--border) solid !important;
   font-family: inherit;
-  height: fit-content !important;
+  height: 100% !important;
   border-radius: 5px !important;
   /* max-width: 1300px; */
 
@@ -96,7 +179,6 @@ svg {
 }
 
 .tabulator * {
-  color: var(--text-light) !important;
   font-size: inherit;
 }
 
@@ -159,7 +241,7 @@ svg {
 /* HEADER COLUMNS */
 .tabulator-col {
   background-color: var(--background) !important;
-  color: var(--text-light);
+  color: var(--text-mute) !important;
   padding: 0px 10px !important;
 
   /* Ensure clean borders in header */
@@ -219,29 +301,47 @@ svg {
 
 /* Container of the list editor */
 .tabulator-edit-list {
-  background-color: var(--foreground) !important;
-  padding: 5px;
+  background: var(--foreground) !important;
+  padding: 6px;
   border: var(--border) !important;
-  border-radius: 5px;
-  box-shadow: none !important;
-  font-size: 15px !important;
+  border-radius: 8px;
+  font-size: 14px;
   display: flex !important;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
+  transform: translateY(175px);
+  box-shadow: var(--shadow) !important;
 }
 
 /* Each option */
 .tabulator-edit-list-item {
-  font-family: inherit;
-  padding: 5px 10px !important;
-  border-radius: 7px;
-  color: var(--text-light);
+  display: flex !important;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color 0.12s ease;
 }
 
 /* Hover effect */
 .tabulator-edit-list-item:hover {
-  background-color: var(--highlight) !important;
+  background-color: transparent !important;
+  color: var(--text-light) !important;
+  filter: brightness(0.96);
+}
+
+.tabulator-edit-list-item:focus-visible {
+  background-color: transparent !important;
+}
+
+.row-name {
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.tabulator-cell.tabulator-editing * {
+  background: var(--background);
   color: var(--text-light) !important;
 }

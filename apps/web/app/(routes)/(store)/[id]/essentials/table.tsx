@@ -8,11 +8,10 @@ import { useEffect, useState } from "react";
 import { url } from "../../../../../utils/url";
 import { TextAaIcon } from "@phosphor-icons/react/TextAa";
 import { CirclesThreeIcon } from "@phosphor-icons/react/CirclesThree";
-import { ChartPieIcon } from "@phosphor-icons/react/ChartPie";
+import { CaretCircleDownIcon } from "@phosphor-icons/react/CaretCircleDown";
 import { TextAlignLeftIcon } from "@phosphor-icons/react/TextAlignLeft";
-import { UserIcon } from "@phosphor-icons/react/User";
-import { GitDiffIcon } from "@phosphor-icons/react/GitDiff";
-import { TagIcon } from "@phosphor-icons/react/Tag";
+import { ListBulletsIcon } from "@phosphor-icons/react/ListBullets";
+import { HashIcon } from "@phosphor-icons/react/Hash";
 import { CalendarBlankIcon } from "@phosphor-icons/react/CalendarBlank";
 import { renderToStaticMarkup } from "react-dom/server";
 import { DateTime } from "luxon";
@@ -58,6 +57,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       width: 300,
       editor: true,
       headerSort: false,
+      cssClass: "row-name",
       headerHozAlign: "left",
       titleFormatter: () => {
         const el = document.createElement("div");
@@ -66,7 +66,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<TextAaIcon size={18} weight="duotone" />)}
+    ${renderToStaticMarkup(<TextAaIcon size={18} weight="bold" />)}
     <span>Name</span>
   `;
 
@@ -80,6 +80,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       width: 200,
       editor: true,
       headerSort: false,
+
       titleFormatter: () => {
         const el = document.createElement("div");
         el.style.display = "flex";
@@ -87,7 +88,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<CirclesThreeIcon size={18} weight="duotone" />)}
+    ${renderToStaticMarkup(<ListBulletsIcon size={18} weight="bold" />)}
     <span>Category</span>
   `;
 
@@ -100,10 +101,50 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       sorter: "string",
       width: 200,
       headerSort: false,
-      editor: "list" as unknown as ColumnDefinition["editor"],
-      editorParams: {
-        values: ["High", "Medium", "Low"],
+      editor: "list" as ColumnDefinition["editor"],
+
+      formatter: (cell: any) => {
+        const value = cell.getValue();
+
+        let color = "";
+        let bg = "";
+
+        if (value === "High") {
+          color = "var(--badge-red-text)";
+          bg = "var(--badge-red-bg)";
+        }
+
+        if (value === "Medium") {
+          color = "var(--badge-yellow-text)";
+          bg = "var(--badge-yellow-bg)";
+        }
+
+        if (value === "Low") {
+          color = "var(--badge-green-text)";
+          bg = "var(--badge-green-bg)";
+        }
+
+        if (!value) return "";
+
+        return `
+      <div
+        style="
+          display:inline-flex;
+          align-items:center;
+          padding:3px 10px;
+          border-radius:6px;
+          color:${color};
+          background:${bg};
+          font-weight:500;
+          width:fit-content;
+          font-size: 13px;
+        "
+      >
+        ${value}
+      </div>
+    `;
       },
+
       titleFormatter: () => {
         const el = document.createElement("div");
         el.style.display = "flex";
@@ -111,13 +152,54 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<ChartPieIcon size={18} weight="duotone" />)}
-    <span>Priority</span>
-  `;
+      ${renderToStaticMarkup(<CaretCircleDownIcon size={18} weight="bold" />)}
+      <span>Priority</span>
+    `;
 
         return el;
       },
-    },
+
+      editorParams: {
+        values: ["High", "Medium", "Low"],
+
+        itemFormatter: (value: string, title: string) => {
+          let color = "";
+          let bg = "";
+
+          if (value === "High") {
+            color = "var(--badge-red-text)";
+            bg = "var(--badge-red-bg)";
+          }
+
+          if (value === "Medium") {
+            color = "var(--badge-yellow-text)";
+            bg = "var(--badge-yellow-bg)";
+          }
+
+          if (value === "Low") {
+            color = "var(--badge-green-text)";
+            bg = "var(--badge-green-bg)";
+          }
+
+          return `
+        <div
+          style="
+            display:flex;
+            align-items:center;
+            padding:6px 10px;
+            border-radius:6px;
+            color:${color};
+            background:${bg};
+            font-weight:500;
+            font-size: 13px;
+          "
+        >
+          ${title}
+        </div>
+      `;
+        },
+      },
+    } as any,
     {
       title: "Summary",
       field: "summary",
@@ -132,7 +214,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<TextAlignLeftIcon size={18} weight="duotone" />)}
+    ${renderToStaticMarkup(<TextAlignLeftIcon size={18} weight="bold" />)}
     <span>Summary</span>
   `;
 
@@ -153,7 +235,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<UserIcon size={18} weight="duotone" />)}
+    ${renderToStaticMarkup(<ListBulletsIcon size={18} weight="bold" />)}
     <span>Owner</span>
   `;
 
@@ -174,7 +256,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<GitDiffIcon size={18} weight="duotone" />)}
+    ${renderToStaticMarkup(<HashIcon size={18} weight="bold" />)}
     <span>Version</span>
   `;
 
@@ -195,7 +277,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<TagIcon size={18} weight="duotone" />)}
+    ${renderToStaticMarkup(<ListBulletsIcon size={18} weight="bold" />)}
     <span>Tags</span>
   `;
 
@@ -222,7 +304,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<CalendarBlankIcon size={18} weight="duotone" />)}
+    ${renderToStaticMarkup(<CalendarBlankIcon size={18} weight="bold" />)}
     <span>Created</span>
   `;
 
@@ -236,8 +318,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       <ReactTabulator
         columns={tableColumns}
         data={essentialData}
-        layout={"fitDataStretch"}
-        autoResize={false}
+        // layout={"fitDataStretch"}
       />
     </Wrapper>
   );
