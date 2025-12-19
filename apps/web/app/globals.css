@@ -5,7 +5,7 @@
   --foreground: oklch(97% 0 0);
   --highlight: oklch(92% 0.004 286.32);
   --accent: #28d060;
-  --accent-foreground: oklch(26.6% 0.065 152.934);
+  --accent-foreground: #ffffff;
   --border: 1px solid oklch(92.2% 0 0);
   --bg-border: oklch(92.2% 0 0);
   --text-dark: oklch(21% 0.006 285.885);
@@ -65,7 +65,7 @@
     --background: oklch(14.5% 0 0);
     --foreground: oklch(21% 0.006 285.885);
     --highlight: oklch(26.9% 0 0);
-
+    --accent-foreground: oklch(26.6% 0.065 152.934);
     --border: 1px solid oklch(26.9% 0 0);
     --bg-border: oklch(26.9% 0 0);
     --text-dark: oklch(97% 0 0);
@@ -202,8 +202,8 @@ svg {
   padding: 10px !important;
 
   /* Only apply BORDER-BOTTOM & RIGHT for a clean grid */
-  border-right: var(--border) solid !important;
-  border-bottom: var(--border) solid !important;
+  border-right: var(--border) !important;
+  border-bottom: var(--border) !important;
 }
 
 /* First row: add top border */
@@ -234,7 +234,7 @@ svg {
 /* HEADER */
 .tabulator-header {
   background-color: var(--background) !important;
-  border-bottom: var(--border) solid !important;
+  border-bottom: var(--border) !important;
   height: 30px;
 }
 
@@ -245,7 +245,7 @@ svg {
   padding: 0px 10px !important;
 
   /* Ensure clean borders in header */
-  border-right: var(--border) solid !important;
+  border-right: var(--border) !important;
 }
 
 /* Remove last header column right border */
@@ -267,7 +267,7 @@ svg {
 
 /* FIX: remove the thin border BEFORE the resize handle */
 .tabulator-col-resize-handle {
-  border-right: var(--border) !important;
+  border-right: none !important;
 }
 
 .tabulator-col-resize-handle:last-child {

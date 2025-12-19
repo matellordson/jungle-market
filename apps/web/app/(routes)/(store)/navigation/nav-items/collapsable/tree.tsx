@@ -105,6 +105,7 @@ export default function NavTree({
   subordinate: {
     icon: JSX.Element;
     name: string;
+    href: string;
   }[];
   active: boolean;
   href: string;
@@ -112,17 +113,17 @@ export default function NavTree({
   const [open, setIsOpen] = useState(false);
   return (
     <Wrapper>
-      <Base $active={active}>
-        <CollapseToggle
-          className="toggle"
-          onClick={() => {
-            if (!open) {
-              setIsOpen(true);
-            } else {
-              setIsOpen(false);
-            }
-          }}
-        >
+      <Base
+        $active={active}
+        onClick={() => {
+          if (!open) {
+            setIsOpen(true);
+          } else {
+            setIsOpen(false);
+          }
+        }}
+      >
+        <CollapseToggle className="toggle">
           {open ? (
             <CaretDownIcon size={21} weight="bold" />
           ) : (
@@ -132,17 +133,17 @@ export default function NavTree({
 
         <span>{icon}</span>
 
-        <Link href={href}>
-          <p>{name}</p>
-        </Link>
+        <p>{name}</p>
       </Base>
       {open ? (
         <SubordinateWrapper>
           {subordinate.map((item) => (
-            <SubordinateItems key={item.name}>
-              <span>{item.icon}</span>
-              <p>{item.name}</p>
-            </SubordinateItems>
+            <Link href={item.href} key={item.name}>
+              <SubordinateItems>
+                <span>{item.icon}</span>
+                <p>{item.name}</p>
+              </SubordinateItems>
+            </Link>
           ))}
         </SubordinateWrapper>
       ) : (

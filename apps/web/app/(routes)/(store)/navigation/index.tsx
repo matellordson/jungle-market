@@ -258,6 +258,7 @@ export default function Navigation({
           <Essentials
             active={isEssentialsActive}
             href={`/${storeId}/essentials`}
+            storeId={storeId}
           />
           {isDesktop() && <DragHandler onMouseDown={onMouseDown} />}
         </NavItemsWrapper>

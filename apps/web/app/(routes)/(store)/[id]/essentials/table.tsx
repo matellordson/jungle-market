@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { url } from "../../../../../utils/url";
 import { TextAaIcon } from "@phosphor-icons/react/TextAa";
-import { CirclesThreeIcon } from "@phosphor-icons/react/CirclesThree";
+import { UserListIcon } from "@phosphor-icons/react/UserList";
 import { CaretCircleDownIcon } from "@phosphor-icons/react/CaretCircleDown";
 import { TextAlignLeftIcon } from "@phosphor-icons/react/TextAlignLeft";
 import { ListBulletsIcon } from "@phosphor-icons/react/ListBullets";
@@ -235,7 +235,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<ListBulletsIcon size={18} weight="bold" />)}
+    ${renderToStaticMarkup(<UserListIcon size={18} weight="bold" />)}
     <span>Owner</span>
   `;
 

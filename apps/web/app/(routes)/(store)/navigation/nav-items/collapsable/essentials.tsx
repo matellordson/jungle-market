@@ -1,29 +1,51 @@
 "use client";
 
 import { FolderSimpleIcon } from "@phosphor-icons/react/FolderSimple";
+import { TableIcon } from "@phosphor-icons/react/Table";
 import { FileIcon } from "@phosphor-icons/react/File";
 import NavTree from "./tree";
+import { useEffect, useState } from "react";
+import { url } from "../../../../../../utils/url";
+
+interface SubordinateType {
+  id: string;
+  name: string;
+}
 
 export default function Essentials({
   active,
   href,
+  storeId,
 }: {
   active: boolean;
   href: string;
+  storeId: string;
 }) {
+  const [subordinateData, setSubordinateData] = useState<SubordinateType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getSubordinate = async () => {
+      const api = await fetch(`${url}/essentials/${storeId}`);
+
+      const apiData = await api.json();
+      setSubordinateData(apiData);
+    };
+
+    getSubordinate();
+  }, [storeId]);
+
   const subordinateItems = [
     {
+      icon: <TableIcon size={19} weight="duotone" />,
+      name: "All",
+      href: `/${storeId}/essentials`,
+    },
+    ...subordinateData.map((item) => ({
       icon: <FileIcon size={19} weight="duotone" />,
-      name: "Brand Identity",
-    },
-    {
-      icon: <FileIcon size={20} weight="duotone" />,
-      name: "Docs",
-    },
-    {
-      icon: <FileIcon size={20} weight="duotone" />,
-      name: "Marketing",
-    },
+      name: item.name,
+      href: `/${storeId}/essentials/${item.name}`,
+    })),
   ];
 
   return (
