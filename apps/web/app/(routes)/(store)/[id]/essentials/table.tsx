@@ -99,7 +99,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       title: "Priority",
       field: "priority",
       sorter: "string",
-      width: 200,
+      width: 150,
       headerSort: false,
       editor: "list" as ColumnDefinition["editor"],
 
@@ -204,7 +204,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       title: "Summary",
       field: "summary",
       sorter: "string",
-      width: 200,
+      width: 300,
       editor: true,
       headerSort: false,
       titleFormatter: () => {
@@ -246,7 +246,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       title: "Version",
       field: "version",
       sorter: "string",
-      width: 200,
+      width: 150,
       editor: true,
       headerSort: false,
       titleFormatter: () => {
@@ -288,7 +288,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       title: "Created At",
       field: "created_at",
       sorter: "date",
-      width: 200,
+      width: 150,
       formatter: "datetime",
       formatterParams: {
         inputFormat: "iso",

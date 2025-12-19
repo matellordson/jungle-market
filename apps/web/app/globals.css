@@ -203,7 +203,7 @@ svg {
 
   /* Only apply BORDER-BOTTOM & RIGHT for a clean grid */
   border-right: var(--border) !important;
-  border-bottom: var(--border) !important;
+  border-bottom: none !important;
 }
 
 /* First row: add top border */
@@ -234,7 +234,7 @@ svg {
 /* HEADER */
 .tabulator-header {
   background-color: var(--background) !important;
-  border-bottom: var(--border) !important;
+  border-bottom: none !important;
   height: 30px;
 }
 
@@ -332,7 +332,7 @@ svg {
   filter: brightness(0.96);
 }
 
-.tabulator-edit-list-item:focus-visible {
+.tabulator-edit-list-item select:checked {
   background-color: transparent !important;
 }
 
@@ -344,4 +344,15 @@ svg {
 .tabulator-cell.tabulator-editing * {
   background: var(--background);
   color: var(--text-light) !important;
+}
+
+.tabulator-col:last-of-type,
+.tabulator-col:last-child,
+.tabulator-row .tabulator-cell:last-of-type {
+  border-right: none !important;
+}
+
+.tabulator-edit-list .tabulator-edit-list-item.active {
+  background: transparent !important;
+  color: inherit !important;
 }
