@@ -30,34 +30,43 @@
   --scrollbar-track: transparent;
   --scrollbar-thumb: var(--bg-border);
   --scrollbar-thumb-hover: rgba(100, 116, 139, 0.9);
-  --shadow: 0px 1px 3px hsla(0, 0%, 0%, 0.2);
+  --shadow: 0px 3px 5px hsla(0, 0%, 0%, 0.1);
 
-  --badge-gray-bg: #e4e4e0;
-  --badge-gray-text: #585854;
+  /* Neutral */
+  --badge-gray-bg: #e0e0dc;
+  --badge-gray-text: #3f3f3a;
 
-  --badge-brown-bg: #e1d8cb;
-  --badge-brown-text: #5f4b2f;
+  /* Brown */
+  --badge-brown-bg: #e8d6bf;
+  --badge-brown-text: #4f3a20;
 
-  --badge-orange-bg: #e6d6c7;
-  --badge-orange-text: #683e1e;
+  /* Orange */
+  --badge-orange-bg: #edcfae;
+  --badge-orange-text: #5f2f10;
 
-  --badge-yellow-bg: #e7ddbf;
-  --badge-yellow-text: #5f511a;
+  /* Yellow */
+  --badge-yellow-bg: #f0dc9a;
+  --badge-yellow-text: #5a4a00;
 
-  --badge-green-bg: #d8e4dc;
-  --badge-green-text: #2f5642;
+  /* Green */
+  --badge-green-bg: #cfe8da;
+  --badge-green-text: #1f4f3a;
 
-  --badge-blue-bg: #d8e1ea;
-  --badge-blue-text: #2f4f6a;
+  /* Blue */
+  --badge-blue-bg: #d3e4f4;
+  --badge-blue-text: #1f4666;
 
-  --badge-purple-bg: #ded6e6;
-  --badge-purple-text: #4f3e63;
+  /* Purple */
+  --badge-purple-bg: #e1d6f0;
+  --badge-purple-text: #3f2f5f;
 
-  --badge-pink-bg: #e3d5dd;
-  --badge-pink-text: #673b51;
+  /* Pink */
+  --badge-pink-bg: #ecd0dc;
+  --badge-pink-text: #5f2340;
 
-  --badge-red-bg: #e6d6d6;
-  --badge-red-text: #663030;
+  /* Red */
+  --badge-red-bg: #f0cfcf;
+  --badge-red-text: #5a1f1f;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -301,39 +310,43 @@ svg {
 
 /* Container of the list editor */
 .tabulator-edit-list {
-  background: var(--foreground) !important;
-  padding: 6px;
+  width: 250px;
+  background: var(--background) !important;
+  padding: 5px;
   border: var(--border) !important;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 12px;
   display: flex !important;
   flex-direction: column;
-  gap: 4px;
   transform: translateY(175px);
   box-shadow: var(--shadow) !important;
 }
 
 /* Each option */
+
 .tabulator-edit-list-item {
+  border-radius: 5px;
+}
+
+.tabulator-edit-list-item > * {
   display: flex !important;
   align-items: center;
+  padding: 3px 8px;
   gap: 5px;
-  padding: 6px 10px;
   border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.12s ease;
+  width: fit-content;
 }
 
 /* Hover effect */
 .tabulator-edit-list-item:hover {
-  background-color: transparent !important;
+  background-color: var(--foreground) !important;
   color: var(--text-light) !important;
-  filter: brightness(0.96);
 }
 
 .tabulator-edit-list-item select:checked {
-  background-color: transparent !important;
+  background-color: var(--foreground) !important;
 }
 
 .row-name {
@@ -354,5 +367,10 @@ svg {
 
 .tabulator-edit-list .tabulator-edit-list-item.active {
   background: transparent !important;
+  color: inherit !important;
+}
+
+.tabulator-edit-list .tabulator-edit-list-item.active:hover {
+  background: var(--foreground) !important;
   color: inherit !important;
 }

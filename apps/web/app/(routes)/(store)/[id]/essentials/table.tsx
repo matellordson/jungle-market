@@ -27,7 +27,6 @@ const Wrapper = styled.div`
 export function EssentialTable({ storeId }: { storeId: string }) {
   type EssentialRow = {
     name: string;
-    category: string | null;
     priority: "High" | "Medium" | "Low" | null;
     summary: string | null;
     owner: string | null;
@@ -68,28 +67,6 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.innerHTML = `
     ${renderToStaticMarkup(<TextAaIcon size={18} weight="bold" />)}
     <span>Name</span>
-  `;
-
-        return el;
-      },
-    },
-    {
-      title: "Category",
-      field: "category",
-      sorter: "string",
-      width: 200,
-      editor: true,
-      headerSort: false,
-
-      titleFormatter: () => {
-        const el = document.createElement("div");
-        el.style.display = "flex";
-        el.style.alignItems = "center";
-        el.style.gap = "6px";
-
-        el.innerHTML = `
-    ${renderToStaticMarkup(<ListBulletsIcon size={18} weight="bold" />)}
-    <span>Category</span>
   `;
 
         return el;
@@ -137,9 +114,9 @@ export function EssentialTable({ storeId }: { storeId: string }) {
           background:${bg};
           font-weight:500;
           width:fit-content;
-          font-size: 13px;
         "
       >
+        
         ${value}
       </div>
     `;
@@ -184,14 +161,8 @@ export function EssentialTable({ storeId }: { storeId: string }) {
           return `
         <div
           style="
-            display:flex;
-            align-items:center;
-            padding:6px 10px;
-            border-radius:6px;
             color:${color};
             background:${bg};
-            font-weight:500;
-            font-size: 13px;
           "
         >
           ${title}
@@ -268,8 +239,52 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       field: "tags",
       sorter: "string",
       width: 200,
-      editor: true,
       headerSort: false,
+      autocomplete: true,
+      editor: "list" as ColumnDefinition["editor"],
+
+      formatter: (cell: any) => {
+        const value = cell.getValue();
+
+        let color = "";
+        let bg = "";
+
+        if (value === "High") {
+          color = "var(--badge-red-text)";
+          bg = "var(--badge-red-bg)";
+        }
+
+        if (value === "Medium") {
+          color = "var(--badge-yellow-text)";
+          bg = "var(--badge-yellow-bg)";
+        }
+
+        if (value === "Low") {
+          color = "var(--badge-green-text)";
+          bg = "var(--badge-green-bg)";
+        }
+
+        if (!value) return "";
+
+        return `
+      <div
+        style="
+          display:inline-flex;
+          align-items:center;
+          padding:3px 10px;
+          border-radius:6px;
+          color:${color};
+          background:${bg};
+          font-weight:500;
+          width:fit-content;
+          font-size: 13px;
+        "
+      >
+        ${value}
+      </div>
+    `;
+      },
+
       titleFormatter: () => {
         const el = document.createElement("div");
         el.style.display = "flex";
@@ -277,11 +292,48 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-    ${renderToStaticMarkup(<ListBulletsIcon size={18} weight="bold" />)}
-    <span>Tags</span>
-  `;
+      ${renderToStaticMarkup(<CaretCircleDownIcon size={18} weight="bold" />)}
+      <span>Tags</span>
+    `;
 
         return el;
+      },
+
+      editorParams: {
+        values: ["High", "Medium", "Low"],
+        multiselect: true,
+        sort: "asc",
+
+        itemFormatter: (value: string, title: string) => {
+          let color = "";
+          let bg = "";
+
+          if (value === "High") {
+            color = "var(--badge-red-text)";
+            bg = "var(--badge-red-bg)";
+          }
+
+          if (value === "Medium") {
+            color = "var(--badge-yellow-text)";
+            bg = "var(--badge-yellow-bg)";
+          }
+
+          if (value === "Low") {
+            color = "var(--badge-green-text)";
+            bg = "var(--badge-green-bg)";
+          }
+
+          return `
+        <div
+          style="
+            color:${color};
+            background:${bg};
+          "
+        >
+          ${title}
+        </div>
+      `;
+        },
       },
     },
     {
@@ -318,7 +370,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       <ReactTabulator
         columns={tableColumns}
         data={essentialData}
-        // layout={"fitDataStretch"}
+        layout={"fitDataStretch"}
       />
     </Wrapper>
   );
