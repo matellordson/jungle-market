@@ -262,43 +262,48 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       editor: "list" as ColumnDefinition["editor"],
 
       formatter: (cell: any) => {
-        const value = cell.getValue();
+        const values = cell.getValue();
 
-        let color = "";
-        let bg = "";
+        if (!values) return "";
+        const tagArray = Array.isArray(values) ? values : values.split(",");
 
-        if (value === "High") {
-          color = "var(--badge-red-text)";
-          bg = "var(--badge-red-bg)";
-        }
+        const tagsHtml = tagArray
+          .map(
+            (tag: any) => `
+      <span style="
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-weight: 500;
+        background-color: var(--foreground);
+        color: var(--text-light);
+        white-space: nowrap;
+        flex-shrink: 0; 
+      ">
+        ${tag.trim()}
+      </span>
+    `
+          )
+          .join("");
 
-        if (value === "Medium") {
-          color = "var(--badge-yellow-text)";
-          bg = "var(--badge-yellow-bg)";
-        }
-
-        if (value === "Low") {
-          color = "var(--badge-green-text)";
-          bg = "var(--badge-green-bg)";
-        }
-
-        if (!value) return "";
-
+        // The container now handles the horizontal scroll
         return `
-      <div
-        style="
-          display:inline-flex;
-          align-items:center;
-          padding:3px 10px;
-          border-radius:6px;
-          color:${color};
-          background:${bg};
-          font-weight:500;
-          width:fit-content;
-          font-size: 13px;
-        "
-      >
-        ${value}
+      <div class="tag-scroll-container" style="
+        display: flex; 
+        align-items:center;
+        flex-wrap: nowrap; 
+        overflow-x: auto; 
+        gap: 6px; 
+        padding: 4px 0;
+        width: 100%;
+        height: 100%;
+        scrollbar-width: none; 
+      ">
+        <style>
+          .tag-scroll-container::-webkit-scrollbar { display: none; } 
+        </style>
+        ${tagsHtml}
       </div>
     `;
       },
@@ -307,47 +312,23 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         const el = document.createElement("div");
         el.style.display = "flex";
         el.style.alignItems = "center";
-        el.style.gap = "6px";
+        el.style.gap = "8px";
 
         el.innerHTML = `
       ${renderToStaticMarkup(<ListBulletsIcon size={18} weight="bold" />)}
-      <span>Tags</span>
+      <span style="font-weight: 600;">Tags</span>
     `;
 
         return el;
       },
 
       editorParams: {
-        values: tagProperties?.tags?.map((item) => item),
+        values: tagProperties?.tags || [],
         multiselect: true,
         sort: "asc",
-
         itemFormatter: (value: string, title: string) => {
-          let color = "";
-          let bg = "";
-
-          if (value === "One") {
-            color = "var(--badge-brown-text)";
-            bg = "var(--badge-brown-bg)";
-          }
-
-          if (value === "Two") {
-            color = "var(--badge-green-text)";
-            bg = "var(--badge-green-bg)";
-          }
-
-          if (value === "Three") {
-            color = "var(--badge-gray-text)";
-            bg = "var(--badge-gray-bg)";
-          }
-
           return `
-        <div
-          style="
-            color:${color};
-            background:${bg};
-          "
-        >
+        <div style="padding: 4px; font-size: 13px; display: flex; align-items: center;">
           ${title}
         </div>
       `;
