@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { url } from "../../../../../utils/url";
 import { TextAaIcon } from "@phosphor-icons/react/TextAa";
+import { ListPlusIcon } from "@phosphor-icons/react/ListPlus";
 import { UserListIcon } from "@phosphor-icons/react/UserList";
 import { CaretCircleDownIcon } from "@phosphor-icons/react/CaretCircleDown";
 import { TextAlignLeftIcon } from "@phosphor-icons/react/TextAlignLeft";
@@ -15,6 +16,7 @@ import { HashIcon } from "@phosphor-icons/react/Hash";
 import { CalendarBlankIcon } from "@phosphor-icons/react/CalendarBlank";
 import { renderToStaticMarkup } from "react-dom/server";
 import { DateTime } from "luxon";
+import { Button } from "@repo/ui/button";
 
 (window as any).luxon = { DateTime };
 
@@ -22,6 +24,12 @@ const Wrapper = styled.div`
   border-radius: 10px;
   max-width: 992px;
   margin: auto;
+  margin-top: 100px;
+`;
+
+const TableActions = styled.div`
+  margin-bottom: 20px;
+  width: 100%;
 `;
 
 export function EssentialTable({ storeId }: { storeId: string }) {
@@ -366,6 +374,12 @@ export function EssentialTable({ storeId }: { storeId: string }) {
 
   return (
     <Wrapper>
+      <TableActions>
+        {/* <Button accent={true}>
+          <ListPlusIcon size={20} weight="duotone" />
+          New
+        </Button> */}
+      </TableActions>
       <ReactTabulator
         columns={tableColumns}
         data={essentialData}

@@ -17,24 +17,24 @@ const Base = styled.div<{ $active: boolean }>`
   cursor: pointer;
   font-size: 15px;
   background-color: ${(props) =>
-    props.$active ? "var(--accent)" : "transparent"};
+    props.$active ? "var(--accent-mute)" : "transparent"};
+  border: ${(props) =>
+    props.$active ? "    var(--accent-border)" : "transparent"};
 
   &:hover {
-    background-color: ${(props) =>
-      props.$active ? "var(--accent)" : "var(--highlight)"};
-    color: ${(props) =>
-      props.$active ? "var(--accent-foreground)" : "var(--text-light)"};
+    background-color: ${(props) => (props.$active ? "" : "var(--highlight)")};
+    color: ${(props) => (props.$active ? "" : "var(--text-light)")};
   }
 
   & svg {
     color: ${(props) =>
-      props.$active ? "var(--accent-foreground)" : "var(--text-light)"};
+      props.$active ? "var(--accent)" : "var(--text-light)"};
     vertical-align: middle;
   }
 
   & p {
     color: ${(props) =>
-      props.$active ? "var(--accent-foreground)" : "var(--text-light)"};
+      props.$active ? "var(--accent)" : "var(--text-light)"};
     font-weight: 500;
   }
 

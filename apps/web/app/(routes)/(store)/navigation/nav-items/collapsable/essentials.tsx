@@ -1,7 +1,7 @@
 "use client";
 
 import { FolderSimpleIcon } from "@phosphor-icons/react/FolderSimple";
-import { TableIcon } from "@phosphor-icons/react/Table";
+import { ListIcon } from "@phosphor-icons/react/List";
 import { FileIcon } from "@phosphor-icons/react/File";
 import NavTree from "./tree";
 import { useEffect, useState } from "react";
@@ -37,8 +37,8 @@ export default function Essentials({
 
   const subordinateItems = [
     {
-      icon: <TableIcon size={19} weight="duotone" />,
-      name: "All",
+      icon: <ListIcon size={19} weight="duotone" />,
+      name: "List",
       href: `/${storeId}/essentials`,
     },
     ...subordinateData.map((item) => ({

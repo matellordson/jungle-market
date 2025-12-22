@@ -4,8 +4,9 @@
   --background: oklch(98.5% 0 0);
   --foreground: oklch(97% 0 0);
   --highlight: oklch(92% 0.004 286.32);
-  --accent: #28d060;
-  --accent-mute: #28d06007;
+  --accent: #209e4a;
+  --accent-mute: #28d06031;
+  --accent-border: 1px solid #28d06060;
   --accent-foreground: #ffffff;
   --border: 1px solid oklch(92.2% 0 0);
   --bg-border: oklch(92.2% 0 0);
@@ -76,6 +77,8 @@
     --foreground: oklch(21% 0.006 285.885);
     --highlight: oklch(26.9% 0 0);
     --accent-foreground: oklch(26.6% 0.065 152.934);
+    --accent-mute: #28d0601d;
+    --accent-border: 1px solid #28d06027;
     --border: 1px solid oklch(26.9% 0 0);
     --bg-border: oklch(26.9% 0 0);
     --text-dark: oklch(97% 0 0);
@@ -320,7 +323,7 @@ svg {
   display: flex !important;
   flex-direction: column;
   box-shadow: var(--shadow) !important;
-  margin-top: 155px;
+  /* margin-top: 155px; */
 }
 
 /* Each option */
