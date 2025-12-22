@@ -2,6 +2,7 @@ import { accountRoute } from "./accounts";
 import { connectWalletRoute } from "./connect-wallet";
 import { essentialRoute } from "./essentials";
 import { storeRoutes } from "./stores";
+import { tablePropertiesRoute } from "./table-properties";
 
 export const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -16,5 +17,6 @@ const server = Bun.serve({
     ...connectWalletRoute,
     ...storeRoutes,
     ...essentialRoute,
+    ...tablePropertiesRoute,
   },
 });

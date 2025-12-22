@@ -35,7 +35,14 @@ export function EssentialTable({ storeId }: { storeId: string }) {
     created_at: string;
   };
 
+  type tagData = {
+    tags: string[];
+  };
+
   const [essentialData, setEssentialData] = useState<EssentialRow[]>([]);
+  const [tagProperties, setTagProperties] = useState<tagData>({
+    tags: [],
+  });
 
   useEffect(() => {
     if (storeId) {
@@ -44,9 +51,21 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         const essentialsData = await essentialsApi.json();
         setEssentialData(essentialsData);
       };
+
       getStoreEssentials();
     }
   }, []);
+
+  useEffect(() => {
+    const getTagProperties = async () => {
+      const tagApi = await fetch(`${url}/table-properties/tags/${storeId}`);
+      const tagData = await tagApi.json();
+      console.log(tagData);
+      setTagProperties(tagData);
+    };
+
+    getTagProperties();
+  });
 
   const tableColumns: ColumnDefinition[] = [
     {
@@ -240,7 +259,6 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       sorter: "string",
       width: 200,
       headerSort: false,
-      autocomplete: true,
       editor: "list" as ColumnDefinition["editor"],
 
       formatter: (cell: any) => {
@@ -292,7 +310,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
         el.style.gap = "6px";
 
         el.innerHTML = `
-      ${renderToStaticMarkup(<CaretCircleDownIcon size={18} weight="bold" />)}
+      ${renderToStaticMarkup(<ListBulletsIcon size={18} weight="bold" />)}
       <span>Tags</span>
     `;
 
@@ -300,7 +318,7 @@ export function EssentialTable({ storeId }: { storeId: string }) {
       },
 
       editorParams: {
-        values: ["High", "Medium", "Low"],
+        values: tagProperties?.tags?.map((item) => item),
         multiselect: true,
         sort: "asc",
 
@@ -308,19 +326,19 @@ export function EssentialTable({ storeId }: { storeId: string }) {
           let color = "";
           let bg = "";
 
-          if (value === "High") {
-            color = "var(--badge-red-text)";
-            bg = "var(--badge-red-bg)";
+          if (value === "One") {
+            color = "var(--badge-brown-text)";
+            bg = "var(--badge-brown-bg)";
           }
 
-          if (value === "Medium") {
-            color = "var(--badge-yellow-text)";
-            bg = "var(--badge-yellow-bg)";
-          }
-
-          if (value === "Low") {
+          if (value === "Two") {
             color = "var(--badge-green-text)";
             bg = "var(--badge-green-bg)";
+          }
+
+          if (value === "Three") {
+            color = "var(--badge-gray-text)";
+            bg = "var(--badge-gray-bg)";
           }
 
           return `

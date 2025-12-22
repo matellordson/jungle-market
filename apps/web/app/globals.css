@@ -5,6 +5,7 @@
   --foreground: oklch(97% 0 0);
   --highlight: oklch(92% 0.004 286.32);
   --accent: #28d060;
+  --accent-mute: #28d06007;
   --accent-foreground: #ffffff;
   --border: 1px solid oklch(92.2% 0 0);
   --bg-border: oklch(92.2% 0 0);
@@ -286,8 +287,8 @@ svg {
 .tabulator-cell.tabulator-editing {
   outline: none !important;
   border: 2px solid var(--accent) !important;
-  border-radius: 6px;
-  background-color: var(--background);
+  border-radius: 0px;
+  background-color: var(--accent-mute);
   padding: 0 5px !important;
 }
 
@@ -318,8 +319,8 @@ svg {
   font-size: 12px;
   display: flex !important;
   flex-direction: column;
-  transform: translateY(175px);
   box-shadow: var(--shadow) !important;
+  margin-top: 155px;
 }
 
 /* Each option */
