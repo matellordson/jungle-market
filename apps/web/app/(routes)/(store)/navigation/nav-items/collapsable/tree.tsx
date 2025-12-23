@@ -79,6 +79,10 @@ const SubordinateItems = styled.div`
   &:hover {
     background-color: var(--highlight);
   }
+
+  & svg {
+    vertical-align: bottom;
+  }
 `;
 
 const CollapseToggle = styled.div`
