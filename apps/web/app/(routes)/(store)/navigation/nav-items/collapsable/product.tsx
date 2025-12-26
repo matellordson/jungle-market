@@ -1,8 +1,8 @@
 "use client";
 
 import { FolderSimpleIcon } from "@phosphor-icons/react/FolderSimple";
-import { ListIcon } from "@phosphor-icons/react/List";
-import { FileIcon } from "@phosphor-icons/react/File";
+import { FolderPlusIcon } from "@phosphor-icons/react/FolderPlus";
+import { FoldersIcon } from "@phosphor-icons/react/Folders";
 import NavTree from "./tree";
 import { useEffect, useState } from "react";
 import { url } from "../../../../../../utils/url";
@@ -17,6 +17,30 @@ const pulse = keyframes`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ProductActionsWrapper = styled.div`
+  padding: 3px 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & p {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  & svg:hover {
+    color: var(--text-dark);
+    cursor: pointer;
+  }
+`;
+
+const ProductActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 const Skeleton = styled.div`
@@ -47,6 +71,8 @@ export default function Product({
   const [loading, setLoading] = useState(true);
 
   const arr = Array.from({ length: 4 }).map((_, i) => i);
+
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
 
   // useEffect(() => {
   //   const getSubordinate = async () => {
@@ -83,6 +109,23 @@ export default function Product({
 
   return (
     <Wrapper>
+      <ProductActionsWrapper>
+        <p>Products</p>
+        <ProductActions>
+          <FolderPlusIcon
+            onClick={() => {
+              if (isAddingProduct) {
+                setIsAddingProduct(false);
+              } else {
+                setIsAddingProduct(true);
+              }
+            }}
+            size={20}
+            weight="duotone"
+          />
+          <FoldersIcon size={20} weight="duotone" />
+        </ProductActions>
+      </ProductActionsWrapper>
       {loading ? (
         <>
           {arr.map((_, index) => (
@@ -91,6 +134,7 @@ export default function Product({
         </>
       ) : (
         <>
+          {isAddingProduct ? <p>add new product</p> : ""}
           {productNames?.map((product, index) => (
             <NavTree
               key={index}

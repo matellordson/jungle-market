@@ -11,7 +11,7 @@
   --border: 1px solid oklch(92.2% 0 0);
   --bg-border: oklch(55.6% 0 0);
   --text-dark: oklch(20.5% 0 0);
-  --text-light: oklch(37.1% 0 0);
+  --text-light: oklch(55.6% 0 0);
   --text-mute: oklch(70.5% 0.015 286.067);
   --icon: oklch(55.2% 0.016 285.938);
   --scrollbar-size: 6px;
@@ -54,7 +54,7 @@ body {
   overflow-x: hidden;
   font-family: var(--font-geist-sans);
   background-color: var(--background);
-  color: var(--text-dark);
+  color: var(--text-light);
 }
 
 a {
