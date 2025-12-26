@@ -106,7 +106,7 @@ export default function NavTree({
 }: {
   icon: JSX.Element;
   name: string;
-  subordinate: {
+  subordinate?: {
     icon: JSX.Element;
     name: string;
     href: string;
@@ -141,7 +141,7 @@ export default function NavTree({
       </Base>
       {open ? (
         <SubordinateWrapper>
-          {subordinate.map((item) => (
+          {subordinate?.map((item) => (
             <Link href={item.href} key={item.name}>
               <SubordinateItems>
                 <span>{item.icon}</span>

@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect, useMemo } from "react";
 import styled, { css } from "styled-components";
 import { SidebarSimpleIcon } from "@phosphor-icons/react/SidebarSimple";
 import { HouseIcon } from "@phosphor-icons/react/House";
 import NavHead from "./head";
-import Essentials from "./nav-items/collapsable/essentials";
+import Product from "./nav-items/collapsable/product";
 import { url } from "../../../../utils/url";
 import SingleNavItem from "./nav-items/single";
 import { usePathname } from "next/navigation";
@@ -15,6 +15,7 @@ const MIN_DESKTOP_WIDTH = 250;
 const MAX_DESKTOP_WIDTH = 400;
 const INITIAL_DESKTOP_WIDTH = 300;
 const MOBILE_SIDEBAR_WIDTH = 80;
+const MOBILE_MAX_WIDTH = 320;
 
 const isDesktop = () =>
   typeof window !== "undefined" && window.innerWidth >= MOBILE_BREAKPOINT;
@@ -25,9 +26,27 @@ const Wrapper = styled.div`
   display: flex;
   position: fixed;
   overflow: hidden;
+  --sb-width: ${INITIAL_DESKTOP_WIDTH}px;
+
+  &[data-sidebar-open="false"] .sidebar-container {
+    margin-left: calc(var(--sb-width) * -1);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT - 1}px) {
+    &[data-sidebar-open="false"] .sidebar-container {
+      margin-left: 0;
+      transform: translateX(-100%);
+      opacity: 1;
+    }
+    &[data-sidebar-open="true"] .sidebar-container {
+      transform: translateX(0);
+    }
+  }
 `;
 
-const NavItemsWrapper = styled.div<{ $isMobileOpen: boolean }>`
+const NavItemsWrapper = styled.div`
   height: 100vh;
   background-color: var(--foreground);
   flex-shrink: 0;
@@ -40,22 +59,18 @@ const NavItemsWrapper = styled.div<{ $isMobileOpen: boolean }>`
   top: 0;
   left: 0;
   z-index: 100;
-  transform: translateX(-100%);
   transition:
+    margin-left 0.3s ease-in-out,
     transform 0.3s ease-in-out,
-    width 0.3s ease-in-out;
+    opacity 0.2s;
   width: ${MOBILE_SIDEBAR_WIDTH}vw;
-
-  ${(props) =>
-    props.$isMobileOpen &&
-    css`
-      transform: translateX(0);
-    `}
+  max-width: ${MOBILE_MAX_WIDTH}px;
 
   @media only screen and (min-width: ${MOBILE_BREAKPOINT}px) {
     position: static;
-    transform: translateX(0);
-    transition: none;
+    width: var(--sb-width);
+    max-width: none;
+    transform: none !important;
   }
 `;
 
@@ -68,7 +83,6 @@ const DragHandler = styled.div`
   cursor: ew-resize;
   background-color: transparent;
   z-index: 101;
-
   display: none;
   @media only screen and (min-width: ${MOBILE_BREAKPOINT}px) {
     display: block;
@@ -95,7 +109,6 @@ const SidebarToggle = styled.div`
   align-items: center;
   border-radius: 5px;
   cursor: pointer;
-
   & svg:hover {
     color: var(--text-dark);
   }
@@ -110,21 +123,10 @@ const PageWrapper = styled.div`
   position: relative;
 `;
 
-const PageContent = styled.div<{ $sidebarOpen: boolean }>`
+const PageContent = styled.div`
   padding: 10px;
   flex-grow: 1;
   overflow-y: auto;
-  /* margin: auto; */
-  /* max-width: 1000px; */
-
-  ${(props) =>
-    props.$sidebarOpen &&
-    css`
-      @media only screen and (max-width: ${MOBILE_BREAKPOINT - 1}px) {
-        opacity: 0.5;
-        pointer-events: none;
-      }
-    `}
 `;
 
 export default function Navigation({
@@ -134,135 +136,109 @@ export default function Navigation({
   children: React.ReactNode;
   storeId: string;
 }) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const [sidebarWidth, setSidebarWidth] = useState(INITIAL_DESKTOP_WIDTH);
-  const [sideBarOpen, setSideBarOpen] = useState(() => isDesktop());
-  const isResizingRef = useRef(false);
-  const [storeName, setStoreName] = useState();
+  const [storeName, setStoreName] = useState("");
   const pathName = usePathname();
 
   useEffect(() => {
-    if (storeId) {
-      const getStoreName = async () => {
-        const storeApi = await fetch(`${url}/stores/${storeId}`);
-        const storeData = await storeApi.json();
-        setStoreName(storeData.name);
-      };
-      getStoreName();
+    if (wrapperRef.current) {
+      wrapperRef.current.setAttribute(
+        "data-sidebar-open",
+        isDesktop() ? "true" : "false"
+      );
     }
-  });
+  }, []);
+
+  useEffect(() => {
+    if (storeId) {
+      fetch(`${url}/stores/${storeId}`)
+        .then((res) => res.json())
+        .then((data) => setStoreName(data.name))
+        .catch(console.error);
+    }
+  }, [storeId]);
+
+  const toggleSidebar = useCallback(() => {
+    if (!wrapperRef.current) return;
+    const current = wrapperRef.current.getAttribute("data-sidebar-open");
+    wrapperRef.current.setAttribute(
+      "data-sidebar-open",
+      current === "true" ? "false" : "true"
+    );
+  }, []);
 
   const onMouseMove = useCallback((e: MouseEvent) => {
-    if (!isResizingRef.current || !isDesktop()) return;
-
-    const newWidth = e.clientX;
-    if (newWidth >= MIN_DESKTOP_WIDTH && newWidth <= MAX_DESKTOP_WIDTH) {
-      setSidebarWidth(newWidth);
+    if (wrapperRef.current) {
+      const newWidth = e.clientX;
+      if (newWidth >= MIN_DESKTOP_WIDTH && newWidth <= MAX_DESKTOP_WIDTH) {
+        wrapperRef.current.style.setProperty("--sb-width", `${newWidth}px`);
+      }
     }
   }, []);
 
   const stopResize = useCallback(() => {
-    if (!isResizingRef.current) return;
-
-    isResizingRef.current = false;
     document.body.style.cursor = "default";
-
     document.removeEventListener("mousemove", onMouseMove);
     document.removeEventListener("mouseup", stopResize);
   }, [onMouseMove]);
 
   const onMouseDown = () => {
-    if (!isDesktop() || !sideBarOpen) return;
-
-    isResizingRef.current = true;
     document.body.style.cursor = "ew-resize";
-
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseup", stopResize);
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      if (!isDesktop()) setSideBarOpen(false);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const toggleSidebar = () => {
-    setSideBarOpen((prev) => !prev);
-  };
-
-  /*
-    MOBILE SIDEBAR AUTO-CLOSE:
-    - We store a ref (sidebarRef) that always points to the sidebar DOM element.
-    - When the user taps anywhere on the page, we check:
-        1. Sidebar is open
-        2. Screen is in mobile mode
-        3. The click target is NOT inside the sidebar
-        4. The click target is NOT the toggle button
-    - If all conditions pass → sidebar closes.
-    - Using useRef avoids stale references and ensures accurate detection of clicks
-      even when the sidebar re-renders or animates.
-  */
-  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (!isDesktop() && sideBarOpen) {
+      if (
+        !isDesktop() &&
+        wrapperRef.current?.getAttribute("data-sidebar-open") === "true"
+      ) {
         if (
           sidebarRef.current &&
           !sidebarRef.current.contains(event.target as Node)
         ) {
           const toggleButton = document.getElementById("sidebar-toggle-btn");
-
-          if (
-            toggleButton &&
-            (toggleButton.contains(event.target as Node) ||
-              event.target === toggleButton)
-          ) {
-            return;
-          }
-
-          setSideBarOpen(false);
+          if (toggleButton?.contains(event.target as Node)) return;
+          wrapperRef.current.setAttribute("data-sidebar-open", "false");
         }
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [sideBarOpen]);
+  }, []);
 
-  // routes for Nav Tree
-  const essentialsHref = `/${storeId}/essentials`;
-  const isEssentialsActive = pathName.startsWith(essentialsHref);
+  // Update active states by specifically checking the pathname
+  const sidebarContent = useMemo(() => {
+    const homeHref = `/${storeId}`;
+    const productHref = `/${storeId}/product`;
+
+    return (
+      <>
+        <NavHead storeName={storeName} />
+        <SingleNavItem
+          name="Home"
+          icon={<HouseIcon size={21} weight="duotone" />}
+          // Ensures /storeId matches exactly or /storeId/
+          active={pathName === homeHref || pathName === `${homeHref}/`}
+          href={`${homeHref}/`}
+        />
+        <Product
+          active={pathName.startsWith(productHref)}
+          href={productHref}
+          storeId={storeId}
+        />
+      </>
+    );
+  }, [storeName, storeId, pathName]);
 
   return (
-    <Wrapper>
-      {sideBarOpen && (
-        <NavItemsWrapper
-          ref={sidebarRef}
-          style={
-            isDesktop()
-              ? { width: `${sidebarWidth}px` }
-              : { width: `${MOBILE_SIDEBAR_WIDTH}vw` }
-          }
-          $isMobileOpen={sideBarOpen}
-        >
-          <NavHead storeName={storeName!} />
-          <SingleNavItem
-            name="Home"
-            icon={<HouseIcon size={21} weight="duotone" />}
-            active={`/${storeId}` === `${pathName}`}
-            href={`/${storeId}/`}
-          />
-          <Essentials
-            active={isEssentialsActive}
-            href={`/${storeId}/essentials`}
-            storeId={storeId}
-          />
-          {isDesktop() && <DragHandler onMouseDown={onMouseDown} />}
-        </NavItemsWrapper>
-      )}
+    <Wrapper ref={wrapperRef} data-sidebar-open="true">
+      <NavItemsWrapper ref={sidebarRef} className="sidebar-container">
+        {sidebarContent}
+        <DragHandler onMouseDown={onMouseDown} />
+      </NavItemsWrapper>
 
       <PageWrapper>
         <TabWrapper>
@@ -278,7 +254,6 @@ export default function Navigation({
               fill="var(--icon)"
             />
           </svg>
-
           <SidebarToggle id="sidebar-toggle-btn">
             <SidebarSimpleIcon
               onClick={toggleSidebar}
@@ -287,8 +262,7 @@ export default function Navigation({
             />
           </SidebarToggle>
         </TabWrapper>
-
-        <PageContent $sidebarOpen={sideBarOpen}>{children}</PageContent>
+        <PageContent>{children}</PageContent>
       </PageWrapper>
     </Wrapper>
   );

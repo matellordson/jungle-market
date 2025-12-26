@@ -1,6 +1,7 @@
 import { accountRoute } from "./accounts";
 import { connectWalletRoute } from "./connect-wallet";
 import { essentialRoute } from "./essentials";
+import { productRoute } from "./products";
 import { storeRoutes } from "./stores";
 import { tablePropertiesRoute } from "./table-properties";
 
@@ -16,6 +17,7 @@ const server = Bun.serve({
     ...accountRoute,
     ...connectWalletRoute,
     ...storeRoutes,
+    ...productRoute,
     ...essentialRoute,
     ...tablePropertiesRoute,
   },

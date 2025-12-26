@@ -11,10 +11,7 @@ const Wrapper = styled.div<{ $active: boolean }>`
   cursor: pointer;
   font-size: 15px;
   color: var(--text-light);
-  background-color: ${(props) =>
-    props.$active ? "var(--accent-mute)" : "transparent"};
-  border: ${(props) =>
-    props.$active ? "    var(--accent-border)" : "transparent"};
+  background-color: ${(props) => (props.$active ? "var(--highlight)" : "")};
 
   &:hover {
     background-color: ${(props) => (props.$active ? "" : "var(--highlight)")};
@@ -22,15 +19,13 @@ const Wrapper = styled.div<{ $active: boolean }>`
   }
 
   & svg {
-    color: ${(props) =>
-      props.$active ? "var(--accent)" : "var(--text-light)"};
+    color: ${(props) => (props.$active ? "var(--text-dark)" : "")};
     vertical-align: middle;
   }
 
   & p {
     font-weight: 500;
-    color: ${(props) =>
-      props.$active ? "var(--accent)" : "var(--text-light)"};
+    color: ${(props) => (props.$active ? "var(--text-dark)" : "")};
   }
 `;
 
