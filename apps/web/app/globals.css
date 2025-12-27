@@ -4,10 +4,7 @@
   --background: oklch(98.5% 0 0);
   --foreground: oklch(97% 0 0);
   --highlight: oklch(92% 0.004 286.32);
-  --accent: #209e4a;
-  --accent-mute: #28d06031;
-  --accent-border: 1px solid #28d06060;
-  --accent-foreground: #ffffff;
+  --accent: oklch(70.4% 0.14 182.503);
   --border: 1px solid oklch(92.2% 0 0);
   --bg-border: oklch(55.6% 0 0);
   --text-dark: oklch(20.5% 0 0);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect, useMemo } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { SidebarSimpleIcon } from "@phosphor-icons/react/SidebarSimple";
 import { HouseIcon } from "@phosphor-icons/react/House";
 import NavHead from "./head";
@@ -38,10 +38,11 @@ const Wrapper = styled.div`
     &[data-sidebar-open="false"] .sidebar-container {
       margin-left: 0;
       transform: translateX(-100%);
-      opacity: 1;
+      opacity: 0;
     }
     &[data-sidebar-open="true"] .sidebar-container {
       transform: translateX(0);
+      opacity: 1;
     }
   }
 `;
@@ -209,7 +210,6 @@ export default function Navigation({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Update active states by specifically checking the pathname
   const sidebarContent = useMemo(() => {
     const homeHref = `/${storeId}`;
     const productHref = `/${storeId}/product`;
@@ -220,7 +220,6 @@ export default function Navigation({
         <SingleNavItem
           name="Home"
           icon={<HouseIcon size={21} weight="duotone" />}
-          // Ensures /storeId matches exactly or /storeId/
           active={pathName === homeHref || pathName === `${homeHref}/`}
           href={`${homeHref}/`}
         />
@@ -234,7 +233,7 @@ export default function Navigation({
   }, [storeName, storeId, pathName]);
 
   return (
-    <Wrapper ref={wrapperRef} data-sidebar-open="true">
+    <Wrapper ref={wrapperRef} data-sidebar-open="false">
       <NavItemsWrapper ref={sidebarRef} className="sidebar-container">
         {sidebarContent}
         <DragHandler onMouseDown={onMouseDown} />

@@ -1,12 +1,14 @@
 "use client";
 
 import { FolderSimpleIcon } from "@phosphor-icons/react/FolderSimple";
-import { FolderPlusIcon } from "@phosphor-icons/react/FolderPlus";
-import { FoldersIcon } from "@phosphor-icons/react/Folders";
+import { PlusIcon } from "@phosphor-icons/react/Plus";
+import { DotsThreeIcon } from "@phosphor-icons/react/DotsThree";
+import { FolderSimplePlusIcon } from "@phosphor-icons/react/FolderSimplePlus";
 import NavTree from "./tree";
 import { useEffect, useState } from "react";
 import { url } from "../../../../../../utils/url";
 import styled, { keyframes } from "styled-components";
+import { Input } from "@repo/ui/input";
 
 const pulse = keyframes`
   0% { opacity: 1; }
@@ -20,27 +22,41 @@ const Wrapper = styled.div`
 `;
 
 const ProductActionsWrapper = styled.div`
-  padding: 3px 7px;
+  border-radius: 10px;
+  padding: 5px 7px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 
   & p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-light);
     font-weight: 500;
   }
 
+  & svg {
+    cursor: pointer;
+  }
+
   & svg:hover {
     color: var(--text-dark);
-    cursor: pointer;
+  }
+
+  &:hover {
+    background-color: var(--highlight);
+  }
+
+  &:hover .actions {
+    visibility: visible;
   }
 `;
 
 const ProductActions = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 7px;
+  visibility: hidden;
 `;
 
 const Skeleton = styled.div`
@@ -50,6 +66,14 @@ const Skeleton = styled.div`
   border-radius: 10px;
   background-color: var(--highlight);
   animation: ${pulse} 1.4s ease-in-out infinite;
+`;
+
+const NewProductWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-left: 5px;
+  margin-bottom: 3px;
 `;
 
 export default function Product({
@@ -73,6 +97,8 @@ export default function Product({
   const arr = Array.from({ length: 4 }).map((_, i) => i);
 
   const [isAddingProduct, setIsAddingProduct] = useState(false);
+
+  const [newProductName, setNewProductName] = useState("");
 
   // useEffect(() => {
   //   const getSubordinate = async () => {
@@ -107,12 +133,28 @@ export default function Product({
 
   // ];
 
+  const handleAddProduct = async () => {
+    const values = {
+      name: newProductName,
+      store_id: storeId,
+    };
+    await fetch(`${url}/products/new`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    setIsAddingProduct(false);
+  };
+
   return (
     <Wrapper>
       <ProductActionsWrapper>
         <p>Products</p>
-        <ProductActions>
-          <FolderPlusIcon
+        <ProductActions className="actions">
+          <DotsThreeIcon size={20} weight="bold" />
+          <PlusIcon
             onClick={() => {
               if (isAddingProduct) {
                 setIsAddingProduct(false);
@@ -120,10 +162,9 @@ export default function Product({
                 setIsAddingProduct(true);
               }
             }}
-            size={20}
-            weight="duotone"
+            size={15}
+            weight="bold"
           />
-          <FoldersIcon size={20} weight="duotone" />
         </ProductActions>
       </ProductActionsWrapper>
       {loading ? (
@@ -134,7 +175,21 @@ export default function Product({
         </>
       ) : (
         <>
-          {isAddingProduct ? <p>add new product</p> : ""}
+          {isAddingProduct ? (
+            <NewProductWrapper>
+              <FolderSimplePlusIcon size={21} weight="duotone" />
+              <form action={handleAddProduct}>
+                <Input
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setNewProductName(e.target.value);
+                  }}
+                />
+              </form>
+            </NewProductWrapper>
+          ) : (
+            ""
+          )}
           {productNames?.map((product, index) => (
             <NavTree
               key={index}
