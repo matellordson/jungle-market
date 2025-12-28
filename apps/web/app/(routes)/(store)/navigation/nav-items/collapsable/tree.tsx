@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { CaretRightIcon } from "@phosphor-icons/react/CaretRight";
 import { CaretDownIcon } from "@phosphor-icons/react/CaretDown";
 import Link from "next/link";
+import { DotsThreeIcon } from "@phosphor-icons/react/dist/icons/DotsThree";
+import { PlusIcon } from "@phosphor-icons/react/dist/icons/Plus";
 
 const Wrapper = styled.div``;
 
@@ -52,6 +54,38 @@ const Base = styled.div<{ $active: boolean }>`
 
   &:hover .toggle {
     display: block;
+  }
+
+  &:hover .actions {
+    visibility: visible;
+  }
+`;
+
+const BaseContent = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+`;
+
+const BaseName = styled.div`
+  display: flex;
+  align-items: end;
+  gap: 5px;
+`;
+
+const BaseActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  visibility: hidden;
+
+  & svg {
+    cursor: pointer;
+  }
+
+  & svg:hover {
+    color: var(--text-dark);
   }
 `;
 
@@ -135,9 +169,17 @@ export default function NavTree({
           )}
         </CollapseToggle>
 
-        <span>{icon}</span>
+        <BaseContent>
+          <BaseName>
+            <span>{icon}</span>
+            <p>{name}</p>
+          </BaseName>
 
-        <p>{name}</p>
+          <BaseActions className="actions">
+            <DotsThreeIcon size={20} weight="bold" />
+            <PlusIcon size={15} weight="bold" />
+          </BaseActions>
+        </BaseContent>
       </Base>
       {open ? (
         <SubordinateWrapper>
