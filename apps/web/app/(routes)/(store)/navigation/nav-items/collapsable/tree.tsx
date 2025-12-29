@@ -7,8 +7,9 @@ import { CaretDownIcon } from "@phosphor-icons/react/CaretDown";
 import Link from "next/link";
 import { DotsThreeIcon } from "@phosphor-icons/react/dist/icons/DotsThree";
 import { PlusIcon } from "@phosphor-icons/react/dist/icons/Plus";
-
-const Wrapper = styled.div``;
+import { Drawer } from "vaul";
+import { Popover } from "react-tiny-popover";
+import { useMediaQuery } from "react-responsive";
 
 const Base = styled.div<{ $active: boolean }>`
   display: flex;
@@ -131,12 +132,57 @@ const CollapseToggle = styled.div`
   }
 `;
 
+const PopOverContent = styled.div`
+  height: 200px;
+  width: 200px;
+  background-color: var(--foreground);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 10px;
+  padding: 10px;
+`;
+
+const DrawerOverlay = styled(Drawer.Overlay)`
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 50;
+`;
+
+const DrawerContent = styled(Drawer.Content)`
+  background-color: var(--foreground);
+  height: fit-content;
+  max-height: 90vh;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  outline: none;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  border-top: var(--border);
+`;
+
+const DrawerHandle = styled.div`
+  width: 50px;
+  height: 5px;
+  background-color: var(--highlight);
+  border-radius: 10px;
+  margin: 12px auto;
+`;
+
+const DrawerBody = styled.div`
+  padding: 10px;
+`;
+
 export default function NavTree({
   icon,
   name,
   subordinate,
   active,
   href,
+  dropDownContent,
 }: {
   icon: JSX.Element;
   name: string;
@@ -147,10 +193,14 @@ export default function NavTree({
   }[];
   active: boolean;
   href: string;
+  dropDownContent: JSX.Element;
 }) {
   const [open, setIsOpen] = useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const isMobile = useMediaQuery({ query: "(max-width: 992px)" });
+
   return (
-    <Wrapper>
+    <>
       <Base
         $active={active}
         onClick={() => {
@@ -175,12 +225,65 @@ export default function NavTree({
             <p>{name}</p>
           </BaseName>
 
-          <BaseActions className="actions">
-            <DotsThreeIcon size={20} weight="bold" />
-            <PlusIcon size={15} weight="bold" />
-          </BaseActions>
+          {isMobile ? (
+            <BaseActions className="actions">
+              <Drawer.Root>
+                <Drawer.Trigger asChild>
+                  <DotsThreeIcon
+                    size={20}
+                    weight="bold"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </Drawer.Trigger>
+
+                <Drawer.Portal>
+                  <DrawerOverlay />
+                  <DrawerContent>
+                    <DrawerHandle />
+
+                    <DrawerBody>Hi! I'm popover content.</DrawerBody>
+                  </DrawerContent>
+                </Drawer.Portal>
+              </Drawer.Root>
+              <PlusIcon
+                size={15}
+                weight="bold"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </BaseActions>
+          ) : (
+            <Popover
+              isOpen={isPopoverOpen}
+              positions={["bottom"]}
+              reposition={false}
+              padding={10}
+              onClickOutside={() => setIsPopoverOpen(false)}
+              content={
+                <PopOverContent>
+                  <div>Hi! I'm popover content.</div>
+                </PopOverContent>
+              }
+            >
+              <BaseActions className="actions">
+                <DotsThreeIcon
+                  size={20}
+                  weight="bold"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsPopoverOpen(!isPopoverOpen);
+                  }}
+                />
+                <PlusIcon
+                  size={15}
+                  weight="bold"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </BaseActions>
+            </Popover>
+          )}
         </BaseContent>
       </Base>
+
       {open ? (
         <SubordinateWrapper>
           {subordinate?.map((item) => (
@@ -195,6 +298,6 @@ export default function NavTree({
       ) : (
         ""
       )}
-    </Wrapper>
+    </>
   );
 }

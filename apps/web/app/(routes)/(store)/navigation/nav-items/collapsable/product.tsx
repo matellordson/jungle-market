@@ -76,6 +76,11 @@ const NewProductWrapper = styled.div`
   margin-bottom: 3px;
 `;
 
+const NavTreeWrapper = styled.div`
+  position: relative;
+  z-index: 1;
+`;
+
 export default function Product({
   active,
   href,
@@ -190,15 +195,17 @@ export default function Product({
           ) : (
             ""
           )}
-          {productNames?.map((product, index) => (
-            <NavTree
-              key={index}
-              active={active}
-              icon={<FolderSimpleIcon size={21} weight="duotone" />}
-              name={product.name}
-              // subordinate=
-              href={href}
-            />
+          {productNames?.map((product) => (
+            <NavTreeWrapper key={product.name}>
+              <NavTree
+                active={active}
+                icon={<FolderSimpleIcon size={21} weight="duotone" />}
+                name={product.name}
+                // subordinate=
+                href={href}
+                dropDownContent={<p>{product.name}</p>}
+              />
+            </NavTreeWrapper>
           ))}
         </>
       )}
