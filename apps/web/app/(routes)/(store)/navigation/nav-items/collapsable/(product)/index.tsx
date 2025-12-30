@@ -3,11 +3,11 @@
 import { FolderSimpleIcon } from "@phosphor-icons/react/FolderSimple";
 import { PlusIcon } from "@phosphor-icons/react/Plus";
 import { DotsThreeIcon } from "@phosphor-icons/react/DotsThree";
-import NavTree from "../tree";
 import { useEffect, useState, useRef } from "react";
 import { url } from "../../../../../../../utils/url";
 import styled, { keyframes } from "styled-components";
 import { Input } from "@repo/ui/input";
+import ProductTree from "../tree";
 
 const pulse = keyframes`
   0% { opacity: 1; }
@@ -76,7 +76,7 @@ const NewProductWrapper = styled.div`
   margin-top: 5px;
 `;
 
-const NavTreeWrapper = styled.div`
+const ProductTreeWrapper = styled.div`
   position: relative;
   z-index: 1;
 `;
@@ -92,6 +92,7 @@ export default function Product({
 }) {
   interface productNameType {
     name: string;
+    id: string;
   }
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -106,17 +107,6 @@ export default function Product({
   const [isAddingProduct, setIsAddingProduct] = useState(false);
 
   const [newProductName, setNewProductName] = useState("");
-
-  // useEffect(() => {
-  //   const getSubordinate = async () => {
-  //     const api = await fetch(`${url}/product/${storeId}`);
-
-  //     const apiData = await api.json();
-  //     setSubordinateData(apiData);
-  //   };
-
-  //   getSubordinate();
-  // }, [storeId]);
 
   useEffect(() => {
     const getProductName = async () => {
@@ -205,16 +195,16 @@ export default function Product({
             ""
           )}
           {productNames?.map((product) => (
-            <NavTreeWrapper key={product.name}>
-              <NavTree
+            <ProductTreeWrapper key={product.name}>
+              <ProductTree
                 active={active}
                 icon={<FolderSimpleIcon size={21} weight="duotone" />}
                 name={product.name}
-                // subordinate=
+                id={product.id}
                 href={href}
                 dropDownContent={<p>{product.name}</p>}
               />
-            </NavTreeWrapper>
+            </ProductTreeWrapper>
           ))}
         </>
       )}

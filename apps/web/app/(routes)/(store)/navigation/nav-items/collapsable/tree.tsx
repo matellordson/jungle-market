@@ -1,17 +1,20 @@
 "use client";
 
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import styled from "styled-components";
 import { CaretRightIcon } from "@phosphor-icons/react/CaretRight";
 import { CaretDownIcon } from "@phosphor-icons/react/CaretDown";
 import Link from "next/link";
 import { DotsThreeIcon } from "@phosphor-icons/react/dist/icons/DotsThree";
+import { StorefrontIcon } from "@phosphor-icons/react/dist/icons/Storefront";
+import { FileIcon } from "@phosphor-icons/react/dist/icons/File";
 import { PlusIcon } from "@phosphor-icons/react/dist/icons/Plus";
 import { Drawer } from "vaul";
 import { Popover } from "react-tiny-popover";
 import { Modal } from "react-responsive-modal";
 import { useMediaQuery } from "react-responsive";
 import { ProductPlugins } from "./(product)/plugins";
+import { url } from "../../../../../../utils/url";
 
 const Base = styled.div<{ $active: boolean }>`
   display: flex;
@@ -92,9 +95,9 @@ const BaseActions = styled.div`
   }
 `;
 
-const SubordinateWrapper = styled.div`
-  margin-top: 5px;
-  margin-left: 30px;
+const PluginWrapper = styled.div`
+  /* margin-top: 5px; */
+  margin-left: 15px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -106,15 +109,17 @@ const SubordinateWrapper = styled.div`
   }
 `;
 
-const SubordinateItems = styled.div`
+const PluginItems = styled.div`
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 5px;
-  border-radius: 10px;
-  padding: 5px;
+  padding: 5px 12px;
+  text-transform: capitalize;
+  border-left: var(--border);
 
   &:hover {
     background-color: var(--highlight);
+    border-radius: 10px;
   }
 
   & svg {
@@ -178,21 +183,21 @@ const DrawerBody = styled.div`
   padding: 10px;
 `;
 
-export default function NavTree({
+type pluginDataType = {
+  all_plugins: string[];
+};
+
+export default function ProductTree({
   icon,
   name,
-  subordinate,
+  id,
   active,
   href,
   dropDownContent,
 }: {
   icon: JSX.Element;
   name: string;
-  subordinate?: {
-    icon: JSX.Element;
-    name: string;
-    href: string;
-  }[];
+  id: string;
   active: boolean;
   href: string;
   dropDownContent: JSX.Element;
@@ -201,6 +206,20 @@ export default function NavTree({
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 992px)" });
+
+  const [plugins, setPlugins] = useState<pluginDataType>({
+    all_plugins: [],
+  });
+
+  useEffect(() => {
+    const getPlugins = async () => {
+      const api = await fetch(`${url}/plugins/all/${id}`);
+      const apiData = await api.json();
+      setPlugins(apiData);
+    };
+
+    getPlugins();
+  }, [id]);
 
   return (
     <>
@@ -266,7 +285,7 @@ export default function NavTree({
                     <DrawerHandle />
 
                     <DrawerBody>
-                      <ProductPlugins />
+                      <ProductPlugins productId={id} />
                     </DrawerBody>
                   </DrawerContent>
                 </Drawer.Portal>
@@ -310,16 +329,27 @@ export default function NavTree({
       </Base>
 
       {open ? (
-        <SubordinateWrapper>
-          {subordinate?.map((item) => (
-            <Link href={item.href} key={item.name}>
-              <SubordinateItems>
-                <span>{item.icon}</span>
-                <p>{item.name}</p>
-              </SubordinateItems>
-            </Link>
-          ))}
-        </SubordinateWrapper>
+        <PluginWrapper>
+          {plugins.all_plugins && plugins.all_plugins.length > 0 ? (
+            plugins.all_plugins.map((plugin) => (
+              <Link href={`${id}/${plugin}`} key={plugin}>
+                <PluginItems>
+                  <span>
+                    {plugin === "public" ? (
+                      <StorefrontIcon size={20} weight="duotone" />
+                    ) : plugin === "docs" ? (
+                      <FileIcon size={20} weight="duotone" />
+                    ) : null}
+                  </span>
+                  <p>{plugin}</p>
+                </PluginItems>
+              </Link>
+            ))
+          ) : (
+            /* This is your dummy/fallback text */
+            <p style={{ padding: "5px" }}>No plugins </p>
+          )}
+        </PluginWrapper>
       ) : (
         ""
       )}
@@ -329,7 +359,7 @@ export default function NavTree({
         onClose={() => setIsModalOpen(!isModalOpen)}
         center
       >
-        <ProductPlugins />
+        <ProductPlugins productId={id} />
       </Modal>
     </>
   );

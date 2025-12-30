@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { url } from "../../../../../../../utils/url";
 
 const Wrapper = styled.div`
   padding: 0;
@@ -47,13 +48,49 @@ const plugins = [
   },
 ];
 
-export function ProductPlugins() {
+export function ProductPlugins({ productId }: { productId: string }) {
+  const handlePublic = async () => {
+    await fetch(`${url}/plugins/public/${productId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const handleDocs = async () => {
+    await fetch(`${url}/plugins/docs/${productId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   return (
     <Wrapper>
       {plugins.map((plugin) => (
-        <PluginList key={plugin.name}>
-          <p>{plugin.name}</p>
-        </PluginList>
+        <form
+          key={plugin.name}
+          action=""
+          style={{
+            display: "inherit",
+            gap: "inherit",
+            width: "inherit",
+          }}
+        >
+          {plugin.name == "Public" ? (
+            <PluginList key={plugin.name} formAction={handlePublic}>
+              <p>{plugin.name}</p>
+            </PluginList>
+          ) : plugin.name == "Docs" ? (
+            <PluginList key={plugin.name} formAction={handleDocs}>
+              <p>{plugin.name}</p>
+            </PluginList>
+          ) : (
+            ""
+          )}
+        </form>
       ))}
     </Wrapper>
   );
