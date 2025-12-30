@@ -9,6 +9,7 @@ import { DotsThreeIcon } from "@phosphor-icons/react/dist/icons/DotsThree";
 import { PlusIcon } from "@phosphor-icons/react/dist/icons/Plus";
 import { Drawer } from "vaul";
 import { Popover } from "react-tiny-popover";
+import { Modal } from "react-responsive-modal";
 import { useMediaQuery } from "react-responsive";
 
 const Base = styled.div<{ $active: boolean }>`
@@ -145,7 +146,7 @@ const PopOverContent = styled.div`
 const DrawerOverlay = styled(Drawer.Overlay)`
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--overlay-bg);
   z-index: 50;
 `;
 
@@ -197,6 +198,7 @@ export default function NavTree({
 }) {
   const [open, setIsOpen] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 992px)" });
 
   return (
@@ -248,7 +250,10 @@ export default function NavTree({
               <PlusIcon
                 size={15}
                 weight="bold"
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsModalOpen(true);
+                }}
               />
             </BaseActions>
           ) : (
@@ -276,7 +281,10 @@ export default function NavTree({
                 <PlusIcon
                   size={15}
                   weight="bold"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsModalOpen(true);
+                  }}
                 />
               </BaseActions>
             </Popover>
@@ -298,6 +306,19 @@ export default function NavTree({
       ) : (
         ""
       )}
+
+      <Modal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(!isModalOpen)}
+        center
+      >
+        <h2>Simple centered modal</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
+          hendrerit risus, sed porttitor quam.
+        </p>
+      </Modal>
     </>
   );
 }

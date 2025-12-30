@@ -28,6 +28,7 @@
     "react-dom": "^19.2.1",
     "react-hotkeys-hook": "^5.2.1",
     "react-responsive": "^10.0.1",
+    "react-responsive-modal": "^7.1.0",
     "react-select": "^5.10.2",
     "react-tabulator": "^0.21.0",
     "react-tiny-popover": "^8.1.6",

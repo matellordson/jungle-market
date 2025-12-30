@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import "react-responsive-modal/styles.css";
 import { WagmiProvider } from "./wagmi-provider";
 
 const geistSans = localFont({
