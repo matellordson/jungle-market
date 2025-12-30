@@ -1,6 +1,5 @@
 import { accountRoute } from "./accounts";
 import { connectWalletRoute } from "./connect-wallet";
-import { essentialRoute } from "./essentials";
 import { pluginsRoute } from "./plugins";
 import { productRoute } from "./products";
 import { storeRoutes } from "./stores";
@@ -18,7 +17,6 @@ const server = Bun.serve({
     ...connectWalletRoute,
     ...storeRoutes,
     ...productRoute,
-    ...essentialRoute,
     ...pluginsRoute,
   },
 });

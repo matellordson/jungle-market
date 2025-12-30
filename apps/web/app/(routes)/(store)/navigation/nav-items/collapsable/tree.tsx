@@ -123,7 +123,7 @@ const PluginItems = styled.div`
   }
 
   & svg {
-    vertical-align: bottom;
+    vertical-align: middle;
   }
 `;
 
