@@ -298,6 +298,7 @@ svg {
   box-shadow: var(--shadow) !important;
   border-radius: 10px;
   padding: 10px !important;
+  /* height: 500px; */
 }
 
 .react-responsive-modal-closeButton {

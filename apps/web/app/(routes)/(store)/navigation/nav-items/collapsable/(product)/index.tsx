@@ -3,10 +3,9 @@
 import { FolderSimpleIcon } from "@phosphor-icons/react/FolderSimple";
 import { PlusIcon } from "@phosphor-icons/react/Plus";
 import { DotsThreeIcon } from "@phosphor-icons/react/DotsThree";
-import { FolderSimplePlusIcon } from "@phosphor-icons/react/FolderSimplePlus";
-import NavTree from "./tree";
-import { useEffect, useState } from "react";
-import { url } from "../../../../../../utils/url";
+import NavTree from "../tree";
+import { useEffect, useState, useRef } from "react";
+import { url } from "../../../../../../../utils/url";
 import styled, { keyframes } from "styled-components";
 import { Input } from "@repo/ui/input";
 
@@ -74,6 +73,7 @@ const NewProductWrapper = styled.div`
   gap: 5px;
   padding-left: 5px;
   margin-bottom: 3px;
+  margin-top: 5px;
 `;
 
 const NavTreeWrapper = styled.div`
@@ -93,6 +93,8 @@ export default function Product({
   interface productNameType {
     name: string;
   }
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [productNames, setProductNames] = useState<productNameType[] | null>(
     []
@@ -138,6 +140,12 @@ export default function Product({
 
   // ];
 
+  useEffect(() => {
+    if (inputRef.current && isAddingProduct) {
+      inputRef.current.focus();
+    }
+  }, [isAddingProduct]);
+
   const handleAddProduct = async () => {
     const values = {
       name: newProductName,
@@ -182,13 +190,14 @@ export default function Product({
         <>
           {isAddingProduct ? (
             <NewProductWrapper>
-              <FolderSimplePlusIcon size={21} weight="duotone" />
+              <FolderSimpleIcon size={21} weight="duotone" />
               <form action={handleAddProduct}>
                 <Input
                   onChange={(e) => {
                     e.preventDefault();
                     setNewProductName(e.target.value);
                   }}
+                  ref={inputRef}
                 />
               </form>
             </NewProductWrapper>

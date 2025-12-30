@@ -12,6 +12,10 @@ interface ProductValues {
   store_id: string;
 }
 
+const pluginData = {
+  metadata: {},
+};
+
 export const productRoute = {
   "/products/name/:id": async (req: GetRequest) => {
     try {
@@ -27,7 +31,7 @@ export const productRoute = {
       try {
         const body = (await req.json()) as ProductValues;
         const { name, store_id } = body;
-        await sql`INSERT INTO products (name, store_id) VALUES (${name}, ${store_id})`;
+        await sql`INSERT INTO products (name, store_id, plugins) VALUES (${name}, ${store_id}, ${pluginData})`;
         return Response.json(body, { status: 201, headers: corsHeaders });
       } catch (error) {
         console.log(error);

@@ -11,6 +11,7 @@ import { Drawer } from "vaul";
 import { Popover } from "react-tiny-popover";
 import { Modal } from "react-responsive-modal";
 import { useMediaQuery } from "react-responsive";
+import { ProductPlugins } from "./(product)/plugins";
 
 const Base = styled.div<{ $active: boolean }>`
   display: flex;
@@ -247,14 +248,29 @@ export default function NavTree({
                   </DrawerContent>
                 </Drawer.Portal>
               </Drawer.Root>
-              <PlusIcon
-                size={15}
-                weight="bold"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsModalOpen(true);
-                }}
-              />
+
+              <Drawer.Root>
+                <Drawer.Trigger asChild>
+                  <PlusIcon
+                    size={15}
+                    weight="bold"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  />
+                </Drawer.Trigger>
+
+                <Drawer.Portal>
+                  <DrawerOverlay />
+                  <DrawerContent>
+                    <DrawerHandle />
+
+                    <DrawerBody>
+                      <ProductPlugins />
+                    </DrawerBody>
+                  </DrawerContent>
+                </Drawer.Portal>
+              </Drawer.Root>
             </BaseActions>
           ) : (
             <Popover
@@ -278,6 +294,7 @@ export default function NavTree({
                     setIsPopoverOpen(!isPopoverOpen);
                   }}
                 />
+
                 <PlusIcon
                   size={15}
                   weight="bold"
@@ -312,12 +329,7 @@ export default function NavTree({
         onClose={() => setIsModalOpen(!isModalOpen)}
         center
       >
-        <h2>Simple centered modal</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-          pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
-          hendrerit risus, sed porttitor quam.
-        </p>
+        <ProductPlugins />
       </Modal>
     </>
   );

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { SidebarSimpleIcon } from "@phosphor-icons/react/SidebarSimple";
 import { HouseIcon } from "@phosphor-icons/react/House";
 import NavHead from "./head";
-import Product from "./nav-items/collapsable/product";
+import Product from "./nav-items/collapsable/(product)";
 import { url } from "../../../../utils/url";
 import SingleNavItem from "./nav-items/single";
 import { usePathname } from "next/navigation";
