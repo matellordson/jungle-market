@@ -1,7 +1,7 @@
 "use client";
 
 import { JSX, useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { CaretRightIcon } from "@phosphor-icons/react/CaretRight";
 import { CaretDownIcon } from "@phosphor-icons/react/CaretDown";
 import Link from "next/link";
@@ -14,6 +14,12 @@ import { Modal } from "react-responsive-modal";
 import { useMediaQuery } from "react-responsive";
 import { ProductPlugins } from "./(product)/plugins";
 import { url } from "../../../../../../utils/url";
+
+const pulse = keyframes`
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+`;
 
 const Base = styled.div<{ $active: boolean }>`
   display: flex;
@@ -95,7 +101,7 @@ const BaseActions = styled.div`
 `;
 
 const PluginWrapper = styled.div`
-  /* margin-top: 5px; */
+  margin-top: 3px;
   margin-left: 15px;
   display: flex;
   flex-direction: column;
@@ -124,6 +130,15 @@ const PluginItems = styled.div`
   & svg {
     vertical-align: middle;
   }
+`;
+
+const Skeleton = styled.div`
+  margin-bottom: 5px;
+  height: 25px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: var(--highlight);
+  animation: ${pulse} 1.4s ease-in-out infinite;
 `;
 
 const CollapseToggle = styled.div`
@@ -192,6 +207,8 @@ export default function ProductTree({
   id,
   active,
   storeId,
+  isOpen,
+  onToggle,
   href,
   dropDownContent,
 }: {
@@ -202,40 +219,43 @@ export default function ProductTree({
   storeId: string;
   href: string;
   dropDownContent: JSX.Element;
+  isOpen: boolean;
+  onToggle: () => void;
 }) {
-  const [open, setIsOpen] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 992px)" });
+  const [pluginsLoading, setPluginsLoading] = useState(true);
+
+  const arr = Array.from({ length: 4 }).map((_, i) => i);
 
   const [plugins, setPlugins] = useState<pluginDataType>({
     all_plugins: [],
   });
 
   useEffect(() => {
-    const getPlugins = async () => {
-      const api = await fetch(`${url}/plugins/all/${id}`);
-      const apiData = await api.json();
-      setPlugins(apiData);
-    };
-
-    getPlugins();
-  }, [id]);
+    if (isOpen) {
+      const getPlugins = async () => {
+        const api = await fetch(`${url}/plugins/all/${id}`);
+        const apiData = await api.json();
+        setPlugins(apiData);
+        setPluginsLoading(false);
+      };
+      getPlugins();
+    }
+  }, [id, isOpen]);
 
   return (
     <>
       <Base
         $active={active}
-        onClick={() => {
-          if (!open) {
-            setIsOpen(true);
-          } else {
-            setIsOpen(false);
-          }
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggle();
         }}
       >
         <CollapseToggle className="toggle">
-          {open ? (
+          {isOpen ? (
             <CaretDownIcon size={21} weight="bold" />
           ) : (
             <CaretRightIcon size={21} weight="bold" />
@@ -329,9 +349,15 @@ export default function ProductTree({
         </BaseContent>
       </Base>
 
-      {open ? (
+      {isOpen ? (
         <PluginWrapper>
-          {plugins.all_plugins && plugins.all_plugins.length > 0 ? (
+          {pluginsLoading ? (
+            <>
+              {arr.map((_, index) => (
+                <Skeleton key={index}></Skeleton>
+              ))}
+            </>
+          ) : plugins.all_plugins && plugins.all_plugins.length > 0 ? (
             plugins.all_plugins.map((plugin) => (
               <Link href={`/${storeId}/${id}/${plugin}`} key={plugin}>
                 <PluginItems>
@@ -343,8 +369,7 @@ export default function ProductTree({
               </Link>
             ))
           ) : (
-            /* This is your dummy/fallback text */
-            <p style={{ padding: "5px" }}>No plugins </p>
+            <p style={{ padding: "5px" }}>No plugins</p>
           )}
         </PluginWrapper>
       ) : (

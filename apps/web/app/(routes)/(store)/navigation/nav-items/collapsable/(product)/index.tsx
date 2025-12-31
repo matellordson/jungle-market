@@ -102,11 +102,19 @@ export default function Product({
   );
   const [loading, setLoading] = useState(true);
 
-  const arr = Array.from({ length: 4 }).map((_, i) => i);
+  const arr = Array.from({ length: 8 }).map((_, i) => i);
 
   const [isAddingProduct, setIsAddingProduct] = useState(false);
 
   const [newProductName, setNewProductName] = useState("");
+
+  const [openProductId, setOpenProductId] = useState<string | null>(null);
+
+  const handleToggle = (id: string) => {
+    // If the clicked ID is already open, close it (set to null).
+    // Otherwise, set the new ID (which closes the previous one).
+    setOpenProductId((prevId) => (prevId === id ? null : id));
+  };
 
   useEffect(() => {
     const getProductName = async () => {
@@ -195,6 +203,8 @@ export default function Product({
                 storeId={storeId}
                 href={href}
                 dropDownContent={<p>{product.name}</p>}
+                isOpen={openProductId === product.id}
+                onToggle={() => handleToggle(product.id)}
               />
             </ProductTreeWrapper>
           ))}
