@@ -17,6 +17,9 @@
   --scrollbar-thumb-hover: rgba(100, 116, 139, 0.9);
   --shadow: 0px 3px 5px hsla(0, 0%, 0%, 0.03);
   --overlay-bg: rgba(0, 0, 0, 0.4);
+  --input-outline: 2px solid var(--accent);
+  --input-bg: oklch(98.4% 0.014 180.72);
+  --input-color: oklch(27.7% 0.046 192.524);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,6 +40,9 @@
     --scrollbar-thumb-hover: #6b7280;
     --shadow: 0px 3px 5px hsla(0, 0%, 0%, 0.2);
     --overlay-bg: rgba(0, 0, 0, 0.6);
+    --input-outline: 2px solid var(--accent);
+    --input-bg: oklch(27.7% 0.046 192.524);
+    --input-color: oklch(98.4% 0.014 180.72);
   }
 }
 

@@ -9,6 +9,13 @@ export const Input = styled.input`
   background-color: var(--input-bg);
   font-size: 15px;
   font-family: inherit;
+  background-color: inherit;
+
+  &:focus {
+    background-color: var(--input-bg);
+    color: var(--input-color);
+    outline: var(--input-outline);
+  }
 `;
 
 // export const Input = styled.input`

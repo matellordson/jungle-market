@@ -111,8 +111,6 @@ export default function Product({
   const [openProductId, setOpenProductId] = useState<string | null>(null);
 
   const handleToggle = (id: string) => {
-    // If the clicked ID is already open, close it (set to null).
-    // Otherwise, set the new ID (which closes the previous one).
     setOpenProductId((prevId) => (prevId === id ? null : id));
   };
 

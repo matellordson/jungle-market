@@ -13,6 +13,15 @@ interface ProductValues {
 }
 
 export const productRoute = {
+  "/products/:id": async (req: GetRequest) => {
+    try {
+      const [data] =
+        await sql`SELECT * FROM products WHERE id = ${req.params.id}`;
+      return Response.json(data, { status: 200, headers: corsHeaders });
+    } catch {
+      return Response.json(null, { status: 200, headers: corsHeaders });
+    }
+  },
   "/products/name/:id": async (req: GetRequest) => {
     try {
       const data =
