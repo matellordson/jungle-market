@@ -121,15 +121,6 @@ export default function Product({
     getProductName();
   }, [storeId]);
 
-  // const subordinateItems = [
-  //   ...subordinateData.map((item) => ({
-  //     icon: <FileIcon size={19} weight="duotone" />,
-  //     name: item.name,
-  //     href: `/${storeId}/product/${item.name}`,
-  //   })),
-
-  // ];
-
   useEffect(() => {
     if (inputRef.current && isAddingProduct) {
       inputRef.current.focus();
@@ -201,6 +192,7 @@ export default function Product({
                 icon={<FolderSimpleIcon size={21} weight="duotone" />}
                 name={product.name}
                 id={product.id}
+                storeId={storeId}
                 href={href}
                 dropDownContent={<p>{product.name}</p>}
               />

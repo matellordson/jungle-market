@@ -6,7 +6,6 @@ import { CaretRightIcon } from "@phosphor-icons/react/CaretRight";
 import { CaretDownIcon } from "@phosphor-icons/react/CaretDown";
 import Link from "next/link";
 import { DotsThreeIcon } from "@phosphor-icons/react/dist/icons/DotsThree";
-import { StorefrontIcon } from "@phosphor-icons/react/dist/icons/Storefront";
 import { FileIcon } from "@phosphor-icons/react/dist/icons/File";
 import { PlusIcon } from "@phosphor-icons/react/dist/icons/Plus";
 import { Drawer } from "vaul";
@@ -111,9 +110,9 @@ const PluginWrapper = styled.div`
 
 const PluginItems = styled.div`
   display: flex;
-  align-items: end;
+  align-items: center;
   gap: 5px;
-  padding: 5px 12px;
+  padding: 5px;
   text-transform: capitalize;
   border-left: var(--border);
 
@@ -192,6 +191,7 @@ export default function ProductTree({
   name,
   id,
   active,
+  storeId,
   href,
   dropDownContent,
 }: {
@@ -199,6 +199,7 @@ export default function ProductTree({
   name: string;
   id: string;
   active: boolean;
+  storeId: string;
   href: string;
   dropDownContent: JSX.Element;
 }) {
@@ -332,16 +333,12 @@ export default function ProductTree({
         <PluginWrapper>
           {plugins.all_plugins && plugins.all_plugins.length > 0 ? (
             plugins.all_plugins.map((plugin) => (
-              <Link href={`${id}/${plugin}`} key={plugin}>
+              <Link href={`/${storeId}/${id}/${plugin}`} key={plugin}>
                 <PluginItems>
                   <span>
-                    {plugin === "public" ? (
-                      <StorefrontIcon size={20} weight="duotone" />
-                    ) : plugin === "docs" ? (
-                      <FileIcon size={20} weight="duotone" />
-                    ) : null}
+                    <FileIcon size={20} weight="duotone" />
                   </span>
-                  <p>{plugin}</p>
+                  <p>{plugin} page</p>
                 </PluginItems>
               </Link>
             ))
