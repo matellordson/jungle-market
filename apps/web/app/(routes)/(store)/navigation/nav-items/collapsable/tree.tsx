@@ -30,9 +30,7 @@ const Base = styled.div<{ $active: boolean }>`
   cursor: pointer;
   font-size: 15px;
   background-color: ${(props) =>
-    props.$active ? "var(--accent-mute)" : "transparent"};
-  border: ${(props) =>
-    props.$active ? "    var(--accent-border)" : "transparent"};
+    props.$active ? "var(--highlight)" : "transparent"};
 
   &:hover {
     background-color: ${(props) => (props.$active ? "" : "var(--highlight)")};
@@ -41,13 +39,13 @@ const Base = styled.div<{ $active: boolean }>`
 
   & svg {
     color: ${(props) =>
-      props.$active ? "var(--accent)" : "var(--text-light)"};
+      props.$active ? "var(--text-dark)" : "var(--text-light)"};
     vertical-align: middle;
   }
 
   & p {
     color: ${(props) =>
-      props.$active ? "var(--accent)" : "var(--text-light)"};
+      props.$active ? "var(--text-dark)" : "var(--text-light)"};
     font-weight: 500;
   }
 
@@ -209,7 +207,6 @@ export default function ProductTree({
   storeId,
   isOpen,
   onToggle,
-  href,
   dropDownContent,
 }: {
   icon: JSX.Element;
@@ -217,7 +214,6 @@ export default function ProductTree({
   id: string;
   active: boolean;
   storeId: string;
-  href: string;
   dropDownContent: JSX.Element;
   isOpen: boolean;
   onToggle: () => void;

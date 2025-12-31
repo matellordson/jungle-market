@@ -83,11 +83,9 @@ const ProductTreeWrapper = styled.div`
 
 export default function Product({
   active,
-  href,
   storeId,
 }: {
   active: boolean;
-  href: string;
   storeId: string;
 }) {
   interface productNameType {
@@ -199,7 +197,6 @@ export default function Product({
                 name={product.name}
                 id={product.id}
                 storeId={storeId}
-                href={href}
                 dropDownContent={<p>{product.name}</p>}
                 isOpen={openProductId === product.id}
                 onToggle={() => handleToggle(product.id)}

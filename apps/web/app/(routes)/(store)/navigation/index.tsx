@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect, useMemo } from "react";
+import { useRef, useState, useCallback, useEffect, useMemo, use } from "react";
 import styled from "styled-components";
 import { SidebarSimpleIcon } from "@phosphor-icons/react/SidebarSimple";
 import { HouseIcon } from "@phosphor-icons/react/House";
@@ -132,9 +132,11 @@ const PageContent = styled.div`
 export default function Navigation({
   children,
   storeId,
+  productsId,
 }: {
   children: React.ReactNode;
   storeId: string;
+  productsId: string[] | undefined;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -211,7 +213,11 @@ export default function Navigation({
 
   const sidebarContent = useMemo(() => {
     const homeHref = `/${storeId}`;
-    const productHref = `/${storeId}/product`;
+    const productHref =
+      productsId?.map((product) => `/${storeId}/${product}`) || [];
+    // const isProductActive = productHref.some((href) => pathName.includes(href));
+    // if (pathName.includes(productHref))
+    // check for if statement to get just one active
 
     return (
       <>
@@ -222,11 +228,7 @@ export default function Navigation({
           active={pathName === homeHref || pathName === `${homeHref}/`}
           href={`${homeHref}/`}
         />
-        <Product
-          active={pathName.startsWith(productHref)}
-          href={productHref}
-          storeId={storeId}
-        />
+        <Product active={isProductActive} storeId={storeId} />
       </>
     );
   }, [storeName, storeId, pathName]);
