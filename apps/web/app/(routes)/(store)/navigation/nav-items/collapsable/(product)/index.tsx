@@ -8,6 +8,7 @@ import { url } from "../../../../../../../utils/url";
 import styled, { keyframes } from "styled-components";
 import { Input } from "@repo/ui/input";
 import ProductTree from "../tree";
+import { usePathname } from "next/navigation";
 
 const pulse = keyframes`
   0% { opacity: 1; }
@@ -18,6 +19,7 @@ const pulse = keyframes`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 2.5px;
 `;
 
 const ProductActionsWrapper = styled.div`
@@ -76,18 +78,9 @@ const NewProductWrapper = styled.div`
   margin-top: 5px;
 `;
 
-const ProductTreeWrapper = styled.div`
-  position: relative;
-  z-index: 1;
-`;
+const ProductTreeWrapper = styled.div``;
 
-export default function Product({
-  active,
-  storeId,
-}: {
-  active: boolean;
-  storeId: string;
-}) {
+export default function Product({ storeId }: { storeId: string }) {
   interface productNameType {
     name: string;
     id: string;
@@ -107,6 +100,8 @@ export default function Product({
   const [newProductName, setNewProductName] = useState("");
 
   const [openProductId, setOpenProductId] = useState<string | null>(null);
+
+  const pathname = usePathname();
 
   const handleToggle = (id: string) => {
     setOpenProductId((prevId) => (prevId === id ? null : id));
@@ -189,20 +184,27 @@ export default function Product({
           ) : (
             ""
           )}
-          {productNames?.map((product) => (
-            <ProductTreeWrapper key={product.name}>
-              <ProductTree
-                active={active}
-                icon={<FolderSimpleIcon size={21} weight="duotone" />}
-                name={product.name}
-                id={product.id}
-                storeId={storeId}
-                dropDownContent={<p>{product.name}</p>}
-                isOpen={openProductId === product.id}
-                onToggle={() => handleToggle(product.id)}
-              />
-            </ProductTreeWrapper>
-          ))}
+          {productNames?.map((product) => {
+            const isThisProductActive = pathname.includes(
+              `/${storeId}/${product.id}`
+            );
+            console.log(isThisProductActive);
+
+            return (
+              <ProductTreeWrapper key={product.id}>
+                <ProductTree
+                  active={isThisProductActive}
+                  name={product.name}
+                  icon={<FolderSimpleIcon size={21} weight="duotone" />}
+                  id={product.id}
+                  storeId={storeId}
+                  dropDownContent={<p>{product.name}</p>}
+                  isOpen={openProductId === product.id}
+                  onToggle={() => handleToggle(product.id)}
+                />
+              </ProductTreeWrapper>
+            );
+          })}
         </>
       )}
     </Wrapper>

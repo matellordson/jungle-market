@@ -213,11 +213,6 @@ export default function Navigation({
 
   const sidebarContent = useMemo(() => {
     const homeHref = `/${storeId}`;
-    const productHref =
-      productsId?.map((product) => `/${storeId}/${product}`) || [];
-    // const isProductActive = productHref.some((href) => pathName.includes(href));
-    // if (pathName.includes(productHref))
-    // check for if statement to get just one active
 
     return (
       <>
@@ -228,7 +223,7 @@ export default function Navigation({
           active={pathName === homeHref || pathName === `${homeHref}/`}
           href={`${homeHref}/`}
         />
-        <Product active={isProductActive} storeId={storeId} />
+        <Product storeId={storeId} />
       </>
     );
   }, [storeName, storeId, pathName]);
