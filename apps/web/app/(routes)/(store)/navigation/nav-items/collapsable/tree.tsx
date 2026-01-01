@@ -98,7 +98,7 @@ const BaseActions = styled.div`
   }
 `;
 
-const PluginWrapper = styled.div`
+const PluginWrapper = styled.div<{ $active: boolean }>`
   margin-top: 3px;
   margin-left: 15px;
   display: flex;
@@ -106,6 +106,8 @@ const PluginWrapper = styled.div`
   cursor: pointer;
   font-size: 15px;
   color: var(--text-light);
+  border-left: ${(props) =>
+    props.$active ? "2px solid var(--accent)" : "2px solid var(--bg-border)"};
 
   & svg {
     color: var(--text-light);
@@ -117,8 +119,8 @@ const PluginItems = styled.div`
   align-items: center;
   gap: 5px;
   padding: 5px;
+  margin-left: 5px;
   text-transform: capitalize;
-  border-left: var(--border);
 
   &:hover {
     background-color: var(--highlight);
@@ -346,7 +348,7 @@ export default function ProductTree({
       </Base>
 
       {isOpen ? (
-        <PluginWrapper>
+        <PluginWrapper $active={false}>
           {pluginsLoading ? (
             <>
               {arr.map((_, index) => (
