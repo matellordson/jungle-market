@@ -24,6 +24,8 @@ export const pluginsRoute = {
       return Response.json(null, { status: 200, headers: corsHeaders });
     }
   },
+
+  // PUBLIC PLUGIN
   "/plugins/public/:id": {
     PUT: async (req: Request) => {
       try {
@@ -38,6 +40,8 @@ export const pluginsRoute = {
       return new Response(null, { status: 204, headers: corsHeaders });
     },
   },
+
+  // DOCS PLUGIN
   "/plugins/docs/:id": {
     PUT: async (req: Request) => {
       try {

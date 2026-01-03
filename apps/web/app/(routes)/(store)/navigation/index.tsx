@@ -9,6 +9,9 @@ import Product from "./nav-items/collapsable/(product)";
 import { url } from "../../../../utils/url";
 import SingleNavItem from "./nav-items/single";
 import { usePathname } from "next/navigation";
+import { CaretRightIcon } from "@phosphor-icons/react/dist/icons/CaretRight";
+import { CaretLeftIcon } from "@phosphor-icons/react/dist/icons/CaretLeft";
+import { useRouter } from "next/navigation";
 
 const MOBILE_BREAKPOINT = 992;
 const MIN_DESKTOP_WIDTH = 250;
@@ -115,6 +118,17 @@ const SidebarToggle = styled.div`
   }
 `;
 
+const HistoryArrows = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  & svg:hover {
+    cursor: pointer;
+    color: var(--text-dark);
+  }
+`;
+
 const PageWrapper = styled.div`
   height: 100vh;
   width: 100%;
@@ -142,6 +156,7 @@ export default function Navigation({
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [storeName, setStoreName] = useState("");
   const pathName = usePathname();
+  const route = useRouter();
 
   useEffect(() => {
     if (wrapperRef.current) {
@@ -256,6 +271,18 @@ export default function Navigation({
               weight="duotone"
             />
           </SidebarToggle>
+          <HistoryArrows>
+            <CaretLeftIcon
+              onClick={() => route.back()}
+              size={22}
+              weight="bold"
+            />
+            <CaretRightIcon
+              size={22}
+              onClick={() => route.forward()}
+              weight="bold"
+            />
+          </HistoryArrows>
         </TabWrapper>
         <PageContent>{children}</PageContent>
       </PageWrapper>
