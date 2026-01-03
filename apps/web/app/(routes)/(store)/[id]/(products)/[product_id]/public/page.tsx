@@ -3,6 +3,8 @@
 import { use, useEffect, useState } from "react";
 import { Header } from "./components/header";
 import { url } from "../../../../../../../utils/url";
+import PublicTable from "./components/table";
+import styled from "styled-components";
 
 interface ParamsType {
   id: string;
@@ -25,6 +27,12 @@ interface productType {
   store_id: string;
   plugins: [];
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
 
 export default function Public({ params }: { params: Promise<ParamsType> }) {
   const { id: store_id, product_id } = use(params);
@@ -57,6 +65,9 @@ export default function Public({ params }: { params: Promise<ParamsType> }) {
   }, [product_id]);
 
   return (
-    <Header isLoading={productDataLoading} productName={productData?.name} />
+    <Wrapper>
+      <Header isLoading={productDataLoading} productName={productData?.name} />
+      <PublicTable />
+    </Wrapper>
   );
 }

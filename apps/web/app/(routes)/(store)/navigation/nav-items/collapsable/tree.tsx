@@ -107,7 +107,7 @@ const PluginWrapper = styled.div<{ $active: boolean }>`
   font-size: 15px;
   color: var(--text-light);
   border-left: ${(props) =>
-    props.$active ? "2px solid var(--accent)" : "2px solid var(--bg-border)"};
+    props.$active ? "1px solid var(--accent)" : "1px solid var(--bg-border)"};
 
   & svg {
     color: var(--text-light);
@@ -139,6 +139,7 @@ const Skeleton = styled.div`
   border-radius: 10px;
   background-color: var(--highlight);
   animation: ${pulse} 1.4s ease-in-out infinite;
+  margin-left: 5px;
 `;
 
 const CollapseToggle = styled.div`
@@ -225,7 +226,7 @@ export default function ProductTree({
   const isMobile = useMediaQuery({ query: "(max-width: 992px)" });
   const [pluginsLoading, setPluginsLoading] = useState(true);
 
-  const arr = Array.from({ length: 4 }).map((_, i) => i);
+  const arr = Array.from({ length: 3 }).map((_, i) => i);
 
   const [plugins, setPlugins] = useState<pluginDataType>({
     all_plugins: [],

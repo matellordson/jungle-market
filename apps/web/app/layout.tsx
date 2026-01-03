@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+// import "react-tabulator/lib/styles.css";
+import "react-tabulator/lib/css/tabulator.min.css";
 import "react-responsive-modal/styles.css";
 import { WagmiProvider } from "./wagmi-provider";
 

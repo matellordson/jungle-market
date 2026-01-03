@@ -8,7 +8,10 @@ type Request = {
 };
 
 const publicJson = {
-  public: {},
+  public: {
+    metadata: {},
+    requests: {},
+  },
 };
 
 export const pluginsRoute = {
@@ -25,7 +28,7 @@ export const pluginsRoute = {
     PUT: async (req: Request) => {
       try {
         const data =
-          await sql`UPDATE products SET plugins = plugins || '{"public": {"metadata": {}}}'::jsonb WHERE id = ${req.params.id}`;
+          await sql`UPDATE products SET plugins = plugins || ${publicJson}::jsonb WHERE id = ${req.params.id}`;
         return Response.json(data, { status: 204, headers: corsHeaders });
       } catch {
         return Response.json(null, { status: 200, headers: corsHeaders });
