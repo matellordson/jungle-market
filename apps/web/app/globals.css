@@ -302,7 +302,7 @@ svg {
   background: var(--foreground) !important;
   border: var(--border);
   box-shadow: var(--shadow) !important;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 10px !important;
   /* height: 500px; */
 }

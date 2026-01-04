@@ -1,10 +1,11 @@
 import Link from "next/link";
+import React from "react";
 import styled from "styled-components";
 
 const Element = styled.button`
   font-family: inherit;
   background-color: var(--foreground);
-  padding: 8px 20px;
+  padding: 5px 15px;
   border: none;
   color: var(--text-dark);
   border-radius: 5px;
@@ -14,7 +15,7 @@ const Element = styled.button`
   border: var(--border);
   outline: none;
   transition: all 0.8 ease-in-out;
-  box-shadow: var(--shadow);
+  /* box-shadow: var(--shadow); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,9 +34,11 @@ const Element = styled.button`
 export function Button({
   children,
   href,
+  onClick,
 }: {
   children: string;
   href?: string;
+  onClick?: React.MouseEventHandler;
 }) {
   if (href) {
     return (
@@ -44,5 +47,5 @@ export function Button({
       </Link>
     );
   }
-  return <Element>{children}</Element>;
+  return <Element onClick={onClick}>{children}</Element>;
 }

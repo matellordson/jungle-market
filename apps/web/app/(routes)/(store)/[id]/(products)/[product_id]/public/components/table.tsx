@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import { ReactTabulator } from "react-tabulator";
-import Link from "next/link";
-import { Button } from "../../../../../../../../components/button";
+import RequestModal from "./request-modal";
 
 const Wrapper = styled.div`
   padding: 10px;
@@ -13,7 +11,7 @@ export default function PublicTable() {
   return (
     <Wrapper>
       <TableActions>
-        <Button href="public/request">Public request</Button>
+        <RequestModal />
       </TableActions>
       {/* <ReactTabulator data={data} columns={columns} /> */}
     </Wrapper>
