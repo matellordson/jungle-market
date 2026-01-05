@@ -18,6 +18,7 @@
     "@repo/ui": "*",
     "@tanstack/react-form": "^1.27.6",
     "@tanstack/react-query": "^5.90.12",
+    "@tippyjs/react": "^4.2.6",
     "@types/luxon": "^3.7.1",
     "@types/tabulator-tables": "^6.3.0",
     "@web3icons/react": "^4.1.4",

@@ -15,7 +15,7 @@
   --scrollbar-track: transparent;
   --scrollbar-thumb: var(--bg-border);
   --scrollbar-thumb-hover: rgba(100, 116, 139, 0.9);
-  --shadow: 0px 3px 5px hsla(0, 0%, 0%, 0.03);
+  --shadow: 0px 2px 3px hsla(0, 0%, 0%, 0.03);
   --overlay-bg: rgba(0, 0, 0, 0.4);
   --input-outline: 2px solid var(--accent);
   --input-bg: oklch(98.4% 0.014 180.72);
@@ -38,7 +38,7 @@
     --icon: oklch(55.2% 0.016 285.938);
     --scrollbar-thumb: var(--bg-border);
     --scrollbar-thumb-hover: #6b7280;
-    --shadow: 0px 3px 5px hsla(0, 0%, 0%, 0.2);
+    --shadow: 0px 2px 3px hsla(0, 0%, 0%, 0.2);
     --overlay-bg: rgba(0, 0, 0, 0.6);
     --input-outline: 2px solid var(--accent);
     --input-bg: oklch(27.7% 0.046 192.524);
@@ -309,4 +309,17 @@ svg {
 
 .react-responsive-modal-closeButton {
   display: none !important;
+}
+
+/* style for tippy */
+
+.tippy-box {
+  background-color: var(--foreground);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.tippy-content {
 }

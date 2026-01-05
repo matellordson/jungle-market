@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import styled from "styled-components";
 import { VideoIcon } from "@phosphor-icons/react/dist/icons/Video";
 import { ImageIcon } from "@phosphor-icons/react/dist/icons/Image";
-import { ArrowUpIcon } from "@phosphor-icons/react/dist/icons/ArrowUp";
+import Tippy from "@tippyjs/react";
 
 const Wrapper = styled.div`
   height: 300px;
@@ -77,6 +77,8 @@ const MediaOption = styled.div`
 export default function RequestModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const titleRef = useRef<HTMLInputElement>(null);
+  const [activeMedia, setActiveMedia] = useState<string | null>(null);
+
   const mediaOptions = [
     {
       name: "Image",
@@ -87,17 +89,11 @@ export default function RequestModal() {
       icon: <VideoIcon size={20} weight="duotone" />,
     },
   ];
+
   return (
     <div>
       <Button onClick={() => setIsModalOpen(true)}>Public request</Button>
-      <Modal
-        open={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          titleRef.current?.focus;
-        }}
-        center
-      >
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)} center>
         <Wrapper>
           <Main></Main>
           <Footer>
@@ -105,10 +101,25 @@ export default function RequestModal() {
             <Actions>
               <MediaOptions>
                 {mediaOptions.map((option) => (
-                  <MediaOption>
-                    {option.icon}
-                    <p>{option.name}</p>
-                  </MediaOption>
+                  <Tippy
+                    key={option.name}
+                    visible={activeMedia === option.name}
+                    onClickOutside={() => setActiveMedia(null)}
+                    interactive={true}
+                    duration={0}
+                    animation={false}
+                    placement="top"
+                    content={
+                      <div>
+                        <p>Upload {option.name}</p>
+                      </div>
+                    }
+                  >
+                    <MediaOption onClick={() => setActiveMedia(option.name)}>
+                      {option.icon}
+                      <p>{option.name}</p>
+                    </MediaOption>
+                  </Tippy>
                 ))}
               </MediaOptions>
               <Button>Publish</Button>
