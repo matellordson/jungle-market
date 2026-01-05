@@ -19,7 +19,7 @@ const Main = styled.div`
 const Footer = styled.div`
   height: 30%;
   width: 100%;
-  background-color: var(--background);
+  background-color: var(--foreground);
   border-radius: 15px;
   padding: 10px;
   display: flex;
@@ -38,6 +38,7 @@ const TitleInput = styled.input`
   padding: 3px 5px;
   font-size: 15px;
   font-weight: 500;
+  font-family: inherit;
 `;
 
 const Actions = styled.div`
@@ -64,13 +65,14 @@ const MediaOption = styled.div`
   font-size: 15px;
   gap: 5px;
   cursor: pointer;
+  background-color: var(--background);
 
   & p {
     font-weight: 500;
   }
 
   &:hover {
-    background-color: var(--foreground);
+    background-color: var(--highlight);
   }
 `;
 

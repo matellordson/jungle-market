@@ -20,6 +20,7 @@
   --input-outline: 2px solid var(--accent);
   --input-bg: oklch(98.4% 0.014 180.72);
   --input-color: oklch(27.7% 0.046 192.524);
+  --transparent: rgba(255, 255, 255, 0.5);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,6 +44,7 @@
     --input-outline: 2px solid var(--accent);
     --input-bg: oklch(27.7% 0.046 192.524);
     --input-color: oklch(98.4% 0.014 180.72);
+    --transparent: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -295,11 +297,12 @@ svg {
 
 /* styles for react-responsive-modal */
 .react-responsive-modal-overlay {
-  background: var(--overlay-bg) !important;
+  background: var(--transparent) !important;
+  backdrop-filter: blur(5px);
 }
 
 .react-responsive-modal-modal {
-  background: var(--foreground) !important;
+  background: var(--background) !important;
   border: var(--border);
   box-shadow: var(--shadow) !important;
   border-radius: 20px;
@@ -314,12 +317,14 @@ svg {
 /* style for tippy */
 
 .tippy-box {
-  background-color: var(--foreground);
+  background-color: var(--transparent);
   border: var(--border);
+  backdrop-filter: blur(15px);
   box-shadow: var(--shadow);
   border-radius: 5px;
   padding: 10px;
 }
 
 .tippy-content {
+  color: var(--text-dark);
 }

@@ -15,7 +15,6 @@ const Element = styled.button`
   border: var(--border);
   outline: none;
   transition: all 0.8 ease-in-out;
-  box-shadow: var(--shadow);
   display: flex;
   justify-content: center;
   align-items: center;
