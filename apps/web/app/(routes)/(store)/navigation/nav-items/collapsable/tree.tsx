@@ -378,7 +378,7 @@ export default function ProductTree({
       <Modal
         open={isModalOpen}
         onClose={() => setIsModalOpen(!isModalOpen)}
-        center
+        // center
       >
         <ProductPlugins productId={id} />
       </Modal>

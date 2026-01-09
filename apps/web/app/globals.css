@@ -302,12 +302,20 @@ svg {
 }
 
 .react-responsive-modal-modal {
-  background: var(--background) !important;
+  width: 340px;
+  background-color: var(--foreground) !important;
   border: var(--border);
-  box-shadow: var(--shadow) !important;
-  border-radius: 20px;
-  padding: 10px !important;
-  /* height: 500px; */
+  border-radius: 15px;
+  padding: 5px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2px;
+  box-shadow: none !important;
+
+  @media only screen and (min-width: 992px) {
+    width: 400px;
+  }
 }
 
 .react-responsive-modal-closeButton {

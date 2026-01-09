@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-const Element = styled.button`
+export const ButtonElement = styled.button`
   font-family: inherit;
   background-color: var(--foreground);
   padding: 5px 15px;
@@ -14,19 +14,20 @@ const Element = styled.button`
   font-weight: 500;
   border: var(--border);
   outline: none;
-  transition: all 0.8 ease-in-out;
+  transition: all 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
   width: fit-content;
 
   &:hover {
-    filter: brightness(90%);
+    filter: brightness(95%);
   }
 
-  &:active {
-    filter: brightness(100%);
-    box-shadow: none;
+  @media (prefers-color-scheme: dark) {
+    &:hover {
+      filter: brightness(80%);
+    }
   }
 `;
 
@@ -34,17 +35,19 @@ export function Button({
   children,
   href,
   onClick,
+  loading,
 }: {
   children: string;
   href?: string;
   onClick?: React.MouseEventHandler;
+  loading?: boolean;
 }) {
   if (href) {
     return (
       <Link href={href} passHref legacyBehavior>
-        <Element as="a">{children}</Element>
+        <ButtonElement as="a">{children}</ButtonElement>
       </Link>
     );
   }
-  return <Element onClick={onClick}>{children}</Element>;
+  return <ButtonElement onClick={onClick}>{children}</ButtonElement>;
 }

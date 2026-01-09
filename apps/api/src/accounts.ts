@@ -11,6 +11,10 @@ interface ConnectWalletBody {
   address: string;
 }
 
+interface roleBody {
+  role: string;
+}
+
 export const accountRoute = {
   "/create-account": {
     POST: async (req: Request) => {
@@ -61,5 +65,21 @@ export const accountRoute = {
     } catch {
       return Response.json(null, { status: 200, headers: corsHeaders });
     }
+  },
+  "/switch-role/:id": {
+    PUT: async (req: Request & { params: { id: string } }) => {
+      try {
+        const body = (await req.json()) as roleBody;
+        const { role } = body;
+        const { id } = req.params;
+        await sql`UPDATE accounts SET role = ${role.toLowerCase()} WHERE address = ${id}`;
+        return Response.json(body, { status: 200, headers: corsHeaders });
+      } catch {
+        return Response.json(null, { status: 200, headers: corsHeaders });
+      }
+    },
+    OPTIONS: () => {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    },
   },
 };

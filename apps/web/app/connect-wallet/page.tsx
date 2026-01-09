@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { url } from "../../utils/url";
 
-const spin = keyframes`
+export const spin = keyframes`
 0% {
   transform: rotate(0deg);
 }
@@ -49,6 +49,10 @@ const ConnectContent = styled.button`
   justify-content: space-between;
   cursor: pointer;
   font-family: inherit;
+
+  &:hover {
+    filter: brightness(80%);
+  }
 `;
 
 const ConnectInfo = styled.div`
