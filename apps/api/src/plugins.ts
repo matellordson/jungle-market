@@ -1,5 +1,5 @@
 import { corsHeaders } from ".";
-import { sql } from "../client/supabase";
+import { sql } from "bun";
 
 type Request = {
   params: {

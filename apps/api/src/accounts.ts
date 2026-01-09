@@ -1,5 +1,5 @@
 import { corsHeaders } from ".";
-import { sql } from "../client/db";
+import { sql } from "bun";
 
 type BunRequest = {
   params: {

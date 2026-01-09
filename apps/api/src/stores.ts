@@ -1,5 +1,5 @@
+import { sql } from "bun";
 import { corsHeaders } from ".";
-import { sql } from "../client/supabase";
 
 interface StoreInterface {
   name: string;
