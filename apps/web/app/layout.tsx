@@ -22,10 +22,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  client,
+  store,
 }: Readonly<{
-  children: React.ReactNode;
+  client: React.ReactNode;
+  store: React.ReactNode;
 }>) {
+  const role = "buyer";
   return (
     <html lang="en">
       <meta
@@ -33,7 +36,7 @@ export default function RootLayout({
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <WagmiProvider>{children}</WagmiProvider>
+        <WagmiProvider>{role == "buyer" ? client : store}</WagmiProvider>
       </body>
     </html>
   );
