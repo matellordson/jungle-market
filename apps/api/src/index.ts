@@ -1,5 +1,4 @@
 import { accountRoute } from "./accounts";
-import { connectWalletRoute } from "./connect-wallet";
 import { pluginsRoute } from "./plugins";
 import { productRoute } from "./products";
 import { storeRoutes } from "./stores";
@@ -14,9 +13,9 @@ const server = Bun.serve({
   port: 8080,
   routes: {
     ...accountRoute,
-    ...connectWalletRoute,
-    ...storeRoutes,
-    ...productRoute,
-    ...pluginsRoute,
+    // ...connectWalletRoute,
+    // ...storeRoutes,
+    // ...productRoute,
+    // ...pluginsRoute,
   },
 });

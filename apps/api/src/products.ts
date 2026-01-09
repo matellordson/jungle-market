@@ -1,5 +1,5 @@
 import { corsHeaders } from ".";
-import { sql } from "../client/neon";
+import { sql } from "../client/supabase";
 
 type GetRequest = {
   params: {
