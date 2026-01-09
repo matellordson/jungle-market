@@ -8,16 +8,7 @@ import { WalletWalletConnect } from "@web3icons/react";
 import { useAccount, useConnect, useConnectors, useDisconnect } from "wagmi";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
-
-const bounce = keyframes`
-0% {
-    transform: scale(1);
-} 50% {
-    transform: scale(0.95);
-
-} 100% {
-    transform: scale(1);
-}`;
+import { url } from "../../utils/url";
 
 const spin = keyframes`
 0% {
@@ -36,7 +27,7 @@ const CardWrapper = styled.div`
   top: 50%;
   background-color: var(--foreground);
   border: var(--border);
-  border-radius: 25px;
+  border-radius: 15px;
   padding: 5px;
   display: flex;
   flex-direction: column;
@@ -47,20 +38,10 @@ const CardWrapper = styled.div`
   }
 `;
 
-const Main = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  &.close {
-    display: none;
-  }
-`;
-
 const ConnectContent = styled.button`
   width: 100%;
   background-color: var(--background);
-  border-radius: 20px;
+  border-radius: 10px;
   border: var(--border);
   padding: 10px;
   display: flex;
@@ -68,10 +49,6 @@ const ConnectContent = styled.button`
   justify-content: space-between;
   cursor: pointer;
   font-family: inherit;
-
-  &:focus {
-    animation: 0.25s forwards ease ${bounce};
-  }
 `;
 
 const ConnectInfo = styled.div`
@@ -129,14 +106,27 @@ export default function ConnectWalletPage() {
   const { disconnect } = useDisconnect();
 
   useEffect(() => {
-    if (address) {
-      redirect("/hompage");
-    }
+    const checkUserExist = async () => {
+      const accountsApi = await fetch(`${url}/check-account/${address}`);
+      const accountsData = await accountsApi.json();
+      if (accountsData.exist) {
+        redirect("/");
+      } else {
+        await fetch(`${url}/create-account`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ address: address }),
+        });
+        redirect("/");
+      }
+    };
+    checkUserExist();
   }, [address]);
 
   return (
     <CardWrapper>
-      {/* Connect Wallet Components */}
       {connectors
         .filter((c) => c.id === "walletConnect")
         .map((connector) => (
