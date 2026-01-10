@@ -15,6 +15,7 @@ import {
   PromptWrapper,
 } from "../../components/prompt";
 import { CircleNotchIcon } from "@phosphor-icons/react/dist/icons/CircleNotch";
+import { redirect } from "next/navigation";
 
 const CardWrapper = styled.div`
   position: absolute;
@@ -94,18 +95,9 @@ const RoleMessage = styled.p`
 
 export default function ConnectWalletPage() {
   const roles = [
-    {
-      name: "Buyer",
-      message: "Purchase goods",
-    },
-    {
-      name: "Seller",
-      message: "Distribute goods",
-    },
-    {
-      name: "Agent",
-      message: "Control inventory",
-    },
+    { name: "Buyer", message: "Purchase goods" },
+    { name: "Seller", message: "Distribute goods" },
+    { name: "Agent", message: "Control inventory" },
   ];
 
   const [selectedRole, setRole] = useState("");
@@ -113,15 +105,25 @@ export default function ConnectWalletPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [switchingLoading, setLoading] = useState(false);
 
+  if (!address) {
+    redirect("/connect-wallet");
+  }
+
   const handleSwitchRole = async () => {
     setLoading(true);
-    await fetch(`${url}/switch-role/${address}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role: selectedRole }),
-    });
-    setLoading(false);
-    setModalOpen(false);
+    try {
+      await fetch(`${url}/switch-role/${address}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role: selectedRole }),
+      });
+      setModalOpen(false);
+    } catch (error) {
+      console.error("Failed to switch role", error);
+    } finally {
+      setLoading(false);
+      redirect("/");
+    }
   };
 
   return (
@@ -135,55 +137,47 @@ export default function ConnectWalletPage() {
           }}
         >
           <RoleInfo>
-            <RoleImage></RoleImage>
+            <RoleImage />
             <RoleText>
               <RoleName>{role.name}</RoleName>
               <RoleMessage>{role.message}</RoleMessage>
             </RoleText>
           </RoleInfo>
-          <Modal
-            open={modalOpen}
-            onClose={() => setModalOpen(false)}
-            center
-            onOverlayClick={(e) => {
-              setModalOpen(false);
-              e.stopPropagation();
-            }}
-          >
-            <PromptWrapper>
-              <PromptTitle>Confirm selected role</PromptTitle>
-              <PromptDesc>
-                By switching role you will loose all previous data from already
-                existing role.
-              </PromptDesc>
-              <PromptButtons>
-                <PromptCancel
-                  onClick={(e) => {
-                    setModalOpen(false);
-                    e.stopPropagation();
-                  }}
-                >
-                  Cancel
-                </PromptCancel>
-                {switchingLoading ? (
-                  <PromptConfirm
-                    onClick={handleSwitchRole}
-                    style={{ opacity: "50%", cursor: "not-allowed" }}
-                    disabled={true}
-                  >
-                    <CircleNotchIcon size={18} weight="duotone" />
-                    Confirm
-                  </PromptConfirm>
-                ) : (
-                  <PromptConfirm onClick={handleSwitchRole}>
-                    Confirm
-                  </PromptConfirm>
-                )}
-              </PromptButtons>
-            </PromptWrapper>
-          </Modal>
         </RoleContent>
       ))}
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)} center>
+        <PromptWrapper>
+          <PromptTitle>Confirm {selectedRole} role</PromptTitle>
+          <PromptDesc>
+            By switching to the <strong>{selectedRole}</strong> role, you will
+            lose all previous data from your existing role.
+          </PromptDesc>
+          <PromptButtons>
+            <PromptCancel onClick={() => setModalOpen(false)}>
+              Cancel
+            </PromptCancel>
+
+            <PromptConfirm
+              onClick={handleSwitchRole}
+              disabled={switchingLoading}
+              style={
+                switchingLoading
+                  ? { opacity: "50%", cursor: "not-allowed" }
+                  : {}
+              }
+            >
+              {switchingLoading && (
+                <CircleNotchIcon
+                  size={18}
+                  weight="duotone"
+                  className="spinner"
+                />
+              )}
+              Confirm
+            </PromptConfirm>
+          </PromptButtons>
+        </PromptWrapper>
+      </Modal>
     </CardWrapper>
   );
 }

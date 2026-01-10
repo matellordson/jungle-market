@@ -60,7 +60,7 @@ export const accountRoute = {
   "/accounts/:id": async (req: BunRequest) => {
     try {
       const data =
-        await sql`SELECT * FROM accounts WHERE address = ${req.params.id}`;
+        await sql`SELECT * FROM accounts WHERE address = ${req.params.id} LIMIT 1`;
       return Response.json(data, { status: 200, headers: corsHeaders });
     } catch {
       return Response.json(null, { status: 200, headers: corsHeaders });

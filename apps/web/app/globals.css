@@ -302,19 +302,19 @@ svg {
 }
 
 .react-responsive-modal-modal {
-  width: 340px;
+  width: 90%;
+  max-width: 400px;
   background-color: var(--foreground) !important;
   border: var(--border);
   border-radius: 15px;
   padding: 5px !important;
+  margin: 0 !important;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 2px;
   box-shadow: none !important;
 
   @media only screen and (min-width: 992px) {
-    width: 400px;
+    width: 420px;
   }
 }
 
