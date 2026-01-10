@@ -149,8 +149,8 @@ export default function ConnectWalletPage() {
         <PromptWrapper>
           <PromptTitle>Confirm {selectedRole} role</PromptTitle>
           <PromptDesc>
-            By switching to the <strong>{selectedRole}</strong> role, you will
-            lose all previous data from your existing role.
+            By switching to the {selectedRole} role, you will lose all previous
+            data from your existing role.
           </PromptDesc>
           <PromptButtons>
             <PromptCancel onClick={() => setModalOpen(false)}>
