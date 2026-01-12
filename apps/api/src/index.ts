@@ -14,7 +14,7 @@ const server = Bun.serve({
   routes: {
     ...accountRoute,
     // ...connectWalletRoute,
-    // ...storeRoutes,
+    ...storeRoutes,
     // ...productRoute,
     // ...pluginsRoute,
   },

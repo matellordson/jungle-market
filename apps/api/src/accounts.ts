@@ -51,7 +51,9 @@ export const accountRoute = {
   },
   "/accounts": async () => {
     try {
-      const data = await sql`SELECT * FROM accounts`;
+      const data = await sql`
+      -- SET LOCAL ROLE anon
+      SELECT * FROM accounts`;
       return Response.json(data, { status: 200, headers: corsHeaders });
     } catch {
       return Response.json(null, { status: 200, headers: corsHeaders });

@@ -24,6 +24,10 @@ export const storeRoutes = {
       return Response.json(null, { status: 204, headers: corsHeaders });
     },
   },
+  "/stores": async () => {
+    const body = await sql`SELECT * FROM stores`;
+    return Response.json(body, { status: 200, headers: corsHeaders });
+  },
   // Store name is used as filter
   "/stores/name/:id": async (req: BunRequest) => {
     const [body] =
