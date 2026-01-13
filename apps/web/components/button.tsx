@@ -2,12 +2,13 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-export const ButtonElement = styled.button`
+export const ButtonElement = styled.button<{ $accent?: boolean }>`
   font-family: inherit;
-  background-color: var(--foreground);
-  padding: 5px 15px;
+  background-color: ${(props) =>
+    props.$accent ? "var(--accent)" : "var(--foreground)"};
+  padding: 7px 15px;
   border: none;
-  color: var(--text-dark);
+  color: ${(props) => (props.$accent ? "#ffffff" : "var(--text-dark)")};
   border-radius: 5px;
   font-size: 15px;
   cursor: pointer;
@@ -36,18 +37,26 @@ export function Button({
   href,
   onClick,
   loading,
+  accent,
 }: {
   children: string;
   href?: string;
   onClick?: React.MouseEventHandler;
   loading?: boolean;
+  accent?: boolean;
 }) {
   if (href) {
     return (
       <Link href={href} passHref legacyBehavior>
-        <ButtonElement as="a">{children}</ButtonElement>
+        <ButtonElement as="a" $accent={accent}>
+          {children}
+        </ButtonElement>
       </Link>
     );
   }
-  return <ButtonElement onClick={onClick}>{children}</ButtonElement>;
+  return (
+    <ButtonElement onClick={onClick} $accent={accent}>
+      {children}
+    </ButtonElement>
+  );
 }

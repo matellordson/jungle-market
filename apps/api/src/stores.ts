@@ -3,7 +3,7 @@ import { corsHeaders } from ".";
 
 interface StoreInterface {
   name: string;
-  owner: string;
+  owners: string;
 }
 
 type BunRequest = {
@@ -16,8 +16,8 @@ export const storeRoutes = {
   "/stores/create": {
     POST: async (req: Request) => {
       const body = (await req.json()) as StoreInterface;
-      const { name, owner } = body;
-      await sql`INSERT INTO stores (name, owner) VALUES (${name}, ${owner})`;
+      const { name, owners } = body;
+      await sql`INSERT INTO stores (name, owners) VALUES (${name}, ${owners})`;
       return Response.json(body, { status: 201, headers: corsHeaders });
     },
     OPTIONS: () => {

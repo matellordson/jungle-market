@@ -1,6 +1,7 @@
 "use client";
 
 import styled from "styled-components";
+import NavItems from "./nav-items";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,6 +37,8 @@ const MainPageWrapper = styled.div`
   width: 100%;
   background-color: var(--background);
   padding: 10px;
+  max-width: 1200px;
+  margin: auto;
 `;
 
 const FooterWrapper = styled.div`
@@ -48,7 +51,9 @@ const FooterWrapper = styled.div`
 export function StoreLayoutComp({ children }: { children: React.ReactNode }) {
   return (
     <Wrapper>
-      <SidebarWrapper>sidebar</SidebarWrapper>
+      <SidebarWrapper>
+        <NavItems></NavItems>
+      </SidebarWrapper>
       <PageWrapper>
         <HeaderWrapper></HeaderWrapper>
         <MainPageWrapper>{children}</MainPageWrapper>

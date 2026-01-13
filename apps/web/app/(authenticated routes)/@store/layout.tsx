@@ -1,5 +1,5 @@
 import { StoreLayoutComp } from "../../../components/store-layout";
-import NoStore from "./components/no-store";
+import { StoreOnboarding } from "./components/store-onboarding";
 
 export default function StoreLayout({
   children,
@@ -9,7 +9,7 @@ export default function StoreLayout({
   return (
     <StoreLayoutComp>
       {/* {children}  */}
-      <NoStore />
+      <StoreOnboarding />
     </StoreLayoutComp>
   );
 }

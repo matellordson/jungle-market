@@ -23,6 +23,11 @@ export const PromptDesc = styled.p`
   padding-top: 5px;
 `;
 
+export const PromptContent = styled.div`
+  margin-top: 10px;
+  width: 100%;
+`;
+
 export const PromptButtons = styled.div`
   margin-top: 25px;
   display: flex;
@@ -48,5 +53,9 @@ export const PromptConfirm = styled(ButtonElement)`
     color: #ffffff;
     transform-origin: center;
     animation: ${spin} 1s linear infinite;
+  }
+
+  &:disabled {
+    opacity: 50%;
   }
 `;
